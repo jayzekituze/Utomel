@@ -1,11 +1,9 @@
-print("lol")
 local PANGALAN = { -- pangalan ng mga alt mo gago ka pakyou
     "SuzumoMalaki",
     "SuzukoMalaki",
     "007jimm",
     ""
 }
-print("error")
 
 
 function serverhop()
@@ -81,53 +79,15 @@ function serverhop()
     Jump("Low")
 end
 
-
-local web = "https://discordapp.com/api/webhooks/1092245593209970799/KhEc8wpTM49q4Vytg53o5NiMjWDutxHtpEIOitB_uYx6MxzRuRKmRv1CbCNnkCogLWha"
-
-function SendWeb(web)
-    local AttemptWebhook, WebhookError = pcall(function()
-        (syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request) {
-            Url = web,
-            Method = "POST",
-            Headers = {
-                ["Content-Type"] = "application/json"
-            },
-            Body = game:GetService("HttpService"):JSONEncode{
-                ["content"] = "MonkeyMan",
-                ["embeds"] = {
-                    {
-                      ["color"] =  tonumber("0x00FF00", 16),
-                      ["title"] = "",
-                      ["fields"] = {
-                        {
-                            ["name"] = "",
-                            ["value"] = ,
-                            ["inline"] = true
-                        },
-                        ["timestamp"] = os.date("%Y-%m-%dT%X.000Z")
-                    },
-                      ["footer"] = {
-                        ["text"] = game.Players.LocalPlayer.Name
-                        ["icon_url"] = "https://cdn.discordapp.com/attachments/911765351132430366/971374855989657620/unknown.png"
-                    },
-                    ["timestamp"] = DateTime.now():ToIsoDate()
-                    }
-                  }
-            }
-        }
-    end)
-    if not AttemptWebhook then print(WebhookError) end
-end
-
-
-for i, v in pairs(game:GetService("Players"):GetChildren()) do
-    print(v.Name)
-    
-    for _, username in ipairs(PANGALAN) do
-        if v.Name == username then
-            pcall(SendWeb)
-            wait(5)
-            pcall(serverhop)
+for _, player in pairs(game.Players:GetPlayers()) do
+    if player:IsA("Player") then
+        print(player.Name)
+        
+        for _, username in ipairs(PANGALAN) do
+            if player.Name == username then
+                wait(10)
+                pcall(serverhop)
+            end
         end
     end
 end
