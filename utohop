@@ -1,10 +1,3 @@
-local PANGALAN = {
-    "SuzumoMalaki",
-    "SuzukoMalaki",
-    "007jimm",
-    ""
-}
-
 function serverhop()
     local numbers = {48, 45, 40, 35, 30}
 
@@ -92,17 +85,4 @@ function serverhop()
     Jump("Low")
 end
 
-for _, player in pairs(game.Players:GetPlayers()) do
-    if player:IsA("Player") then
-        print(player.Name)
-
-        local isSelf = player.Name == game.Players.LocalPlayer.Name
-
-        for _, username in ipairs(PANGALAN) do
-            if player.Name == username and not isSelf then
-                wait(10)
-                pcall(serverhop)
-            end
-        end
-    end
-end
+serverhop()
