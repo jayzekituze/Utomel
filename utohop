@@ -1,9 +1,11 @@
+print("lol")
 local PANGALAN = { -- pangalan ng mga alt mo gago ka pakyou
     "SuzumoMalaki",
     "SuzukoMalaki",
     "007jimm",
     ""
 }
+print("error")
 
 
 function serverhop()
