@@ -1,0 +1,138 @@
+if not game:IsLoaded() then
+    while not game:IsLoaded() do wait(1) end
+
+    wait(5)
+end
+
+
+local PANGALAN = { -- pangalan ng mga alt mo gago ka pakyou
+    "SuzumoMalaki",
+    "SuzukoMalaki",
+    "007jimm",
+    ""
+}
+
+
+function serverhop()
+    local numbers = {48, 45, 40, 35, 30}
+
+
+    local MINIMUM_PLAYERS = numbers[math.random(1, #numbers)]
+
+    --// Services
+    local Players = game:GetService("Players")
+    local HttpService = game:GetService("HttpService")
+    local TeleportService = game:GetService("TeleportService")
+    local LocalPlayer = Players.LocalPlayer
+
+    local CurrentWorld : string = ""
+    local CurrentPosition = nil
+
+    --// Variables
+    local PlaceId = game.PlaceId
+    local fileName = string.format("%s_servers.json", tostring(PlaceId))
+    local ServerHopData = { 
+        CheckedServers = {},
+        LastTimeHop = nil,
+        CreatedAt = os.time() -- We can use it later to clear the checked servers
+        -- TODO: Save the cursor? Prob this can help on fast-hops
+    }
+
+    -- Load data from disk/workspace
+    if isfile(fileName) then
+        local fileContent = readfile(fileName)
+        ServerHopData = HttpService:JSONDecode(fileContent)
+    end
+
+    -- Optional log feature
+    if ServerHopData.LastTimeHop then
+        print("Took", os.time() - ServerHopData.LastTimeHop, "seconds to server hop")
+    end
+
+    local ServerTypes = { ["Normal"] = "desc", ["Low"] = "asc" }
+
+    function Jump(serverType)
+        serverType = serverType or "Normal" -- Default parameter
+        if not ServerTypes[serverType] then serverType = "Normal" end
+        
+        local function GetServerList(cursor)
+            cursor = cursor and "&cursor=" .. cursor or ""
+            local API_URL = string.format('https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=100', tostring(PlaceId), ServerTypes[serverType])
+            return HttpService:JSONDecode(game:HttpGet(API_URL .. cursor))
+        end
+
+        local currentPageCursor = nil
+        while true do 
+            local serverList = GetServerList(currentPageCursor)
+            currentPageCursor = serverList.nextPageCursor
+            
+            for _, server in ipairs(serverList.data) do
+                if server.playing and tonumber(server.playing) >= MINIMUM_PLAYERS and tonumber(server.playing) < Players.MaxPlayers and not table.find(ServerHopData.CheckedServers, tostring(server.id)) then     
+                    -- Save current data to disk/workspace
+                    ServerHopData.LastTimeHop = os.time() -- Last time that tried to hop
+                    table.insert(ServerHopData.CheckedServers, server.id) -- Insert on our list
+                    writefile(fileName, HttpService:JSONEncode(ServerHopData)) -- Save our data
+                    TeleportService:TeleportToPlaceInstance(PlaceId, server.id, LocalPlayer) -- Actually teleport the player
+                    -- Change the wait time if you take long times to hop (or it will add more than 1 server in the file)
+                    wait(0.25)
+                end
+            end
+            
+            if not currentPageCursor then break else wait(0.25) end
+        end  
+    end
+
+
+    Jump("Low")
+end
+
+
+local web = "https://discordapp.com/api/webhooks/1092245593209970799/KhEc8wpTM49q4Vytg53o5NiMjWDutxHtpEIOitB_uYx6MxzRuRKmRv1CbCNnkCogLWha"
+
+function SendWeb(web)
+    local AttemptWebhook, WebhookError = pcall(function()
+        (syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request) {
+            Url = web,
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json"
+            },
+            Body = game:GetService("HttpService"):JSONEncode{
+                ["content"] = "MonkeyMan",
+                ["embeds"] = {
+                    {
+                      ["color"] =  tonumber("0x00FF00", 16),
+                      ["title"] = "",
+                      ["fields"] = {
+                        {
+                            ["name"] = "",
+                            ["value"] = ,
+                            ["inline"] = true
+                        },
+                        ["timestamp"] = os.date("%Y-%m-%dT%X.000Z")
+                    },
+                      ["footer"] = {
+                        ["text"] = game.Players.LocalPlayer.Name
+                        ["icon_url"] = "https://cdn.discordapp.com/attachments/911765351132430366/971374855989657620/unknown.png"
+                    },
+                    ["timestamp"] = DateTime.now():ToIsoDate()
+                    }
+                  }
+            }
+        }
+    end)
+    if not AttemptWebhook then print(WebhookError) end
+end
+
+
+for i, v in pairs(game:GetService("Players"):GetChildren()) do
+    print(v.Name)
+    
+    for _, username in ipairs(PANGALAN) do
+        if v.Name == username then
+            pcall(SendWeb)
+            wait(5)
+            pcall(serverhop)
+        end
+    end
+end
