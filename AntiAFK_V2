@@ -1,0 +1,2 @@
+game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
+print("AntiAFKV2 executed")
