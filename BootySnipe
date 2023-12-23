@@ -13,6 +13,8 @@ VirtualUser:ClickButton2(Vector2.new())
 end)
 
 -- Players.LocalPlayer.PlayerScripts["Idle Tracking"].Disabled = true
+game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
+
 
 local function serverHop()
     local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true"
@@ -88,7 +90,7 @@ end)
 
 local niggaJump = coroutine.create(function ()
     while 1 do
-        wait(5)
+        wait(10)
         game.Players.LocalPlayer.Character.Humanoid.Jump = true
     end
 end)
