@@ -5,17 +5,6 @@ local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChi
 local TeleportService = game:GetService("TeleportService")
 local HttpService = game:GetService("HttpService")
 
--- //Anti Afk
-local VirtualUser=game:service'VirtualUser'
-game:service'Players'.LocalPlayer.Idled:connect(function()
-VirtualUser:CaptureController()
-VirtualUser:ClickButton2(Vector2.new())
-end)
-
--- Players.LocalPlayer.PlayerScripts["Idle Tracking"].Disabled = true
-game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
-
-
 local function serverHop()
     local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true"
     local req = request({ Url = string.format(sfUrl, game.placeId, "Desc", 100) })
@@ -90,11 +79,22 @@ end)
 
 local niggaJump = coroutine.create(function ()
     while 1 do
-        wait(10)
+        wait(5)
         game.Players.LocalPlayer.Character.Humanoid.Jump = true
     end
 end)
 coroutine.resume(niggaJump)
+
+--//Anti AFK
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
+
+game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
+
+
 
 local isServerDead = coroutine.create(function ()
     local isDead = false
