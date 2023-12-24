@@ -80,7 +80,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     local jsonMessage = http:JSONEncode(message)
 
     http:PostAsync(
-        "https://discord.com/api/webhooks/1185926383143239771/GE5NA7VOKMCzImGEp-NT4LBktgdo35ay06CGoRCqv5idBqJ0S_0zcT6p45YWdtO0rSWL",
+        "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr",
         jsonMessage,
         Enum.HttpContentType.ApplicationJson,
         false
