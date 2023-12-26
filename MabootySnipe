@@ -195,6 +195,7 @@ end)
 game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
 
 game:GetService('RunService'):Set3dRenderingEnabled(false)
+setfpscap(15)
 
 local isServerDead = coroutine.create(function ()
     local isDead = false
