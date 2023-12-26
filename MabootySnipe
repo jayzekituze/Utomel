@@ -109,6 +109,10 @@ local function checklisting(uid, gems, item, version, shiny, amount, username, p
         print('Successfully Sniped ', item)
     elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and gems <= getgenv().Settings.Pets.ExclusivePetPrice then
         game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+        print('Successfully Sniped ', item)        
+    end
+    elseif gems <= getgenv().Settings.Other.buyAnything then
+        game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         print('Successfully Sniped ', item)
     end
     for i, v in pairs(keywords) do
