@@ -92,8 +92,6 @@ for i, v in pairs(game:GetService("Players"):GetChildren()) do
     end
 end
 
-wait(10)
-
 local function checklisting(uid, gems, item, version, shiny, amount, username, playerid)
     gems = tonumber(gems)
     local type = {}
@@ -129,7 +127,7 @@ local function checklisting(uid, gems, item, version, shiny, amount, username, p
     end
 end
 
-function create_platform(x, y, z)
+local function create_platform(x, y, z)
     local p = Instance.new("Part")
     p.Anchored = true
     p.Name = "plat"
@@ -138,7 +136,7 @@ function create_platform(x, y, z)
     p.Parent = game.Workspace
 end
 
-function teleport(x, y, z)
+local function teleport(x, y, z)
     local Players = game:GetService("Players")
     local LocalPlayer = Players.LocalPlayer
 
@@ -152,9 +150,9 @@ function teleport(x, y, z)
     end
 end
 
-create_platform(-922, 270, -2338)
-wait(0.1)
-teleport(-922, 275, -2338)  
+create_platform(-922, 190, -2338)
+wait(10)
+teleport(-922, 200, -2338)
 
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
     local playerID = message['PlayerID']
@@ -214,7 +212,5 @@ local isServerDead = coroutine.create(function ()
 end)
 coroutine.resume(isServerDead)
 
-
-
-wait(4800)
+wait(2400)
 pcall(serverHop, getgenv().Settings.place)
