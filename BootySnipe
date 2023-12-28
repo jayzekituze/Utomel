@@ -188,7 +188,6 @@ local function checklisting(uid, gems, item, playerid)
         print('Successfully Sniped ', item)
     elseif gems <= getgenv().Settings.Other.buyAnything then
         local shwa = buyItem(playerid, uid)
-        sendUpdate(getgenv().Settings.webhook, p, item, gems, shwa)
         print('Successfully Sniped ', item)      
     end
     for i, v in pairs(keywords) do
