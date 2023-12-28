@@ -98,6 +98,8 @@ end
 
 local function buyItem(playerid, uid)
     local success = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+    print(success)
+    print(type(success))
     return success
 end
 
@@ -185,9 +187,9 @@ local function checklisting(uid, gems, item, playerid)
         sendUpdate(getgenv().Settings.webhook, p, item, gems, shwa)
         print('Successfully Sniped ', item)
     elseif gems <= getgenv().Settings.Other.buyAnything then
-        local shwa = buyItem(playerid, uid)
+        game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         sendUpdate(getgenv().Settings.webhook, p, item, gems, shwa)
-        print('Successfully Sniped ', item)  
+        print('Successfully Sniped ', item)      
     end
     for i, v in pairs(keywords) do
         if string.find(item, i) and gems <= v then
