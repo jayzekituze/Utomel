@@ -240,7 +240,6 @@ local function checklisting(uid, gems, item, version, playerid)
         local startTick = os.clock()
         local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         local endTick = os.clock() - startTick
-        sendUpdate(getgenv().Settings.webhook, p, item, gems, version, shwa, endTick)
         print('Successfully Sniped ', item)
     end
 
