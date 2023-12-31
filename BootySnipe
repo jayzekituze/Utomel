@@ -100,7 +100,7 @@ local function formatNumber(number)
     return tostring(number):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", "")
 end
 
-local function sendUpdate(webhook, user, item, gems, version, isSniped, timeTook)
+local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFrom, timeTook)
     local gemamount = tonumber(game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value)
     local embed
     if version then
@@ -170,7 +170,6 @@ local function sendUpdate(webhook, user, item, gems, version, isSniped, timeTook
                     {
                         ['name'] = "**PET VERSION:**",
                         ['value'] = "Normal",
-                        ['inline'] = true
                     },
                     {
                         ['name'] = "**REMAINING :gem:: **",
@@ -194,11 +193,15 @@ local function sendUpdate(webhook, user, item, gems, version, isSniped, timeTook
                 ["timestamp"] = DateTime.now():ToIsoDate(),
                 ['fields'] = {
                     {
+						['name'] = "FROM:",
+						['value'] = tostring(boughtFrom),
+					},
+                    {
                         ['name'] = "**ITEM:**",
                         ['value'] = tostring(item)
                     },
                     {
-                        ['name'] = "**COST:**",
+                        ['name'] = "**PRICE:**",
                         ['value'] = formatNumber(gems)
                     }
                 }
