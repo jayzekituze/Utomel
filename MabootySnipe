@@ -221,7 +221,7 @@ local function checkListing(uid, cost, item, version, shiny, amount, username, p
 
     
     for i, v in pairs(keywords) do
-        if string.find(item, i) and gems <= v then
+        if string.find(item, i) and cost <= v then
             startTick = os.clock()
             local buyPet = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
             endTick = os.clock() - startTick
@@ -233,7 +233,7 @@ local function checkListing(uid, cost, item, version, shiny, amount, username, p
     end
 
     for i, v in pairs(thingsTosnipe) do
-        if item == i and gems <= v then
+        if item == i and cost <= v then
             startTick = os.clock()
             local buyPet = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
             endTick = os.clock() - startTick
