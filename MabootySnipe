@@ -357,7 +357,7 @@ game:GetService("RunService").Stepped:Connect(function()
     local Players = game:GetService("Players")
     local getPlayers = Players:GetPlayers()
     PlayerInServer = #getPlayers
-    if PlayerInServer < 20 then
+    if PlayerInServer < 25 then
         serverHop(getgenv().Settings.place)
     end
 end)
