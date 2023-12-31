@@ -153,22 +153,18 @@ local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFr
                     {
                         ['name'] = "**USER:**",
                         ['value'] = "||" ..tostring(user).. "||",
-                        ['inline'] = true
                     },
                     {
                         ['name'] = "**ITEM:**",
                         ['value'] = tostring(item),
-                        ['inline'] = true
                     },
                     {
                         ['name'] = "**PET VERSION:**",
                         ['value'] = "Normal",
-                        ['inline'] = true
                     },
                     {
                         ['name'] = "**COST:**",
                         ['value'] = formatNumber(gems),
-                        ['inline'] = true
                     },
                     {
                         ['name'] = "**REMAINING :gem:: **",
