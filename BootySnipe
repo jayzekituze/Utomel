@@ -337,21 +337,16 @@ game:GetService('RunService'):Set3dRenderingEnabled(false)
 setfps(10)
 
 --//DEAD SERVER CHECK
-local isServerDead = coroutine.create(function ()
-    local isDead = false
-    while not isDead do
-        wait(10)
-        local Playerss = Players:GetPlayers()
-        local count = #Playerss
+--//Low Players Hop
 
-        if count <= getgenv().Settings.num_of_players_to_tp then
-            isDead = true
-            pcall(serverHop, getgenv().Settings.place)
-            wait(60)
-        end
+game:GetService("RunService").Stepped:Connect(function()
+    local Players = game:GetService("Players")
+    local getPlayers = Players:GetPlayers()
+    PlayerInServer = #getPlayers
+    if PlayerInServer < 20 then
+        serverHop(getgenv().Settings.place)
     end
 end)
-coroutine.resume(isServerDead)
 
 --//TP TO ANOTHER SERVER AFTER 40MINS
 wait(2400)
