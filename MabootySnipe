@@ -106,17 +106,17 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
 	
 	if boughtStatus then
 		webColor = tonumber(0x32CD32)
-		webUrl = getgenv().Settings.snipeSuccess
-		title = "NAKA KUHA NG: " ..item.. 
+		webUrl = snipeSuccess
+		title = "Sniped " ..item.. " | Took: " ..timeTook
 		if mention then
-			webContent = "PUTANGINAMO SWERTO MONG GAGO KA <@402681518197047306>"
+			webContent = "<@569768504014929930>"
 		else
 			webContent = ""
 		end
 	else
-		webUrl = getgenv().Settings.snipeFail
+		webUrl = snipeFail
 		webColor = tonumber(0xFF0000)
-		title = "HINDI NA SNIPE YUNG  " ..item
+		title = "Failed to Snipe " ..item
 	end
 	
 	local message = {
@@ -128,28 +128,28 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
 				['timestamp'] = DateTime.now():ToIsoDate(),
 				['fields'] = {
 					{
-						['name'] = "PRESYO:",
+						['name'] = "PRICE:",
 						['value'] = tostring(cost) .. " :gem:",
 					},
 					{
-						['name'] = "BINILI KO KAY:",
+						['name'] = "BOUGHT FROM:",
 						['value'] = tostring(boughtFrom),
 					},
 					{
-						['name'] = "HALAGA:",
+						['name'] = "AMOUNT:",
 						['value'] = tostring(amount),
 					},
 					{
-						['name'] = "NATITIRANG HIYAS:",
+						['name'] = "REMAINING GEMS:",
 						['value'] = tostring(gemamount),
 					},
 					{
-						['name'] = "ALAGANG ID:",
+						['name'] = "PETID:",
 						['value'] = tostring(uid),
 					},
 					{
-						['name'] = "SA BILIS NG:",
-						['value'] = tostring(timeTook) .. " seconds" " :clock1:" 
+						['name'] = "TIME TOOK:",
+						['value'] = tostring(timeTook) .. " :clock1:"
 					}
 				}
 			}
