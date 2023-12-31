@@ -1,7 +1,7 @@
 local NiggasToAvoid = {
     "007jimm",
     "SuzumoMalaki",
-    "SuzukoMalaki",
+    "FriendlyRanger588",
     "22SaltyPineapples",
     "StartedManw2134",
     "shwalalala1",
@@ -19,7 +19,10 @@ local thingsTosnipe = {
     ["Shiny Hunter"] = getgenv().Settings.Books.ShinyHunterPrice,
     ["Huge Hunter"] = getgenv().Settings.Books.HugeHunterPrice,
     ["Titanic Christmas Present"] = getgenv().Settings.Present.TitanicPresentPrice,
-    ["X-Large Christmas Present"] = getgenv().Settings.Present.XLargeChristmasPrice
+    ["X-Large Christmas Present"] = getgenv().Settings.Present.XLargeChristmasPrice,
+    ["Diamond Chest Mimic"] = getgenv().Settings.Books.DiamondChestMimic,
+    ["Massive Comet"] = getgenv().Settings.Books.MassiveComet,
+    ["Party Time"] = getgenv().Settings.Books.PartyTime
 }
 
 local keywords = {
@@ -177,7 +180,7 @@ local function sendUpdate(webhook, user, item, gems, version, isSniped, timeTook
         }
     end
     local message = {
-        ['content'] = "@everyone",
+        ['content'] = "<@402681518197047306>",
         ['embeds'] = embed
     }
 
@@ -247,6 +250,7 @@ local function checklisting(uid, gems, item, version, playerid)
         if string.find(item, i) and gems <= v then
             buyItem(playerid, uid)
             print('Successfully Sniped ', item)
+            sendUpdate(getgenv().Settings.webhook, p, item, gems, version, shwa, endTick)
         end
     end
     for i, v in pairs(thingsTosnipe) do
@@ -375,7 +379,7 @@ game:GetService("RunService").Stepped:Connect(function()
     local Players = game:GetService("Players")
     local getPlayers = Players:GetPlayers()
     PlayerInServer = #getPlayers
-    if PlayerInServer < 20 then
+    if PlayerInServer < 25 then
         serverHop(getgenv().Settings.place)
     end
 end)
