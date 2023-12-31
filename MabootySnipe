@@ -226,6 +226,9 @@ local function checkListing(uid, cost, item, version, shiny, amount, username, p
             buyItem(playerid, uid)
             local buyPet = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
             endTick = os.clock() - startTick
+            if buyPet then
+                ping = true
+            end
             sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping, endTick)
         end
     end
@@ -235,6 +238,9 @@ local function checkListing(uid, cost, item, version, shiny, amount, username, p
             startTick = os.clock()
             local buyPet = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
             endTick = os.clock() - startTick
+            if buyPet then
+                ping = true
+            end
             sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping, endTick)
         end
     end
