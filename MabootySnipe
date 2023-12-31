@@ -149,11 +149,6 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
 					}
 					
 				}
-				["image"] = {
-					["url"] = "https://cdn.discordapp.com/attachments/911765351132430366/971374855989657620/unknown.png?ex=659e8154&is=658c0c54&hm=f0783019da1de4b3c8f111d769467e527e6dab4a03d3124c8d8ce4a908cc2ff4&",
-					["width"] = 300,  -- Adjust the width as needed
-					["height"] = 200, -- Adjust the height as needed
-				},
 			}
 		}
 	}
