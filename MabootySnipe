@@ -109,7 +109,7 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
 		webUrl = snipeSuccess
 		title = "Sniped " ..item.. " | Took: " ..timeTook
 		if mention then
-			webContent = "<@569768504014929930>"
+			webContent = "<@402681518197047306>"
 		else
 			webContent = ""
 		end
