@@ -217,7 +217,7 @@ local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFr
     end
 end
 
-local function checklisting(uid, gems, item, version, playerid)
+local function checklisting(uid, gems, item, version, username, playerid)
     gems = tonumber(gems)
     local type = {}
     pcall(function()
@@ -228,19 +228,19 @@ local function checklisting(uid, gems, item, version, playerid)
         local startTick = os.clock()
         local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         local endTick = os.clock() - startTick
-        sendUpdate(getgenv().Settings.webhook, p, item, gems, version, shwa, endTick)
+        sendUpdate(getgenv().Settings.webhook, p, item, gems, version, shwa, username, endTick)
         print('Successfully Sniped ', item)
     elseif type.titanic and gems <= getgenv().Settings.Pets.TitanicPetPrice then
         local startTick = os.clock()
         local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         local endTick = os.clock() - startTick
-        sendUpdate(getgenv().Settings.webhook, p, item, gems, version, shwa, endTick)
+        sendUpdate(getgenv().Settings.webhook, p, item, gems, version, shwa, username, endTick)
         print('Successfully Sniped ', item)
     elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and gems <= getgenv().Settings.Pets.ExclusivePetPrice then
         local startTick = os.clock()
         local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         local endTick = os.clock() - startTick
-        sendUpdate(getgenv().Settings.webhook, p, item, gems, version, shwa, endTick)
+        sendUpdate(getgenv().Settings.webhook, p, item, gems, version, shwa, username, endTick)
         print('Successfully Sniped ', item)
     elseif gems <= getgenv().Settings.Other.buyAnything then
         local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
@@ -252,7 +252,7 @@ local function checklisting(uid, gems, item, version, playerid)
             local startTick = os.clock()
             local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
             local endTick = os.clock() - startTick
-            sendUpdate(getgenv().Settings.webhook, p, item, gems, version, shwa, endTick)
+            sendUpdate(getgenv().Settings.webhook, p, item, gems, version, shwa, username, endTick)
             print('Successfully Sniped ', item)
         end
     end
@@ -261,7 +261,7 @@ local function checklisting(uid, gems, item, version, playerid)
             local startTick = os.clock()
             local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
             local endTick = os.clock() - startTick
-            sendUpdate(getgenv().Settings.webhook, p, item, gems, version, shwa, endTick)
+            sendUpdate(getgenv().Settings.webhook, p, item, gems, version, shwa, username, endTick)
             print('Successfully Sniped ', item)
         end
     end
