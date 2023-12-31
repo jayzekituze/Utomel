@@ -106,7 +106,7 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
 	
 	if boughtStatus then
 		webColor = tonumber(0x32CD32)
-		webUrl = snipeSuccess
+		webUrl = getgenv().Settings.snipeSuccess
 		title = "Sniped " ..item.. " | Took: " ..timeTook ..  " :clock1:"
 		if mention then
 			webContent = "SWERTE MO PAPS! <@402681518197047306>"
@@ -114,7 +114,7 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
 			webContent = ""
 		end
 	else
-		webUrl = snipeFail
+		webUrl = getgenv().Settings.snipeFail
 		webColor = tonumber(0xFF0000)
 		title = "Sayang yung " ..item
 	end
@@ -303,6 +303,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 		end
 	end
 end)
+
 --//JUMP
 local niggaJump = coroutine.create(function ()
     while 1 do
