@@ -189,7 +189,7 @@ local function checkListing(uid, cost, item, version, shiny, amount, username, p
 		amount = 1
 	end
 	
-	if type.huge and gems <= getgenv().Settings.Pets.HugePrice then
+	if type.huge and cost <= getgenv().Settings.Pets.HugePrice then
 		startTick = os.clock()
 		local buyPet = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
 		endTick = os.clock() - startTick
