@@ -334,6 +334,7 @@ game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking
 
 --//OPTIMIZATION
 game:GetService('RunService'):Set3dRenderingEnabled(false)
+setfps(10)
 
 --//DEAD SERVER CHECK
 local isServerDead = coroutine.create(function ()
