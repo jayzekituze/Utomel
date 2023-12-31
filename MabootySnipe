@@ -19,7 +19,10 @@ local thingsTosnipe = {
     ["Shiny Hunter"] = getgenv().Settings.Books.ShinyHunterPrice,
     ["Huge Hunter"] = getgenv().Settings.Books.HugeHunterPrice,
     ["Titanic Christmas Present"] = getgenv().Settings.Present.TitanicPresentPrice,
-    ["X-Large Christmas Present"] = getgenv().Settings.Present.XLargeChristmasPrice
+    ["X-Large Christmas Present"] = getgenv().Settings.Present.XLargeChristmasPrice,
+    ["Diamond Chest Mimic"] = getgenv().Settings.Books.DiamondChestMimic,
+    ["Massive Comet"] = getgenv().Settings.Books.MassiveComet,
+    ["Party Time"] = getgenv().Settings.Books.PartyTime
 }
 
 local keywords = {
