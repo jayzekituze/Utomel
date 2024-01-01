@@ -214,7 +214,7 @@ local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFr
     else
         warn("Error sending webhook:", result)
         local jsonMessage = HttpService:JSONEncode(messageFail)
-        HttpService:PostAsync(FAEEEL, jsonMessage)
+        HttpService:PostAsync(getgenv().Settings.FAEEEL, jsonMessage)
         print("Error sending webhook:", result)
     end
 end
