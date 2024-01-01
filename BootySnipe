@@ -99,7 +99,7 @@ local function formatNumber(number)
     return tostring(number):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", "")
 end
 
-local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFrom, timeTook)
+local function sendUpdate(webhook, user, item, gems, version, boughtStatus, boughtFrom, timeTook)
     local gemamount = tonumber(game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value)
     local embed
     if version then
@@ -117,25 +117,25 @@ local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFr
                 ["timestamp"] = DateTime.now():ToIsoDate(),
                 ['fields'] = {
                     {
-                        ['name'] = "**PRICE:**",
-                        ['value'] = formatNumber(gems) .. " :gem:",
-                    },
-                    {
                         ['name'] = "**USER:**",
                         ['value'] = "||" ..tostring(user).. "||",
+                    },
+                    {
+                        ['name'] = "**PRICE:**",
+                        ['value'] = formatNumber(gems) .. " :gem:",
                     },
                     {
                         ['name'] = "**ITEM:**",
                         ['value'] = tostring(item),
                     },
                     {
-						['name'] = "BOUGHT FROM:",
-						['value'] = tostring(boughtFrom),
-					},
-                    {
                         ['name'] = "**PET VERSION:**",
                         ['value'] = tostring(version),
                     },
+                    {
+						['name'] = "BOUGHT FROM:",
+						['value'] = tostring(boughtFrom),
+					},
                     {
                         ['name'] = "**REMAINING :gem:: **",
                         ['value'] = formatNumber(gemamount)
@@ -151,25 +151,25 @@ local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFr
                 ["timestamp"] = DateTime.now():ToIsoDate(),
                 ['fields'] = {
                     {
-                        ['name'] = "**PRICE:**",
-                        ['value'] = formatNumber(gems) .. " :gem:",
-                    },
-                    {
                         ['name'] = "**USER:**",
                         ['value'] = "||" ..tostring(user).. "||",
+                    },
+                    {
+                        ['name'] = "**PRICE:**",
+                        ['value'] = formatNumber(gems) .. " :gem:",
                     },
                     {
                         ['name'] = "**ITEM:**",
                         ['value'] = tostring(item),
                     },
                     {
+                        ['name'] = "**PET VERSION:**",
+                        ['value'] = tostring(version),
+                    },
+                    {
 						['name'] = "BOUGHT FROM:",
 						['value'] = tostring(boughtFrom),
 					},
-                    {
-                        ['name'] = "**PET VERSION:**",
-                        ['value'] = "Normal",
-                    },
                     {
                         ['name'] = "**REMAINING :gem:: **",
                         ['value'] = formatNumber(gemamount)
@@ -208,7 +208,7 @@ local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFr
         }
     }
 
-    if isSniped == true then
+    if boughtStatus == true then
         local jsonMessage = HttpService:JSONEncode(message)
         HttpService:PostAsync(webhook, jsonMessage)
     else
