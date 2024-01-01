@@ -210,11 +210,11 @@ local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFr
 
     if isSniped == true then
         local jsonMessage = HttpService:JSONEncode(message)
-        HttpService:PostAsync(getgenv().Settings.webhook.success, jsonMessage)
+        HttpService:PostAsync(getgenv().Settings.SuckSis, jsonMessage)
     else
         warn("Error sending webhook:", result)
         local jsonMessage = HttpService:JSONEncode(messageFail)
-        HttpService:PostAsync(getgenv().Settings.webhook.fail, jsonMessage)
+        HttpService:PostAsync(getgenv().Settings.FAEEEL, jsonMessage)
         print("Error sending webhook:", result)
     end
 end
