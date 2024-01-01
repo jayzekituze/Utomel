@@ -102,6 +102,7 @@ end
 local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFrom, timeTook)
     local gemamount = tonumber(game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value)
     local embed
+    isSniped = false
     if version then
         if version == 1 then
             version = "Golden"
@@ -208,7 +209,7 @@ local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFr
         }
     }
 
-    if isSniped == true then
+    if isSniped then
         local jsonMessage = HttpService:JSONEncode(message)
         HttpService:PostAsync(webhook, jsonMessage)
     else
