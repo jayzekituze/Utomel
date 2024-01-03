@@ -249,7 +249,9 @@ local function checklisting(uid, gems, item, version, username, playerid)
         print('Successfully Sniped ', item)
     elseif gems <= getgenv().Settings.Other.buyAnything then
         task.wait(3)
+        local startTick = os.clock()
         local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+        local endTick = os.clock() - startTick
         sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, shwa, username, endTick)
         print('Successfully Sniped ', item)
     end
