@@ -220,7 +220,7 @@ local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFr
 end
 
 local function checklisting(uid, gems, item, version, username, playerid)
-    local buyPet, errorMessage
+    local startTick, buyPet, errorMessage
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local Library = require(ReplicatedStorage:WaitForChild('Library'))
     gems = tonumber(gems)
@@ -231,8 +231,7 @@ local function checklisting(uid, gems, item, version, username, playerid)
     
     if type.huge and gems <= getgenv().Settings.Pets.HugePrice then
         repeat
-            local startTick = os.clock()
-            buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
             local endTick = os.clock() - startTick
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
@@ -241,55 +240,55 @@ local function checklisting(uid, gems, item, version, username, playerid)
 		end
     elseif type.titanic and gems <= getgenv().Settings.Pets.TitanicPetPrice then
         repeat
-            local startTick = os.clock()
-            buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
             local endTick = os.clock() - startTick
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
         if buyPet then
             sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
+		end
     elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and gems <= getgenv().Settings.Pets.ExclusivePetPrice then
         repeat
-            local startTick = os.clock()
-            buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
             local endTick = os.clock() - startTick
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
         if buyPet then
             sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
+		end
     elseif gems <= getgenv().Settings.Other.buyAnything then
         repeat
-            local startTick = os.clock()
-            buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
             local endTick = os.clock() - startTick
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
         if buyPet then
             sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
+		end
     end
 
     for i, v in pairs(keywords) do
         if string.find(item, i) and gems <= v then
             repeat
-                local startTick = os.clock()
                 buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
                 local endTick = os.clock() - startTick
                 wait(0.2)
             until errorMessage ~= "You cannot buy that yet!"
             if buyPet then
                 sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
+            end
         end
     end
     for i, v in pairs(thingsTosnipe) do
         if item == i and gems <= v then
             repeat
-                local startTick = os.clock()
                 buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
                 local endTick = os.clock() - startTick
                 wait(0.2)
             until errorMessage ~= "You cannot buy that yet!"
             if buyPet then
                 sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
+            end
         end
     end
 end
