@@ -220,7 +220,7 @@ local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFr
 end
 
 local function checklisting(uid, gems, item, version, username, playerid)
-    local startTick, buyPet, errorMessage
+    local buyPet, errorMessage
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local Library = require(ReplicatedStorage:WaitForChild('Library'))
     gems = tonumber(gems)
