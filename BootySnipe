@@ -227,28 +227,24 @@ local function checklisting(uid, gems, item, version, username, playerid)
     end)
     
     if type.huge and gems <= getgenv().Settings.Pets.HugePrice then
-        wait(3)
         local startTick = os.clock()
         local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         local endTick = os.clock() - startTick
         sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, shwa, username, endTick)
         print('Successfully Sniped ', item)
     elseif type.titanic and gems <= getgenv().Settings.Pets.TitanicPetPrice then
-        wait(3)
         local startTick = os.clock()
         local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         local endTick = os.clock() - startTick
         sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, shwa, username, endTick)
         print('Successfully Sniped ', item)
     elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and gems <= getgenv().Settings.Pets.ExclusivePetPrice then
-        wait(3)
         local startTick = os.clock()
         local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         local endTick = os.clock() - startTick
         sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, shwa, username, endTick)
         print('Successfully Sniped ', item)
     elseif gems <= getgenv().Settings.Other.buyAnything then
-        wait(3)
         local startTick = os.clock()
         local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         local endTick = os.clock() - startTick
@@ -258,7 +254,6 @@ local function checklisting(uid, gems, item, version, username, playerid)
 
     for i, v in pairs(keywords) do
         if string.find(item, i) and gems <= v then
-            wait(3)
             local startTick = os.clock()
             local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
             local endTick = os.clock() - startTick
@@ -268,7 +263,6 @@ local function checklisting(uid, gems, item, version, username, playerid)
     end
     for i, v in pairs(thingsTosnipe) do
         if item == i and gems <= v then
-            wait(3)
             local startTick = os.clock()
             local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
             local endTick = os.clock() - startTick
