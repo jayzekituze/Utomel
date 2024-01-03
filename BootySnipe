@@ -231,38 +231,42 @@ local function checklisting(uid, gems, item, version, username, playerid)
     
     if type.huge and gems <= getgenv().Settings.Pets.HugePrice then
         repeat
+            startTick = os.clock()
 			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-            local endTick = os.clock() - startTick
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
         if buyPet then
+            local endTick = os.clock() - startTick
             sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
 		end
     elseif type.titanic and gems <= getgenv().Settings.Pets.TitanicPetPrice then
         repeat
+            startTick = os.clock()
 			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-            local endTick = os.clock() - startTick
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
         if buyPet then
+            local endTick = os.clock() - startTick
             sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
 		end
     elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and gems <= getgenv().Settings.Pets.ExclusivePetPrice then
         repeat
+            startTick = os.clock()
 			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-            local endTick = os.clock() - startTick
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
         if buyPet then
+            local endTick = os.clock() - startTick
             sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
 		end
     elseif gems <= getgenv().Settings.Other.buyAnything then
         repeat
+            startTick = os.clock()
 			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-            local endTick = os.clock() - startTick
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
         if buyPet then
+            local endTick = os.clock() - startTick
             sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
 		end
     end
@@ -270,11 +274,12 @@ local function checklisting(uid, gems, item, version, username, playerid)
     for i, v in pairs(keywords) do
         if string.find(item, i) and gems <= v then
             repeat
+                startTick = os.clock()
                 buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-                local endTick = os.clock() - startTick
                 wait(0.2)
             until errorMessage ~= "You cannot buy that yet!"
             if buyPet then
+                local endTick = os.clock() - startTick
                 sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
             end
         end
@@ -282,11 +287,12 @@ local function checklisting(uid, gems, item, version, username, playerid)
     for i, v in pairs(thingsTosnipe) do
         if item == i and gems <= v then
             repeat
+                startTick = os.clock()
                 buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-                local endTick = os.clock() - startTick
                 wait(0.2)
             until errorMessage ~= "You cannot buy that yet!"
             if buyPet then
+                local endTick = os.clock() - startTick
                 sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
             end
         end
