@@ -99,166 +99,176 @@ local function formatNumber(number)
     return tostring(number):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", "")
 end
 
-local osclock = os.clock()
-local Players = game:GetService("Players")
-local getPlayers = Players:GetPlayers()
-local PlayerInServer = #getPlayers
-
-local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, boughtStatus, mention)
-    local gemamount = Players.LocalPlayer.leaderstats["💎 Diamonds"].Value
-    local user = Players.LocalPlayer.Name
-    local HttpService = game:GetService("HttpService")
-    local webUrl, webContent, webColor, title, webUrl2
-
-    if boughtStatus then
-        webColor = tonumber(0x32CD32)
-        webUrl = snipeSuccess
-        webUrl2 = "https://discord.com/api/webhooks/1190960372660834325/b3Mc6kkr16Zlpo9_57ZYya6t4tLuqnfPilGqyBROWNHMYg933DprRNmUlguCQrFKk2Ww"
-        title = user.. " sniped " ..item
-        if mention then
-            webContent = "<@402681518197047306>"
+local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFrom, timeTook)
+    local gemamount = tonumber(game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value)
+    local embed
+    if version then
+        if version == 1 then
+            version = "Golden"
+        elseif version == 2 then
+            version = "Rainbow"
         else
-            webContent = ""
+            version = "Normal"
         end
-    else
-        webUrl = snipeFail
-        webUrl2 = "https://discord.com/api/webhooks/1190960682523426897/OM9rdsLFLQl_CYK0Sw4ne_5uNAWInyoqcIjGDgXe1nl7b4sjRhtlTf3yjXJvo9D5zVMe"
-        webColor = tonumber(0xFF0000)
-        title = user.. " failed to snipe " ..item
-    end
-
-    print("Attempting to send webhook...")
-    print("webUrl:", webUrl)
-    print("webUrl2:", webUrl2)
-
-    if webUrl == nil then
-        warn("Error in sendUpdate: webUrl is nil.")
-        return
-    end
-
-    local message = {
-        ['content'] = webContent,
-        ['embeds'] = {
+        embed = {
             {
-                ['title'] = title,
-                ['color'] = webColor,
-                ['timestamp'] = DateTime.now():ToIsoDate(),
+                ['title'] = "Sniped! | Took: " ..tostring(timeTook),
+                ["color"] = tonumber(0x32CD32),
+                ["timestamp"] = DateTime.now():ToIsoDate(),
                 ['fields'] = {
                     {
-                        ['name'] = "PRICE:",
-                        ['value'] = tostring(cost) .. " :gem:",
+                        ['name'] = "**USER:**",
+                        ['value'] = "||" ..tostring(user).. "||",
+                    },
+                    {
+                        ['name'] = "**PRICE:**",
+                        ['value'] = formatNumber(gems) .. " :gem:",
+                    },
+                    {
+                        ['name'] = "**ITEM:**",
+                        ['value'] = tostring(item),
+                    },
+                    {
+                        ['name'] = "**PET VERSION:**",
+                        ['value'] = tostring(version),
                     },
                     {
                         ['name'] = "BOUGHT FROM:",
                         ['value'] = tostring(boughtFrom),
                     },
                     {
-                        ['name'] = "AMOUNT:",
-                        ['value'] = tostring(amount),
+                        ['name'] = "**REMAINING :gem:: **",
+                        ['value'] = formatNumber(gemamount)
+                    }
+                }
+            }
+        }
+    else
+        embed = {
+            {
+                ['title'] = "Sniped! | Took: " ..tostring(timeTook),
+                ["color"] = tonumber(0x32CD32),
+                ["timestamp"] = DateTime.now():ToIsoDate(),
+                ['fields'] = {
+                    {
+                        ['name'] = "**USER:**",
+                        ['value'] = "||" ..tostring(user).. "||",
                     },
                     {
-                        ['name'] = "REMAINING GEMS:",
-                        ['value'] = tostring(gemamount),
+                        ['name'] = "**PRICE:**",
+                        ['value'] = formatNumber(gems) .. " :gem:",
                     },
                     {
-                        ['name'] = "PETID:",
-                        ['value'] = tostring(uid),
+                        ['name'] = "**ITEM:**",
+                        ['value'] = tostring(item),
+                    },
+                    {
+                        ['name'] = "**PET VERSION:**",
+                        ['value'] = "NORMAL",
+                    },
+                    {
+                        ['name'] = "BOUGHT FROM:",
+                        ['value'] = tostring(boughtFrom),
+                    },
+                    {
+                        ['name'] = "**REMAINING :gem:: **",
+                        ['value'] = formatNumber(gemamount)
+                    }
+                }
+            }
+        }
+    end
+    local message = {
+        ['content'] = "",
+        ['embeds'] = embed
+    }
+
+    local messageFail = {
+        ['content'] = "",
+        ['embeds'] = {
+            {
+                ['title'] = "Failed to Snipe!",
+                ["color"] = tonumber(0xFF0000),
+                ["timestamp"] = DateTime.now():ToIsoDate(),
+                ['fields'] = {
+                    {
+                        ['name'] = "FROM:",
+                        ['value'] = tostring(boughtFrom),
+                    },
+                    {
+                        ['name'] = "**ITEM:**",
+                        ['value'] = tostring(item)
+                    },
+                    {
+                        ['name'] = "**PRICE:**",
+                        ['value'] = formatNumber(gems)
                     }
                 }
             }
         }
     }
 
-    local jsonMessage = HttpService:JSONEncode(message)
-
-    local response = request({
-        Url = webUrl,
-        Method = "POST",
-        Headers = {
-            ["Content-Type"] = "application/json"
-        },
-        Body = jsonMessage
-    })
-
-    print("Webhook response:", response)
-
-    if response == nil or response.Success == false then
-        warn("Error in sendUpdate: Webhook request failed.")
-        print("Request details:", response)
-    end
-
-    wait(0.1)
-
-    response = request({
-        Url = webUrl2,
-        Method = "POST",
-        Headers = {
-            ["Content-Type"] = "application/json"
-        },
-        Body = jsonMessage
-    })
-
-    print("Webhook2 response:", response)
-
-    if response == nil or response.Success == false then
-        warn("Error in sendUpdate: Webhook2 request failed.")
-        print("Request details:", response)
+    if isSniped == true then
+        local jsonMessage = HttpService:JSONEncode(message)
+        HttpService:PostAsync(webhook, jsonMessage)
+    else
+        warn("Error sending webhook:", result)
+        local jsonMessage = HttpService:JSONEncode(messageFail)
+        HttpService:PostAsync(getgenv().Settings.FAEEEL, jsonMessage)
+        print("Error sending webhook:", result)
     end
 end
 
-local function checkListing(uid, cost, item, version, shiny, amount, username, playerid)
-    --wait(3.02)
-    local startTick, buyPet, errorMessage
-    local ReplicatedStorage = game:GetService("ReplicatedStorage")
-    local Library = require(ReplicatedStorage:WaitForChild('Library'))
-    cost = tonumber(cost)
-    local ping = false
+local function checklisting(uid, gems, item, version, username, playerid)
+    gems = tonumber(gems)
     local type = {}
     pcall(function()
-        type = Library.Directory.Pets[item]
+      type = Library.Directory.Pets[item]
     end)
     
-    if amount == nil then
-        amount = 1
+    if type.huge and gems <= getgenv().Settings.Pets.HugePrice then
+        local startTick = os.clock()
+        local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+        local endTick = os.clock() - startTick
+        sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, shwa, username, endTick)
+        print('Successfully Sniped ', item)
+    elseif type.titanic and gems <= getgenv().Settings.Pets.TitanicPetPrice then
+        local startTick = os.clock()
+        local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+        local endTick = os.clock() - startTick
+        sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, shwa, username, endTick)
+        print('Successfully Sniped ', item)
+    elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and gems <= getgenv().Settings.Pets.ExclusivePetPrice then
+        local startTick = os.clock()
+        local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+        local endTick = os.clock() - startTick
+        sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, shwa, username, endTick)
+        print('Successfully Sniped ', item)
+    elseif gems <= getgenv().Settings.Other.buyAnything then
+        local startTick = os.clock()
+        local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+        local endTick = os.clock() - startTick
+        sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, shwa, username, endTick)
+        print('Successfully Sniped ', item)
     end
-    
-    if type.huge and cost <= 1000000 then
-        repeat
-            buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-            wait(0.2)
-        until errorMessage ~= "You cannot buy that yet!"
-        if buyPet then
-            sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
+
+    for i, v in pairs(keywords) do
+        if string.find(item, i) and gems <= v then
+            local startTick = os.clock()
+            local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+            local endTick = os.clock() - startTick
+            sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, shwa, username, endTick)
+            print('Successfully Sniped ', item)
         end
-    elseif type.exclusiveLevel and not string.find(item, 'Banana') and not string.find(item, 'Coin') and cost <= 10000 then
-        repeat
-            buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-            wait(0.2)
-        until errorMessage ~= "You cannot buy that yet!"
-        if buyPet then
-            sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
+    end
+    for i, v in pairs(thingsTosnipe) do
+        if item == i and gems <= v then
+            local startTick = os.clock()
+            local shwa = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+            local endTick = os.clock() - startTick
+            sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, shwa, username, endTick)
+            print('Successfully Sniped ', item)
         end
-    elseif type.titanic and cost <= 1000000 then
-        repeat
-            buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-            wait(0.2)
-        until errorMessage ~= "You cannot buy that yet!"
-        if buyPet then
-            sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
-        end
-    elseif string.find(item, 'Exclusive') and cost <= 100000 then
-        repeat
-            buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-            wait(0.2)
-        until errorMessage ~= "You cannot buy that yet!"
-        if buyPet then
-            sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
-        end
-    elseif cost <= 23 then
-        repeat
-            buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-            wait(0.2)
-        until errorMessage ~= "You cannot buy that yet!"
     end
 end
 
@@ -297,7 +307,7 @@ local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChi
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
     if message ~= nil then
         if type(message) == "table" then
-            local playerID = message['PlayerID']
+			local playerID = message['PlayerID']
             local listing = message["Listings"]
             for key, value in pairs(listing) do
                 if type(value) == "table" then
@@ -309,9 +319,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
                         if data then
                             local item = data["id"]
                             local version = data["pt"]
-                            local shiny = data["sh"]
-                            local amount = data["_am"]
-                            checkListing(uid, gems, item, version, shiny, amount, username, playerID)
+                            checklisting(uid, gems, item, version, username, playerID)
                         end
                     end
                 end
@@ -350,26 +358,26 @@ lighting.FogStart = 0
 lighting.FogEnd = 0
 lighting.Brightness = 0
 for i, v in pairs(game:GetDescendants()) do
-    if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-        v.Material = "Plastic"
-        v.Reflectance = 0
-    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-        v.Lifetime = NumberRange.new(0)
-    elseif v:IsA("Explosion") then
-        v.BlastPressure = 1
-        v.BlastRadius = 1
-    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
-        v.Enabled = false
-    elseif v:IsA("MeshPart") then
-        v.Material = "Plastic"
-        v.Reflectance = 0
-    end
+	if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+		v.Material = "Plastic"
+		v.Reflectance = 0
+	elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+		v.Lifetime = NumberRange.new(0)
+	elseif v:IsA("Explosion") then
+		v.BlastPressure = 1
+		v.BlastRadius = 1
+	elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+		v.Enabled = false
+	elseif v:IsA("MeshPart") then
+		v.Material = "Plastic"
+		v.Reflectance = 0
+	end
 end
 
 for i, e in pairs(lighting:GetChildren()) do
-    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
-        e.Enabled = false
-    end
+	if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+		e.Enabled = false
+	end
 end
 game:GetService('RunService'):Set3dRenderingEnabled(false)
 
