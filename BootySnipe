@@ -105,22 +105,19 @@ local getPlayers = Players:GetPlayers()
 local PlayerInServer = #getPlayers
 
 local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, boughtStatus, mention)
-    local gemamount = Players.LocalPlayer.leaderstats["💎 Diamonds"].Value
+	local gemamount = Players.LocalPlayer.leaderstats["💎 Diamonds"].Value
     local user = Players.LocalPlayer.Name
 	local HttpService = game:GetService("HttpService")
 	local webUrl, webContent, webColor, title, webUrl2
-
-    if boughtStatus then
+	
+	if boughtStatus then
 		webColor = tonumber(0x32CD32)
 		webUrl = snipeSuccess
 		webUrl2 = getgenv().Settings.SuckSis
 		title = user.. " sniped " ..item
-        boothContent = "BOUGHT FROM:"
 		if mention then
-            print("Ping is on")
 			webContent = "<@402681518197047306>"
 		else
-            print("Ping is off")
 			webContent = ""
 		end
 	else
@@ -128,9 +125,8 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
 		webUrl2 = getgenv().Settings.FAEEEL
 		webColor = tonumber(0xFF0000)
 		title = user.. " failed to snipe " ..item
-        boothContent = "Almost bought from:"
 	end
-
+	
 	local message = {
 		['content'] = webContent,
 		['embeds'] = {
@@ -144,7 +140,7 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
 						['value'] = tostring(cost) .. " :gem:",
 					},
 					{
-						['name'] = boothContent,
+						['name'] = "BOUGHT FROM:",
 						['value'] = tostring(boughtFrom),
 					},
 					{
@@ -182,7 +178,6 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
 	end
 end
 
-
 local function checkListing(uid, cost, item, version, shiny, amount, username, playerid)
 	--wait(3.02)
 	local startTick, buyPet, errorMessage
@@ -198,63 +193,45 @@ local function checkListing(uid, cost, item, version, shiny, amount, username, p
 	if amount == nil then
 		amount = 1
 	end
-
-    if type.huge and gems <= getgenv().Settings.Pets.HugePrice then
-        repeat
+	
+	if type.huge and cost <= 1000000 then
+		repeat
 			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
 		if buyPet then
 			sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
 		end
-    elseif type.titanic and gems <= getgenv().Settings.Pets.TitanicPetPrice then
-        repeat
+	elseif type.exclusiveLevel and not string.find(item, 'Banana') and not string.find(item, 'Coin') and cost <= 10000 then
+		repeat
 			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
 		if buyPet then
 			sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
 		end
-    elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and gems <= getgenv().Settings.Pets.ExclusivePetPrice then
-        repeat
+	elseif type.titanic and cost <= 1000000 then
+		repeat
 			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
 		if buyPet then
 			sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
 		end
-    elseif gems <= getgenv().Settings.Other.buyAnything then
-        repeat
+	elseif string.find(item, 'Exclusive') and cost <= 100000 then
+		repeat
 			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
 		if buyPet then
 			sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
 		end
-    end
-
-    for i, v in pairs(keywords) do
-        if string.find(item, i) and gems <= v then
-            repeat
-                buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-                wait(0.2)
-            until errorMessage ~= "You cannot buy that yet!"
-            if buyPet then
-                sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
-            end
-        end
-    end
-    for i, v in pairs(thingsTosnipe) do
-        if item == i and gems <= v then
-            repeat
-                buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-                wait(0.2)
-            until errorMessage ~= "You cannot buy that yet!"
-            if buyPet then
-                sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
-            endd
-        end
-    end
+	elseif cost <= 23 then
+		repeat
+			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+			wait(0.2)
+		until errorMessage ~= "You cannot buy that yet!"
+	end
 end
 
 local function create_platform(x, y, z)
