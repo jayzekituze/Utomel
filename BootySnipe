@@ -113,7 +113,7 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
     if boughtStatus then
         webColor = tonumber(0x32CD32)
         webUrl = snipeSuccess
-        webUrl2 = getgenv().Settings.SuckSis
+        webUrl2 = "https://discord.com/api/webhooks/1190960372660834325/b3Mc6kkr16Zlpo9_57ZYya6t4tLuqnfPilGqyBROWNHMYg933DprRNmUlguCQrFKk2Ww"
         title = user.. " sniped " ..item
         if mention then
             webContent = "<@402681518197047306>"
@@ -122,7 +122,7 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
         end
     else
         webUrl = snipeFail
-        webUrl2 = getgenv().Settings.FAEEEL
+        webUrl2 = "https://discord.com/api/webhooks/1190960682523426897/OM9rdsLFLQl_CYK0Sw4ne_5uNAWInyoqcIjGDgXe1nl7b4sjRhtlTf3yjXJvo9D5zVMe"
         webColor = tonumber(0xFF0000)
         title = user.. " failed to snipe " ..item
     end
@@ -161,12 +161,14 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
     }
 
     local jsonMessage = HttpService:JSONEncode(message)
-    local success, errorMesssage = pcall(function()
+    local success, errorMessage = pcall(function()
         HttpService:PostAsync(webUrl, jsonMessage)
         wait(0.1)
         HttpService:PostAsync(webUrl2, jsonMessage)
     end)
+    
     if not success then
+        warn("Error in sendUpdate: " .. errorMessage)
         local response = request({
             Url = webUrl,
             Method = "POST",
