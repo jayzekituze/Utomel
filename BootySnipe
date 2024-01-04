@@ -161,22 +161,43 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
     }
 
     local jsonMessage = HttpService:JSONEncode(message)
-    local success, errorMessage = pcall(function()
-        HttpService:PostAsync(webUrl, jsonMessage)
-        wait(0.1)
-        HttpService:PostAsync(webUrl2, jsonMessage)
-    end)
-    
-    if not success then
-        warn("Error in sendUpdate: " .. errorMessage)
-        local response = request({
-            Url = webUrl,
-            Method = "POST",
-            Headers = {
-                ["Content-Type"] = "application/json"
-            },
-            Body = jsonMessage
-        })
+
+    print("Attempting to send webhook...")
+    print("webUrl:", webUrl)
+    print("webUrl2:", webUrl2)
+
+    local response = request({
+        Url = webUrl,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = jsonMessage
+    })
+
+    print("Webhook response:", response)
+
+    if response == nil or response.Success == false then
+        warn("Error in sendUpdate: Webhook request failed.")
+        print("Request details:", response)
+    end
+
+    wait(0.1)
+
+    response = request({
+        Url = webUrl2,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = jsonMessage
+    })
+
+    print("Webhook2 response:", response)
+
+    if response == nil or response.Success == false then
+        warn("Error in sendUpdate: Webhook2 request failed.")
+        print("Request details:", response)
     end
 end
 
