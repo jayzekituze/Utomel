@@ -109,7 +109,7 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
     local user = Players.LocalPlayer.Name
     local HttpService = game:GetService("HttpService")
     local webUrl, webContent, webColor, title, webUrl2
-    
+
     if boughtStatus then
         webColor = tonumber(0x32CD32)
         webUrl = snipeSuccess
@@ -126,7 +126,16 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
         webColor = tonumber(0xFF0000)
         title = user.. " failed to snipe " ..item
     end
-    
+
+    print("Attempting to send webhook...")
+    print("webUrl:", webUrl)
+    print("webUrl2:", webUrl2)
+
+    if webUrl == nil then
+        warn("Error in sendUpdate: webUrl is nil.")
+        return
+    end
+
     local message = {
         ['content'] = webContent,
         ['embeds'] = {
@@ -161,10 +170,6 @@ local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, b
     }
 
     local jsonMessage = HttpService:JSONEncode(message)
-
-    print("Attempting to send webhook...")
-    print("webUrl:", webUrl)
-    print("webUrl2:", webUrl2)
 
     local response = request({
         Url = webUrl,
