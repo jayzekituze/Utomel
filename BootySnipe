@@ -99,202 +99,160 @@ local function formatNumber(number)
     return tostring(number):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", "")
 end
 
-local function sendUpdate(webhook, user, item, gems, version, isSniped, boughtFrom, timeTook)
-    local gemamount = tonumber(game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value)
-    local embed
-    if version then
-        if version == 1 then
-            version = "Golden"
-        elseif version == 2 then
-            version = "Rainbow"
-        else
-            version = "Normal"
-        end
-        embed = {
-            {
-                ['title'] = "Sniped! | Took: " ..tostring(timeTook),
-                ["color"] = tonumber(0x32CD32),
-                ["timestamp"] = DateTime.now():ToIsoDate(),
-                ['fields'] = {
-                    {
-                        ['name'] = "**USER:**",
-                        ['value'] = "||" ..tostring(user).. "||",
-                    },
-                    {
-                        ['name'] = "**PRICE:**",
-                        ['value'] = formatNumber(gems) .. " :gem:",
-                    },
-                    {
-                        ['name'] = "**ITEM:**",
-                        ['value'] = tostring(item),
-                    },
-                    {
-                        ['name'] = "**PET VERSION:**",
-                        ['value'] = tostring(version),
-                    },
-                    {
-                        ['name'] = "BOUGHT FROM:",
-                        ['value'] = tostring(boughtFrom),
-                    },
-                    {
-                        ['name'] = "**REMAINING :gem:: **",
-                        ['value'] = formatNumber(gemamount)
-                    }
-                }
-            }
-        }
-    else
-        embed = {
-            {
-                ['title'] = "Sniped! | Took: " ..tostring(timeTook),
-                ["color"] = tonumber(0x32CD32),
-                ["timestamp"] = DateTime.now():ToIsoDate(),
-                ['fields'] = {
-                    {
-                        ['name'] = "**USER:**",
-                        ['value'] = "||" ..tostring(user).. "||",
-                    },
-                    {
-                        ['name'] = "**PRICE:**",
-                        ['value'] = formatNumber(gems) .. " :gem:",
-                    },
-                    {
-                        ['name'] = "**ITEM:**",
-                        ['value'] = tostring(item),
-                    },
-                    {
-                        ['name'] = "**PET VERSION:**",
-                        ['value'] = "NORMAL",
-                    },
-                    {
-                        ['name'] = "BOUGHT FROM:",
-                        ['value'] = tostring(boughtFrom),
-                    },
-                    {
-                        ['name'] = "**REMAINING :gem:: **",
-                        ['value'] = formatNumber(gemamount)
-                    }
-                }
-            }
-        }
-    end
-    local message = {
-        ['content'] = "",
-        ['embeds'] = embed
-    }
+local osclock = os.clock()
+local Players = game:GetService("Players")
+local getPlayers = Players:GetPlayers()
+local PlayerInServer = #getPlayers
 
-    local messageFail = {
-        ['content'] = "",
-        ['embeds'] = {
-            {
-                ['title'] = "Failed to Snipe!",
-                ["color"] = tonumber(0xFF0000),
-                ["timestamp"] = DateTime.now():ToIsoDate(),
-                ['fields'] = {
-                    {
-                        ['name'] = "FROM:",
-                        ['value'] = tostring(boughtFrom),
-                    },
-                    {
-                        ['name'] = "**ITEM:**",
-                        ['value'] = tostring(item)
-                    },
-                    {
-                        ['name'] = "**PRICE:**",
-                        ['value'] = formatNumber(gems)
-                    }
-                }
-            }
-        }
-    }
+local function sendUpdate(uid, cost, item, version, shiny, amount, boughtFrom, boughtStatus, mention)
+    local gemamount = Players.LocalPlayer.leaderstats["💎 Diamonds"].Value
+    local user = Players.LocalPlayer.Name
+	local HttpService = game:GetService("HttpService")
+	local webUrl, webContent, webColor, title, webUrl2
 
-    if isSniped == true then
-        local jsonMessage = HttpService:JSONEncode(message)
-        HttpService:PostAsync(webhook, jsonMessage)
-    else
-        warn("Error sending webhook:", result)
-        local jsonMessage = HttpService:JSONEncode(messageFail)
-        HttpService:PostAsync(getgenv().Settings.FAEEEL, jsonMessage)
-        print("Error sending webhook:", result)
-    end
+    if boughtStatus then
+		webColor = tonumber(0x32CD32)
+		webUrl = snipeSuccess
+		webUrl2 = getgenv().Settings.SuckSis
+		title = user.. " sniped " ..item
+        boothContent = "BOUGHT FROM:"
+		if mention then
+            print("Ping is on")
+			webContent = "<@402681518197047306>"
+		else
+            print("Ping is off")
+			webContent = ""
+		end
+	else
+		webUrl = snipeFail
+		webUrl2 = getgenv().Settings.FAEEEL
+		webColor = tonumber(0xFF0000)
+		title = user.. " failed to snipe " ..item
+        boothContent = "Almost bought from:"
+	end
+
+	local message = {
+		['content'] = webContent,
+		['embeds'] = {
+			{
+				['title'] = title,
+				['color'] = webColor,
+				['timestamp'] = DateTime.now():ToIsoDate(),
+				['fields'] = {
+					{
+						['name'] = "PRICE:",
+						['value'] = tostring(cost) .. " :gem:",
+					},
+					{
+						['name'] = boothContent,
+						['value'] = tostring(boughtFrom),
+					},
+					{
+						['name'] = "AMOUNT:",
+						['value'] = tostring(amount),
+					},
+					{
+						['name'] = "REMAINING GEMS:",
+						['value'] = tostring(gemamount),
+					},
+					{
+						['name'] = "PETID:",
+						['value'] = tostring(uid),
+					}
+				}
+			}
+		}
+	}
+
+	local jsonMessage = HttpService:JSONEncode(message)
+	local success, errorMesssage = pcall(function()
+		HttpService:PostAsync(webUrl, jsonMessage)
+		wait(0.1)
+		HttpService:PostAsync(webUrl2, jsonMessage)
+	end)
+	if not success then
+		local response = request({
+			Url = webUrl,
+			Method = "POST",
+			Headers = {
+				["Content-Type"] = "application/json"
+			},
+			Body = jsonMessage
+		})
+	end
 end
 
-local function checklisting(uid, gems, item, version, username, playerid)
-    local startTick, buyPet, errorMessage
+
+local function checkListing(uid, cost, item, version, shiny, amount, username, playerid)
+	--wait(3.02)
+	local startTick, buyPet, errorMessage
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local Library = require(ReplicatedStorage:WaitForChild('Library'))
-    gems = tonumber(gems)
-    local type = {}
-    pcall(function()
-      type = Library.Directory.Pets[item]
-    end)
-    
+	cost = tonumber(cost)
+	local ping = false
+	local type = {}
+	pcall(function()
+		type = Library.Directory.Pets[item]
+	end)
+	
+	if amount == nil then
+		amount = 1
+	end
+
     if type.huge and gems <= getgenv().Settings.Pets.HugePrice then
         repeat
-            startTick = os.clock()
 			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
-        if buyPet then
-            local endTick = os.clock() - startTick
-            sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
+		if buyPet then
+			sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
 		end
     elseif type.titanic and gems <= getgenv().Settings.Pets.TitanicPetPrice then
         repeat
-            startTick = os.clock()
 			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
-        if buyPet then
-            local endTick = os.clock() - startTick
-            sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
+		if buyPet then
+			sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
 		end
     elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and gems <= getgenv().Settings.Pets.ExclusivePetPrice then
         repeat
-            startTick = os.clock()
 			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
-        if buyPet then
-            local endTick = os.clock() - startTick
-            sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
+		if buyPet then
+			sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
 		end
     elseif gems <= getgenv().Settings.Other.buyAnything then
         repeat
-            startTick = os.clock()
 			buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
 			wait(0.2)
 		until errorMessage ~= "You cannot buy that yet!"
-        if buyPet then
-            local endTick = os.clock() - startTick
-            sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
+		if buyPet then
+			sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
 		end
     end
 
     for i, v in pairs(keywords) do
         if string.find(item, i) and gems <= v then
             repeat
-                startTick = os.clock()
                 buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
                 wait(0.2)
             until errorMessage ~= "You cannot buy that yet!"
             if buyPet then
-                local endTick = os.clock() - startTick
-                sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
+                sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
             end
         end
     end
     for i, v in pairs(thingsTosnipe) do
         if item == i and gems <= v then
             repeat
-                startTick = os.clock()
                 buyPet, errorMessage = ReplicatedStorage.Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
                 wait(0.2)
             until errorMessage ~= "You cannot buy that yet!"
             if buyPet then
-                local endTick = os.clock() - startTick
-                sendUpdate(getgenv().Settings.SuckSis, p, item, gems, version, buyPet, username, endTick)
-            end
+                sendUpdate(uid, cost, item, version, shiny, amount, username, buyPet, ping)
+            endd
         end
     end
 end
@@ -332,27 +290,29 @@ teleport(-922, 195, -2338)
 --//CHECKS BOOTH FOR SALE
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
-    if message ~= nil then
-        if type(message) == "table" then
+	if message ~= nil then
+		if type(message) == "table" then
 			local playerID = message['PlayerID']
-            local listing = message["Listings"]
-            for key, value in pairs(listing) do
-                if type(value) == "table" then
-                    local uid = key
-                    local gems = value["DiamondCost"]
-                    local itemdata = value["ItemData"]
-                    if itemdata then
-                        local data = itemdata["data"]
-                        if data then
-                            local item = data["id"]
-                            local version = data["pt"]
-                            checklisting(uid, gems, item, version, username, playerID)
-                        end
-                    end
-                end
-            end
-        end
-    end
+			local listing = message["Listings"]
+			for key, value in pairs(listing) do
+				if type(value) == "table" then
+					local uid = key
+					local gems = value["DiamondCost"]
+					local itemdata = value["ItemData"]
+					if itemdata then
+						local data = itemdata["data"]
+						if data then
+							local item = data["id"]
+							local version = data["pt"]
+							local shiny = data["sh"]
+							local amount = data["_am"]
+							checkListing(uid, gems, item, version, shiny, amount, username, playerID)
+						end
+					end
+				end
+			end
+		end
+	end
 end)
 
 --//JUMP
