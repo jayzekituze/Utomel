@@ -186,7 +186,7 @@ local success, errorMessage = pcall(function()
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                     return
                     
-                elseif unitGems <= getgenv().Settings.Other.buyAnything then
+                elseif unitGems <= 49 then
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                     return
                 end	
