@@ -28,6 +28,7 @@ local thingsTosnipe = {
 local keywords = {
     ["Royalty"] = 1000000,
     ["Exclusive"] = 500000,
+	["2024 New Year"] = 50000,
     ["Spinny"]= 5000,
     ["Upper"] = 10000,
     ["Lower"] = 3000
