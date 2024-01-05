@@ -143,7 +143,6 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 		local highestTimestamp = -math.huge -- Initialize with the smallest possible number
 		local key = nil
 		local listing = nil
-        local tag = ""
         for v, value in pairs(message["Listings"] or {}) do
 			if type(value) == "table" and value["ItemData"] and value["ItemData"]["data"] then
 				local timestamp = value["Timestamp"]
@@ -175,7 +174,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 			print(string.format("%s listed %s %s - %s gems, %s gems/unit", tostring(username), tostring(amount), tostring(item), tostring(gems), tostring(unitGems)))
 
 
-
+            local tag = ""
 
 			if type.huge and unitGems <= 5000000 then
                 tag = tag .. "@everyone "
