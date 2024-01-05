@@ -187,7 +187,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 				return
 				
 			elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and unitGems <= 70000 then
-                tag = tag .. "<@402681518197047306> "
+                tag = tag .. "@everyone "
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
 				
@@ -199,7 +199,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 
 			for i, v in pairs(keywords) do
 				if string.find(item, i) and unitGems <= v then
-                    tag = tag .. "<@402681518197047306> "
+                    tag = tag .. "@everyone "
 					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
@@ -207,7 +207,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 
 			for i, v in pairs(thingsTosnipe) do
 				if item == i and unitGems <= v then
-                    tag = tag .. "<@402681518197047306> "
+                    tag = tag .. "@everyone "
 					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
