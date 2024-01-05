@@ -106,10 +106,10 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
                 }, 
 				},
                 	['footer'] = {
-                    ['text'] = "V 3.2 by edmond.yv"
+                    ['text'] = "Kyle the Sniper V1"
                 },
             ['thumbnail'] = {
-            	['url'] = "https://cdn.discordapp.com/attachments/1057080336313495614/1190229689126621235/target_PNG42.png?ex=65a10ac7&is=658e95c7&hm=51fb914c7330c90326660077f6487ce9238a26ad483ad38bbccc41cbc216ad59&"
+            	['url'] = "https://cdn.discordapp.com/attachments/911765351132430366/971374855989657620/unknown.png?ex=65a7bbd4&is=659546d4&hm=3d232aa4e41297f2033bb04f27199c0e6733cd3e0aa2375d1bebef3a255ccde0&"
             },
         },
     }
