@@ -10,6 +10,8 @@ local osclock = os.clock()
 repeat task.wait() until game:IsLoaded()
 
 
+print("booty works")
+
 local thingsTosnipe = {
     ["Fortune"] = 200000,
     ["Chest Mimic"] = 5000000,
