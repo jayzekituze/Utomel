@@ -136,13 +136,13 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
 	end
 end
 
-local function tryPurchase(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
-	local ping = Player:GetNetworkPing()
-	if buytimestamp > listTimestamp then
-		task.wait(3.4 - ping)
-	end
-	local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-	processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, class, boughtMessage, math.floor(ping*1000))
+local function tryPurchase(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, smeg)
+    local ping = Player:GetNetworkPing()
+    if buytimestamp > listTimestamp then
+        task.wait(3.4 - ping)
+    end
+    local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+    processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, class, boughtMessage, math.floor(ping * 1000), shouldMention, smeg)
 end
 
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
@@ -199,10 +199,10 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 				return
 				
 			elseif smeg <= 49 then
-				shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, smeg)
-				return
-			end	
+                shouldMention = true
+                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, smeg)
+                return
+            end	
 			
 
 			for i, v in pairs(keywords) do
