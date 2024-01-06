@@ -216,6 +216,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
 				return
 			elseif class == "Egg" and unitGems <= MainPrices.EggPrice then
+				shouldMention = true
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
 				return	
             end
