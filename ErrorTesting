@@ -78,7 +78,8 @@ local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
 local mentionUserID = "402681518197047306"
 
 
-local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtPet, class, boughtMessage, ping, shouldMention)
+local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtPet, class, boughtMessage, ping, shouldMention, smeg)
+    smeg = tonumber(gems)
 	local gemamount = Player.leaderstats["💎 Diamonds"] and Player.leaderstats["💎 Diamonds"].Value or 0
     local versionVal = { [2] = "Rainbow", [1] = "Golden" }
     local versionStr = versionVal[version] or (version == nil and "Normal" or "")
@@ -197,9 +198,9 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
 				return
 				
-			elseif unitGems <= 5 then
+			elseif smeg <= 49 then
 				shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, smeg)
 				return
 			end	
 			
