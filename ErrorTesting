@@ -77,156 +77,154 @@ moveToPosition(Vector3.new(-919, 285, -2183))
 local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
 local mentionUserID = "402681518197047306"
 
-
 local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtPet, class, boughtMessage, ping, shouldMention)
-	local gemamount = Player.leaderstats["💎 Diamonds"] and Player.leaderstats["💎 Diamonds"].Value or 0
+    local gemamount = Player.leaderstats["💎 Diamonds"] and Player.leaderstats["💎 Diamonds"].Value or 0
     local versionVal = { [2] = "Rainbow", [1] = "Golden" }
     local versionStr = versionVal[version] or (version == nil and "Normal" or "")
     local snipeMessage = string.format("Found a %s%s%s!", versionStr, shiny and " Shiny " or " ", item)
     local mention = ""
     local colourcheck = boughtPet and 0x05ff00 or 0xff000f
-	local failMessage = boughtPet and "Sniped! No errors occured!" or tostring(boughtMessage)
+    local failMessage = boughtPet and "Sniped! No errors occurred!" or tostring(boughtMessage)
 
     if shouldMention then
         mention = string.format("<@%s> ", mentionUserID)
     end
 
     local message1 = {
-    	['content'] = mention,
-    	['embeds'] = {
-		{
-			['title'] = snipeMessage,
-            ["color"] = tonumber(colourcheck),
-            ["timestamp"] = DateTime.now():ToIsoDate(),
-            ['fields'] = {
-                {
-                	['name'] = "*LISTING INFO* :",
-                    ['value'] = string.format("**Price :** %s gems \n**Amount :** %s\n**Seller :** ||%s||\n**Listing ID : ** ||%s||", tostring(gems), tostring(amount or 1), tostring(boughtFrom), tostring(uid)),
+        ['content'] = mention,
+        ['embeds'] = {
+            {
+                ['title'] = snipeMessage,
+                ["color"] = tonumber(colourcheck),
+                ["timestamp"] = DateTime.now():ToIsoDate(),
+                ['fields'] = {
+                    {
+                        ['name'] = "*LISTING INFO* :",
+                        ['value'] = string.format("**Price :** %s gems \n**Amount :** %s\n**Seller :** ||%s||\n**Listing ID : ** ||%s||", tostring(gems), tostring(amount or 1), tostring(boughtFrom), tostring(uid)),
+                    },
+                    {
+                        ['name'] = "*USER INFO* :",
+                        ['value'] = string.format("**User :** ||%s||\n**Remaining gems :** %s", Player.Name, tostring(gemamount)),
+                    },
+                    {
+                        ['name'] = "*SNIPER INFO* :",
+                        ['value'] = string.format("**Status :** %s\n**Ping :** %s ms", failMessage, tostring(ping)),
+                    },
                 },
-                {
-                    ['name'] = "*USER INFO* :",
-                    ['value'] = string.format("**User :** ||%s||\n**Remaining gems :** %s", Player.Name, tostring(gemamount)),
-                },
-				{
-                    ['name'] = "*SNIPER INFO* :",
-                    ['value'] = string.format("**Status :** %s\n**Ping :** %s ms", failMessage, tostring(ping)),
-                }, 
-				},
-                	['footer'] = {
+                ['footer'] = {
                     ['text'] = "Kyle the Sniper V1"
                 },
-            ['thumbnail'] = {
-            	['url'] = "https://cdn.discordapp.com/attachments/911765351132430366/971374855989657620/unknown.png?ex=65a7bbd4&is=659546d4&hm=3d232aa4e41297f2033bb04f27199c0e6733cd3e0aa2375d1bebef3a255ccde0&"
+                ['thumbnail'] = {
+                    ['url'] = "https://cdn.discordapp.com/attachments/911765351132430366/971374855989657620/unknown.png?ex=65a7bbd4&is=659546d4&hm=3d232aa4e41297f2033bb04f27199c0e6733cd3e0aa2375d1bebef3a255ccde0&"
+                },
             },
-        },
+        }
     }
-	}
     local jsonMessage = http:JSONEncode(message1)
-	local success, webMessage = pcall(function()
-		if mention ~= "" then
+    local success, webMessage = pcall(function()
+        if mention ~= "" then
             mention = string.format("<@%s> ", mentionUserID)
         end
-		http:PostAsync(getgenv().snipeSuccess, jsonMessage)
-	end)
+        http:PostAsync(getgenv().snipeSuccess, jsonMessage)
+    end)
     if success == false then
-	local response = request({
-		Url = getgenv().snipeFail,
-		Method = "POST",
-		Headers = {["Content-Type"] = "application/json"},
-		Body = jsonMessage
-	})
-	end
+        local response = request({
+            Url = getgenv().snipeFail,
+            Method = "POST",
+            Headers = {["Content-Type"] = "application/json"},
+            Body = jsonMessage
+        })
+    end
 end
 
 local function tryPurchase(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-	local ping = Player:GetNetworkPing()
-	if buytimestamp > listTimestamp then
-		task.wait(3.4 - ping)
-	end
-	local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-	processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, class, boughtMessage, math.floor(ping*1000))
+    local ping = Player:GetNetworkPing()
+    if buytimestamp > listTimestamp then
+        task.wait(3.4 - ping)
+    end
+    local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+    processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, class, boughtMessage, math.floor(ping * 1000))
 end
 
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
-	if type(message) == "table" then
-		local highestTimestamp = -math.huge -- Initialize with the smallest possible number
-		local key = nil
-		local listing = nil
+    if type(message) == "table" then
+        local highestTimestamp = -math.huge -- Initialize with the smallest possible number
+        local key = nil
+        local listing = nil
         for v, value in pairs(message["Listings"] or {}) do
-			if type(value) == "table" and value["ItemData"] and value["ItemData"]["data"] then
-				local timestamp = value["Timestamp"]
-				if timestamp > highestTimestamp then
-					highestTimestamp = timestamp
-					key = v
-					listing = value
-				end
-			end
-		end
-		if listing then
-			local buytimestamp = listing["ReadyTimestamp"]
-			local listTimestamp = listing["Timestamp"]
-			local data = listing["ItemData"]["data"]
-			local gems = tonumber(listing["DiamondCost"])
+            if type(value) == "table" and value["ItemData"] and value["ItemData"]["data"] then
+                local timestamp = value["Timestamp"]
+                if timestamp > highestTimestamp then
+                    highestTimestamp = timestamp
+                    key = v
+                    listing = value
+                end
+            end
+        end
+        if listing then
+            local buytimestamp = listing["ReadyTimestamp"]
+            local listTimestamp = listing["Timestamp"]
+            local data = listing["ItemData"]["data"]
+            local gems = tonumber(listing["DiamondCost"])
             local uid = key
-			local item = data["id"]
-			local version = data["pt"]
-			local shiny = data["sh"]
-			local amount = tonumber(data["_am"]) or 1
-			local playerid = message['PlayerID']
-			local class = tostring(listing["ItemData"]["class"])
-			local unitGems = gems/amount
-			local type = {}
-			pcall(function()
-			type = Library.Directory.Pets[item]
-			end)
+            local item = data["id"]
+            local version = data["pt"]
+            local shiny = data["sh"]
+            local amount = tonumber(data["_am"]) or 1
+            local playerid = message['PlayerID']
+            local class = tostring(listing["ItemData"]["class"])
+            local unitGems = gems / amount
+            local type = {}
+            pcall(function()
+                type = Library.Directory.Pets[item]
+            end)
 
-			print(string.format("%s listed %s %s - %s gems, %s gems/unit", tostring(username), tostring(amount), tostring(item), tostring(gems), tostring(unitGems)))
-
+            print(string.format("%s listed %s %s - %s gems, %s gems/unit", tostring(username), tostring(amount), tostring(item), tostring(gems), tostring(unitGems)))
 
             local shouldMention = false
 
-			if type.huge and unitGems <= 5000000 then
+            if type.huge and unitGems <= 5000000 then
                 shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-				return
-				
-			elseif type.titanic and unitGems <= 5000000 then
-                shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-				return
-				
-			elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and unitGems <= 70000 then
-                shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-				return
-				
-			elseif unitGems <= 5 then
-				shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-				return
-			end	
-			
+                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                return
 
-			for i, v in pairs(keywords) do
-				if string.find(item, i) and unitGems <= v then
+            elseif type.titanic and unitGems <= 5000000 then
+                shouldMention = true
+                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                return
+
+            elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and unitGems <= 70000 then
+                shouldMention = true
+                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                return
+
+            elseif unitGems <= 5 then
+                shouldMention = true
+                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                return
+            end
+
+            for i, v in pairs(keywords) do
+                if string.find(item, i) and unitGems <= v then
                     shouldMention = true
-					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-					return
-				end
-			end
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                    return
+                end
+            end
 
-			for i, v in pairs(thingsTosnipe) do
-				if item == i and unitGems <= v then
+            for i, v in pairs(thingsTosnipe) do
+                if item == i and unitGems <= v then
                     shouldMention = true
-					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-					return
-				end
-			end
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                    return
+                end
+            end
 
-		
-		end
+            processListingInfo(uid, gems, item, version, shiny, amount, username, false, class, "Not sniped", 0, shouldMention)
+        end
     end
 end)
+
 
 
 local function jumpToServer()
