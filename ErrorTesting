@@ -12,21 +12,27 @@ repeat task.wait() until game:IsLoaded()
 
 print("booty works")
 
+local MainPrices = {
+    ["HugePrice"] = 4000000,
+    ["TitanicPetPrice"] = 4000000,
+    ["ExclusivePetPrice"] = 70000,
+    ["buyAnything"] = 5
 
+}
+
+--PS99 ITEMS
 local ItemsPS99 = {
     ["Titanic Christmas Present"] = 300000,
     ["X-Large Christmas Present"] = 30000,
 	["2024 New Year"] = 50000,
     ["Spinny"]= 5000,
+    ["Crystal Key"]= 15000,
     ["Upper"] = 10000,
     ["Lower"] = 3000
 }
 
 local PotionsPS99 = {
-    ["The Cocktail"]= 50000,
-    ["Potion VIII"] = 50000,
-    ["Potion VII"] = 25000,
-	["Potion VI"] = 5000
+    ["The Cocktail"]= 50000
 }
 
 local EnchantsPS99 = {
@@ -38,8 +44,7 @@ local EnchantsPS99 = {
     ["Diamond Chest Mimic"] = 2000000,
     ["Super Lightning"] = 100000,
     ["Massive Comet"] = 1000000,
-    ["Party Time"] = 50000,
-    ["Book VII"] = 100000
+    ["Party Time"] = 50000
 }
 
 local CharmsPS99 = {
@@ -161,6 +166,9 @@ local function tryPurchase(uid, gems, item, version, shiny, amount, username, cl
 end
 
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
+
+    local gems = tonumber(gems)
+
 	if type(message) == "table" then
 		local highestTimestamp = -math.huge -- Initialize with the smallest possible number
 		local key = nil
@@ -198,17 +206,17 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 
             local shouldMention = false
 
-			if type.huge and unitGems <= 5000000 then
+			if type.huge and unitGems <= MainPrices.HugePrice then
                 shouldMention = true
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
 				return
 				
-			elseif type.titanic and unitGems <= 5000000 then
+			elseif type.titanic and unitGems <= MainPrices.TitanicPetPrice then
                 shouldMention = true
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
 				return
 				
-			elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and unitGems <= 70000 then
+			elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and unitGems <= MainPrices.ExclusivePetPrice then
                 shouldMention = true
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
 				return
@@ -257,6 +265,13 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 		
 		end
     end
+
+    if gems <= MainPrices.buyAnything then
+        coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+        return
+
+    end
+
 end)
 
 
