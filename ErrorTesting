@@ -1,3 +1,7 @@
+
+
+
+
 --[[
 Credits List
 ethereum: creating the base sniper
@@ -26,11 +30,13 @@ local MainPrices = {
 local ItemsPS99 = {
     ["Titanic Christmas Present"] = 300000,
     ["X-Large Christmas Present"] = 30000,
-	["2024 New Year"] = 50000,
-    ["Spinny"]= 5000,
-    ["Crystal Key"]= 15000,
-    ["Upper"] = 10000,
-    ["Lower"] = 3000
+    ["2024 New Year"] = 50000,
+    ["Ticket"]= 5000,
+    ["Crystal Key"] = {
+        ["Value"] = 15000,  -- Value for "Crystal Key"
+        ["Lower"] = 5000,
+        ["Upper"] = 10000
+    }
 }
 
 local PotionsPS99 = {
