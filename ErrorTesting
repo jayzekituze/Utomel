@@ -79,7 +79,6 @@ local mentionUserID = "402681518197047306"
 
 
 local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtPet, class, boughtMessage, ping, shouldMention, smeg)
-    smeg = tonumber(gems)
 	local gemamount = Player.leaderstats["💎 Diamonds"] and Player.leaderstats["💎 Diamonds"].Value or 0
     local versionVal = { [2] = "Rainbow", [1] = "Golden" }
     local versionStr = versionVal[version] or (version == nil and "Normal" or "")
@@ -87,6 +86,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     local mention = string.format("<@%s> ", mentionUserID)
     local colourcheck = boughtPet and 0x05ff00 or 0xff000f
 	local failMessage = boughtPet and "Sniped! No errors occured!" or tostring(boughtMessage)
+    smeg = tonumber(gems)
 
     if shouldMention then
         local mentionUser = mention
