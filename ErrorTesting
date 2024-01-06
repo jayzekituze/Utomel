@@ -85,9 +85,8 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     local mention = string.format("<@%s> ", mentionUserID)
     local colourcheck = boughtPet and 0x05ff00 or 0xff000f
 	local failMessage = boughtPet and "Sniped! No errors occured!" or tostring(boughtMessage)
-    local gems = tonumber(["DiamondCost"])
-    smeg = tonumber(gems)
-
+    local gems1 = tonumber(gems)
+    smeg = tonumber(gems1)
     if shouldMention then
         local mentionUser = mention
     end
