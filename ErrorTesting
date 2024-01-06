@@ -13,10 +13,11 @@ repeat task.wait() until game:IsLoaded()
 print("booty works")
 
 local MainPrices = {
-    "HugePrice" = 4000000,
-    "TitanicPetPrice" = 4000000,
-    "ExclusivePetPrice" = 70000,
-    "buyAnything" = 5
+	
+    HugePrice = 4000000,
+    TitanicPetPrice = 4000000,
+    ExclusivePetPrice = 70000,
+    buyAnything = 5
 
 }
 
