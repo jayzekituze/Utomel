@@ -166,20 +166,6 @@ local function tryPurchase(uid, gems, item, version, shiny, amount, username, cl
 end
 
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
-
-    gems = tonumber(["DiamondCost"])
-    local type = {}
-    pcall(function()
-      type = Library.Directory.Pets[item]
-    end)
-    
-    if gems <= MainPrices.buyAnything then
-        coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-        return
-
-    end
-
-
 	if type(message) == "table" then
 		local highestTimestamp = -math.huge -- Initialize with the smallest possible number
 		local key = nil
