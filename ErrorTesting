@@ -149,33 +149,35 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 		local highestTimestamp = -math.huge -- Initialize with the smallest possible number
 		local key = nil
 		local listing = nil
+        local smeg = nil
+        local listing = nil
         for v, value in pairs(message["Listings"] or {}) do
-			if type(value) == "table" and value["ItemData"] and value["ItemData"]["data"] then
-				local timestamp = value["Timestamp"]
-				if timestamp > highestTimestamp then
-					highestTimestamp = timestamp
-					key = v
-					listing = value
-				end
-			end
-		end
-		if listing then
-			local buytimestamp = listing["ReadyTimestamp"]
-			local listTimestamp = listing["Timestamp"]
-			local data = listing["ItemData"]["data"]
-			local gems = tonumber(listing["DiamondCost"])
+            if type(value) == "table" and value["ItemData"] and value["ItemData"]["data"] then
+                local timestamp = value["Timestamp"]
+                if timestamp > highestTimestamp then
+                    highestTimestamp = timestamp
+                    key = v
+                    listing = value
+                end
+            end
+        end
+        if listing then
+            local buytimestamp = listing["ReadyTimestamp"]
+            local listTimestamp = listing["Timestamp"]
+            local data = listing["ItemData"]["data"]
+            local gems = tonumber(listing["DiamondCost"])
             local uid = key
-			local item = data["id"]
-			local version = data["pt"]
-			local shiny = data["sh"]
-			local amount = tonumber(data["_am"]) or 1
-			local playerid = message['PlayerID']
-			local class = tostring(listing["ItemData"]["class"])
-			local unitGems = gems/amount
-			local type = {}
-			pcall(function()
-			type = Library.Directory.Pets[item]
-			end)
+            local item = data["id"]
+            local version = data["pt"]
+            local shiny = data["sh"]
+            local amount = tonumber(data["_am"]) or 1
+            local playerid = message['PlayerID']
+            local class = tostring(listing["ItemData"]["class"])
+            local unitGems = gems/amount
+            local type = {}
+            pcall(function()
+                type = Library.Directory.Pets[item]
+            end)
 
 			print(string.format("%s listed %s %s - %s gems, %s gems/unit", tostring(username), tostring(amount), tostring(item), tostring(gems), tostring(unitGems)))
 
