@@ -31,9 +31,9 @@ local ItemsPS99 = {
     ["Titanic Christmas Present"] = 300000,
     ["X-Large Christmas Present"] = 30000,
     ["2024 New Year"] = 50000,
-    ["Spinny Wheel Ticket"]= 5000,
+    ["Ticket"]= 5000,
+    ["Crystal Key"] = 15000,  -- Direct value for "Crystal Key"
     ["Crystal Key"] = {
-        ["Value"] = 15000,  -- Value for "Crystal Key"
         ["Lower"] = 5000,
         ["Upper"] = 10000
     }
@@ -230,20 +230,8 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 			
             
             for i, v in pairs(ItemsPS99) do
-				if type(v) == "table" then
-					-- The item has sub-keys, handle it accordingly
-					local value = v["Value"]
-					local lower = v["Lower"]
-					local upper = v["Upper"]
-			
-					if item == i and unitGems >= value and unitGems >= lower and unitGems <= upper then
-						shouldMention = true
-						coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
-						return
-					end
-				elseif unitGems <= v then
-					-- The item doesn't have sub-keys
-					shouldMention = true
+				if item == i and unitGems <= v then
+                    shouldMention = true
 					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
 					return
 				end
