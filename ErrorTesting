@@ -77,7 +77,7 @@ moveToPosition(Vector3.new(-919, 285, -2183))
 local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
 local mentionUserID = "402681518197047306"
 
-local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtPet, class, boughtMessage, ping, shouldMention, smeg)
+local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtPet, class, boughtMessage, ping, shouldMention)
 	local gemamount = Player.leaderstats["💎 Diamonds"] and Player.leaderstats["💎 Diamonds"].Value or 0
     local versionVal = { [2] = "Rainbow", [1] = "Golden" }
     local versionStr = versionVal[version] or (version == nil and "Normal" or "")
@@ -85,8 +85,6 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     local mention = string.format("<@%s> ", mentionUserID)
     local colourcheck = boughtPet and 0x05ff00 or 0xff000f
 	local failMessage = boughtPet and "Sniped! No errors occured!" or tostring(boughtMessage)
-    local gems1 = tonumber(gems)
-    smeg = tonumber(gems1)
     if shouldMention then
         local mentionUser = mention
     end
@@ -135,13 +133,13 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
 	end
 end
 
-local function tryPurchase(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, smeg)
+local function tryPurchase(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
     local ping = Player:GetNetworkPing()
     if buytimestamp > listTimestamp then
         task.wait(3.4 - ping)
     end
     local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-    processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, class, boughtMessage, math.floor(ping * 1000), shouldMention, smeg)
+    processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, class, boughtMessage, math.floor(ping * 1000), shouldMention)
 end
 
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
@@ -149,35 +147,33 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 		local highestTimestamp = -math.huge -- Initialize with the smallest possible number
 		local key = nil
 		local listing = nil
-        local smeg = nil
-        local listing = nil
         for v, value in pairs(message["Listings"] or {}) do
-            if type(value) == "table" and value["ItemData"] and value["ItemData"]["data"] then
-                local timestamp = value["Timestamp"]
-                if timestamp > highestTimestamp then
-                    highestTimestamp = timestamp
-                    key = v
-                    listing = value
-                end
-            end
-        end
-        if listing then
-            local buytimestamp = listing["ReadyTimestamp"]
-            local listTimestamp = listing["Timestamp"]
-            local data = listing["ItemData"]["data"]
-            local gems = tonumber(listing["DiamondCost"])
+			if type(value) == "table" and value["ItemData"] and value["ItemData"]["data"] then
+				local timestamp = value["Timestamp"]
+				if timestamp > highestTimestamp then
+					highestTimestamp = timestamp
+					key = v
+					listing = value
+				end
+			end
+		end
+		if listing then
+			local buytimestamp = listing["ReadyTimestamp"]
+			local listTimestamp = listing["Timestamp"]
+			local data = listing["ItemData"]["data"]
+			local gems = tonumber(listing["DiamondCost"])
             local uid = key
-            local item = data["id"]
-            local version = data["pt"]
-            local shiny = data["sh"]
-            local amount = tonumber(data["_am"]) or 1
-            local playerid = message['PlayerID']
-            local class = tostring(listing["ItemData"]["class"])
-            local unitGems = gems/amount
-            local type = {}
-            pcall(function()
-                type = Library.Directory.Pets[item]
-            end)
+			local item = data["id"]
+			local version = data["pt"]
+			local shiny = data["sh"]
+			local amount = tonumber(data["_am"]) or 1
+			local playerid = message['PlayerID']
+			local class = tostring(listing["ItemData"]["class"])
+			local unitGems = gems/amount
+			local type = {}
+			pcall(function()
+			type = Library.Directory.Pets[item]
+			end)
 
 			print(string.format("%s listed %s %s - %s gems, %s gems/unit", tostring(username), tostring(amount), tostring(item), tostring(gems), tostring(unitGems)))
 
@@ -199,9 +195,9 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
 				return
 				
-			elseif smeg <= 49 then
+			elseif unitGems <= 49 then
                 shouldMention = true
-                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, smeg)
+                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
                 return
             end	
 			
