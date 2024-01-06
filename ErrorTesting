@@ -13,48 +13,45 @@ repeat task.wait() until game:IsLoaded()
 print("booty works")
 
 local MainPrices = {
-	
+
     HugePrice = 4000000,
     TitanicPetPrice = 4000000,
     ExclusivePetPrice = 70000,
+	EggPrice = 700000,
     buyAnything = 5
 
 }
 
 --PS99 ITEMS
 local ItemsPS99 = {
-    "Titanic Christmas Present" = 300000,
-    "X-Large Christmas Present" = 30000,
-	"2024 New Year" = 50000,
-    "Spinny"= 5000,
-    "Crystal Key"= 15000,
-    "Upper" = 10000,
-    "Lower" = 3000
+    ["Titanic Christmas Present"] = 300000,
+    ["X-Large Christmas Present"] = 30000,
+	["2024 New Year"] = 50000,
+    ["Spinny"]= 5000,
+    ["Crystal Key"]= 15000,
+    ["Upper"] = 10000,
+    ["Lower"] = 3000
 }
 
 local PotionsPS99 = {
-    "The Cocktail" = 50000
+    ["The Cocktail"] = 50000
 }
 
 local EnchantsPS99 = {
-    "Fortune" = 200000,
-    "Chest Mimic" = 1000000,
-    "Lucky Block" = 500000,
-    "Shiny Hunter" = 300000,
-    "Huge Hunter" = 1000000,
-    "Diamond Chest Mimic" = 2000000,
-    "Super Lightning" = 100000,
-    "Massive Comet" = 1000000,
-    "Party Time" = 50000
+    ["Fortune"] = 200000,
+    ["Chest Mimic"] = 1000000,
+    ["Lucky Block"] = 500000,
+    ["Shiny Hunter"] = 300000,
+    ["Huge Hunter"] = 1000000,
+    ["Diamond Chest Mimic"] = 2000000,
+    ["Super Lightning"] = 100000,
+    ["Massive Comet"] = 1000000,
+    ["Party Time"] = 50000
 }
 
 local CharmsPS99 = {
     ["Royalty"] = 1000000,
     ["Glittering"]= 25000
-}
-
-local EggPS99 = {
-    "Exclusive" = 700000
 }
 
 
@@ -148,12 +145,12 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
 		http:PostAsync(getgenv().snipeSuccess, jsonMessage)
 	end)
     if success == false then
-	local response = request({
-		Url = getgenv().snipeFail,
-		Method = "POST",
-		Headers = {["Content-Type"] = "application/json"},
-		Body = jsonMessage
-	})
+		local response = game:GetService("HttpService"):RequestAsync({
+			Url = getgenv().snipeFail,
+			Method = "POST",
+			Headers = {["Content-Type"] = "application/json"},
+			Body = jsonMessage
+		})
 	end
 end
 
@@ -218,7 +215,12 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
                 shouldMention = true
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
 				return
+			elseif class == "Egg" and unitGems <= MainPrices.EggPrice then
+				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+				return	
             end
+
+			
             
             for i, v in pairs(ItemsPS99) do
 				if item == i and unitGems <= v then
@@ -246,14 +248,6 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 			end
 
 			for i, v in pairs(CharmsPS99) do
-				if item == i and unitGems <= v then
-                    shouldMention = true
-					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
-					return
-				end
-			end
-
-            for i, v in pairs(EggPS99) do
 				if item == i and unitGems <= v then
                     shouldMention = true
 					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
