@@ -177,21 +177,22 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
             local tag = ""
 
 			if type.huge and unitGems <= 5000000 then
-                tag = tag .. "@everyone "
+                tag = tag .."<@" .. 402681518197047306 .. ">"
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
 				
 			elseif type.titanic and unitGems <= 5000000 then
-                tag = tag .. "@everyone "
+                tag = tag .."<@" .. 402681518197047306 .. ">"
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
 				
 			elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and unitGems <= 70000 then
-                tag = tag .. "@everyone "
+                tag = tag .."<@" .. 402681518197047306 .. ">"
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
 				
 			elseif unitGems <= 5 then
+                tag = tag .."<@" .. 402681518197047306 .. ">"
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
 			end	
@@ -199,7 +200,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 
 			for i, v in pairs(keywords) do
 				if string.find(item, i) and unitGems <= v then
-                    tag = tag .. "@everyone "
+                    tag = tag .."<@" .. 402681518197047306 .. ">"
 					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
@@ -207,7 +208,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 
 			for i, v in pairs(thingsTosnipe) do
 				if item == i and unitGems <= v then
-                    tag = tag .. "@everyone "
+                    tag = tag .."<@" .. 402681518197047306 .. ">"
 					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
@@ -294,7 +295,7 @@ Players.PlayerAdded:Connect(function(player)
     end
 end)
 
-local hopDelay = math.random(2400, 3000)
+local hopDelay = math.random(2000, 2400)
 
 while task.wait(1) do
 	if math.floor(os.clock() - osclock) >= hopDelay then
