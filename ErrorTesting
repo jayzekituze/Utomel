@@ -12,27 +12,45 @@ repeat task.wait() until game:IsLoaded()
 
 print("booty works")
 
-local thingsTosnipe = {
-    ["Fortune"] = 200000,
-    ["Chest Mimic"] = 5000000,
-    ["Lucky Block"] = 500000,
-    ["Shiny Hunter"] = 300000,
-    ["Huge Hunter"] = 1000000,
+
+local ItemsPS99 = {
     ["Titanic Christmas Present"] = 300000,
     ["X-Large Christmas Present"] = 30000,
-    ["Diamond Chest Mimic"] = 5000000,
-    ["Massive Comet"] = 2000000,
-    ["Party Time"] = 50000
-}
-
-local keywords = {
-    ["Royalty"] = 1000000,
-    ["Exclusive"] = 500000,
 	["2024 New Year"] = 50000,
     ["Spinny"]= 5000,
     ["Upper"] = 10000,
     ["Lower"] = 3000
 }
+
+local PotionsPS99 = {
+    ["The Cocktail"]= 50000,
+    ["Potion VIII"] = 50000,
+    ["Potion VII"] = 25000,
+	["Potion VI"] = 5000
+}
+
+local EnchantsPS99 = {
+    ["Fortune"] = 200000,
+    ["Chest Mimic"] = 1000000,
+    ["Lucky Block"] = 500000,
+    ["Shiny Hunter"] = 300000,
+    ["Huge Hunter"] = 1000000,
+    ["Diamond Chest Mimic"] = 2000000,
+    ["Super Lightning"] = 100000,
+    ["Massive Comet"] = 1000000,
+    ["Party Time"] = 50000,
+    ["Book VII"] = 100000
+}
+
+local CharmsPS99 = {
+    ["Royalty"] = 1000000,
+    ["Glittering"]= 25000
+}
+
+local EggPS99 = {
+    ["Exclusive"] = 700000
+}
+
 
 
 setfpscap(10)
@@ -194,15 +212,9 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
                 shouldMention = true
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
 				return
-				
-			elseif unitGems <= 49 then
-                shouldMention = true
-                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
-                return
-            end	
-			
-
-			for i, v in pairs(keywords) do
+            end
+            
+            for i, v in pairs(ItemsPS99) do
 				if string.find(item, i) and unitGems <= v then
                     shouldMention = true
 					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
@@ -210,7 +222,24 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 				end
 			end
 
-			for i, v in pairs(thingsTosnipe) do
+            for i, v in pairs(PotionsPS99) do
+				if string.find(item, i) and unitGems <= v then
+                    shouldMention = true
+					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+					return
+				end
+			end
+			
+
+			for i, v in pairs(EnchantsPS99) do
+				if string.find(item, i) and unitGems <= v then
+                    shouldMention = true
+					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+					return
+				end
+			end
+
+			for i, v in pairs(CharmsPS99) do
 				if item == i and unitGems <= v then
                     shouldMention = true
 					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
@@ -218,6 +247,13 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 				end
 			end
 
+            for i, v in pairs(EggPS99) do
+				if string.find(item, i) and unitGems <= v then
+                    shouldMention = true
+					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+					return
+				end
+			end
 		
 		end
     end
