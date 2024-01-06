@@ -173,30 +173,26 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 
 			print(string.format("%s listed %s %s - %s gems, %s gems/unit", tostring(username), tostring(amount), tostring(item), tostring(gems), tostring(unitGems)))
 
-
+            local tag = ""
+            
 			if type.huge and unitGems <= 5000000 then
-                local tag = ""
                 tag = tag .."<@" .. 402681518197047306 .. ">"
                 print("Debug: Keyword condition met")
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
 				
 			elseif type.titanic and unitGems <= 5000000 then
-                local tag = ""
                 tag = tag .."<@" .. 402681518197047306 .. ">"
                 print("Debug: Keyword condition met")
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
 				
 			elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and unitGems <= 70000 then
-                local tag = ""
                 tag = tag .."<@" .. 402681518197047306 .. ">"
-                print("Debug: Keyword condition met")
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
 				
 			elseif unitGems <= 5 then
-                local tag = ""
                 tag = tag .."<@" .. 402681518197047306 .. ">"
                 print("Debug: Keyword condition met")
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
@@ -206,7 +202,6 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 
 			for i, v in pairs(keywords) do
 				if string.find(item, i) and unitGems <= v then
-                    local tag = ""
                     tag = tag .."<@" .. 402681518197047306 .. ">"
                     print("Debug: Keyword condition met")
 					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
@@ -216,7 +211,6 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 
 			for i, v in pairs(thingsTosnipe) do
 				if item == i and unitGems <= v then
-                    local tag = ""
                     tag = tag .."<@" .. 402681518197047306 .. ">"
                     print("Debug: Keyword condition met")
 					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
