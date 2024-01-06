@@ -31,12 +31,10 @@ local ItemsPS99 = {
     ["Titanic Christmas Present"] = 300000,
     ["X-Large Christmas Present"] = 30000,
     ["2024 New Year"] = 50000,
-    ["Ticket"]= 5000,
+    ["Spinny Wheel Ticket"]= 5000,
     ["Crystal Key"] = 15000,  -- Direct value for "Crystal Key"
-    ["Crystal Key"] = {
-        ["Lower"] = 5000,
-        ["Upper"] = 10000
-    }
+    ["Crystal Key Lower Half"] = 5000,
+	["Crystal Key Upper Half"] = 10000
 }
 
 local PotionsPS99 = {
