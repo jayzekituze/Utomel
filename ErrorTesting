@@ -18,10 +18,10 @@ print("booty works")
 
 local MainPrices = {
 
-    HugePrice = 3000000,
+    HugePrice = 3500000,
     TitanicPetPrice = 10000000,
     ExclusivePetPrice = 70000,
-	EggPrice = 700000,
+	EggPrice = 600000,
     buyAnything = 5
 
 }
