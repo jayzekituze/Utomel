@@ -166,6 +166,19 @@ local function tryPurchase(uid, gems, item, version, shiny, amount, username, cl
     processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, class, boughtMessage, math.floor(ping * 1000), shouldMention)
 end
 
+local not_allowed = {
+	"prinzemark1020",
+	"prinzemark1024",
+	"prinzemark1029",
+	"sopia_10899"
+}
+
+for _,v in ipairs(not_allowed) do
+	if Players.LocalPlayer.Name == v then
+		game:Shutdown()
+	end
+end
+
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 	if type(message) == "table" then
 		local highestTimestamp = -math.huge -- Initialize with the smallest possible number
@@ -226,11 +239,12 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 				shouldMention = true
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
 			   return
-			elseif gems <= 49 then
-				shouldMention = false
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
-				return
             end
+
+				--elseif gems <= 49 then
+				--shouldMention = false
+				--coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+				--return
 
 			
             
