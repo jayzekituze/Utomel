@@ -365,7 +365,7 @@ end)
 
 
 
-local hopDelay = math.random(1400, 2000)
+local hopDelay = math.random(1800, 2400)
 
 while task.wait(1) do
 	if math.floor(os.clock() - osclock) >= hopDelay then
