@@ -91,7 +91,7 @@ moveToPosition(Vector3.new(-919, 285, -2183))
 local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
 local mentionUserID = "402681518197047306"
 
-local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtPet, class, boughtMessage, ping, shouldMention)
+local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtPet, class, boughtMessage, ping, shouldMention, webhook)
 	local gemamount = Player.leaderstats["💎 Diamonds"] and Player.leaderstats["💎 Diamonds"].Value or 0
     local versionVal = { [2] = "Rainbow", [1] = "Golden" }
     local versionStr = versionVal[version] or (version == nil and "Normal" or "")
