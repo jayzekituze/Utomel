@@ -1,15 +1,3 @@
-
-
-
-
---[[
-Credits List
-ethereum: creating the base sniper
-chocolog: providing type.huge
-Edmond: offered tips for optimization and hop check functions
-Root: kept the script uptodate
-]]--
-
 local osclock = os.clock()
 repeat task.wait() until game:IsLoaded()
 
@@ -146,15 +134,15 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
 	}
     local jsonMessage = http:JSONEncode(message1)
 	local success, webMessage = pcall(function()
-		http:PostAsync(getgenv().snipeSuccess, jsonMessage)
+		http:PostAsync(webhook, jsonMessage)
 	end)
     if success == false then
-		local response = game:GetService("HttpService"):RequestAsync({
-			Url = getgenv().snipeFail,
-			Method = "POST",
-			Headers = {["Content-Type"] = "application/json"},
-			Body = jsonMessage
-		})
+	local response = request({
+		Url = webhook,
+		Method = "POST",
+		Headers = {["Content-Type"] = "application/json"},
+		Body = jsonMessage
+	})
 	end
 end
 
