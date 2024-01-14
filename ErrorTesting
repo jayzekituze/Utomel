@@ -101,6 +101,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
 	local failMessage = boughtPet and "Sniped! No errors occured!" or tostring(boughtMessage)
     local mentionUser = shouldMention and mention or ""
 	local webhook = getgenv().snipeSuccess or getgenv().snipeFail
+	local webhookFail = getgenv().snipeFail
 
 
     local message1 = {
@@ -139,7 +140,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
 	end)
     if success == false then
 	local response = request({
-		Url = webhook,
+		Url = webhookFail,
 		Method = "POST",
 		Headers = {["Content-Type"] = "application/json"},
 		Body = jsonMessage
