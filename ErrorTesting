@@ -146,13 +146,13 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
 	end
 end
 
-local function tryPurchase(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+local function tryPurchase(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
     local ping = Player:GetNetworkPing()
     if buytimestamp > listTimestamp then
         task.wait(3.4 - ping)
     end
     local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-    processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, class, boughtMessage, math.floor(ping * 1000), shouldMention)
+    processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, class, boughtMessage, math.floor(ping * 1000), shouldMention, webhook)
 end
 
 local not_allowed = {
@@ -208,25 +208,25 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 
 			if type.huge and unitGems <= MainPrices.HugePrice then
                 shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
 				return
 				
 			elseif type.titanic and unitGems <= MainPrices.TitanicPetPrice then
                 shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
 				return
 				
 			elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and unitGems <= MainPrices.ExclusivePetPrice then
                 shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+				ccoroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
 				return
 			elseif class == "Egg" and unitGems <= MainPrices.EggPrice then
 				shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
 				return
 			elseif (string.find(item, "Ticket") or string.find(item, "Charm") or class == "Charm") and unitGems <= 2500 then
 				shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
 			   return
             end
 
@@ -240,7 +240,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
             for i, v in pairs(ItemsPS99) do
 				if item == i and unitGems <= v then
                     shouldMention = true
-					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
 					return
 				end
 			end
@@ -248,7 +248,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
             for i, v in pairs(PotionsPS99) do
 				if item == i and unitGems <= v then
                     shouldMention = true
-					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
 					return
 				end
 			end
@@ -257,7 +257,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 			for i, v in pairs(EnchantsPS99) do
 				if item == i and unitGems <= v then
                     shouldMention = true
-					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
 					return
 				end
 			end
@@ -265,7 +265,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 			for i, v in pairs(CharmsPS99) do
 				if item == i and unitGems <= v then
                     shouldMention = true
-					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention)
+					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
 					return
 				end
 			end
