@@ -100,6 +100,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     local colourcheck = boughtPet and 0x05ff00 or 0xff000f
 	local failMessage = boughtPet and "Sniped! No errors occured!" or tostring(boughtMessage)
     local mentionUser = shouldMention and mention or ""
+	local webhook = getgenv().snipeSuccess or getgenv().snipeFail
 
 
     local message1 = {
