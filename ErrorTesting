@@ -136,17 +136,18 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
 	}
     local jsonMessage = http:JSONEncode(message1)
 	local success, webMessage = pcall(function()
-		http:PostAsync(webhook, jsonMessage)
+		http:PostAsync(getgenv().snipeSuccess, jsonMessage)
 	end)
     if success == false then
-	local response = request({
-		Url = webhookFail,
-		Method = "POST",
-		Headers = {["Content-Type"] = "application/json"},
-		Body = jsonMessage
-	})
+		local response = game:GetService("HttpService"):RequestAsync({
+			Url = webhookFail,
+			Method = "POST",
+			Headers = {["Content-Type"] = "application/json"},
+			Body = jsonMessage
+		})
 	end
 end
+
 
 local function tryPurchase(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
     local ping = Player:GetNetworkPing()
