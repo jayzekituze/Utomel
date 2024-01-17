@@ -42,8 +42,6 @@ moveToPosition(Vector3.new(-970, 284, -2278))
 moveToPosition(Vector3.new(-935, 284, -2189))
 moveToPosition(Vector3.new(-919, 285, -2183))
 
-wait(10)
-
 script_key="ghDVbSpcVfcQBBXYdNwePnBCrIlyVRqV";
 WebhookType = "Post";   -- Request / Post -- Some executors only work with request, and some Post, if the webhook isnt working try the other option.
 Maximum_TitanicPrice = 100000000; --Set price for titanic you want to buy
