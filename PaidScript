@@ -1,75 +1,156 @@
-local RunService = game:GetService("RunService")
-UserSettings():GetService("UserGameSettings").MasterVolume = 0
-local decalsyeeted = true
-local g = game
-local w = g.Workspace
-local l = g.Lighting
-local t = w.Terrain
-sethiddenproperty(l,"Technology",2)
-sethiddenproperty(t,"Decoration",false)
-game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.Chat,false)
-t.WaterWaveSize = 0
-t.WaterWaveSpeed = 0
-t.WaterReflectance = 0
-t.WaterTransparency = 0
-l.GlobalShadows = 0
-l.FogEnd = 9e9
-l.Brightness = 0
-settings().Rendering.QualityLevel = "1"
-for i, v in pairs(w:GetDescendants()) do
-    if v:IsA("BasePart") and not v:IsA("MeshPart") then
-        v.Material = "Plastic"
-        v.Reflectance = 0
-    elseif (v:IsA("Decal") or v:IsA("Texture")) and decalsyeeted then
-        v.Transparency = 1
-    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-        v.Lifetime = NumberRange.new(0)
-    elseif v:IsA("Explosion") then
-        v.BlastPressure = 1
-        v.BlastRadius = 1
-    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
-        v.Enabled = false
-    elseif v:IsA("MeshPart") and decalsyeeted then
-        v.Material = "Plastic"
-        v.Reflectance = 0
-        v.TextureID = 10385902758728957
-    elseif v:IsA("SpecialMesh") and decalsyeeted  then
-        v.TextureId=0
-    elseif v:IsA("ShirtGraphic") and decalsyeeted then
-        v.Graphic=1
-    elseif (v:IsA("Shirt") or v:IsA("Pants")) and decalsyeeted then
-        v[v.ClassName.."Template"]=1
+local osclock = os.clock()
+repeat task.wait() until game:IsLoaded()
+
+
+print("booty works")
+
+setfpscap(10)
+game:GetService("RunService"):Set3dRenderingEnabled(false)
+local Players = game:GetService('Players')
+local Player = Players.LocalPlayer
+local getPlayers = Players:GetPlayers()
+local PlayerInServer = #getPlayers
+local http = game:GetService("HttpService")
+local ts = game:GetService("TeleportService")
+local rs = game:GetService("ReplicatedStorage")
+
+local vu = game:GetService("VirtualUser")
+Players.LocalPlayer.Idled:connect(function()
+	vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	task.wait(1)
+	vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
+
+local character = Player.Character or Player.CharacterAdded:Wait()
+local humanoid = character:FindFirstChildWhichIsA('Humanoid')
+
+local function moveToPosition(position)
+	local moveFinished = false
+	local connection
+	connection = humanoid.MoveToFinished:Connect(function(reached)
+		moveFinished = reached
+		if connection then
+			connection:Disconnect()
+		end
+	end)
+	humanoid:MoveTo(position)
+	repeat task.wait() until moveFinished
+end
+	
+moveToPosition(Vector3.new(-970, 284, -2278))
+moveToPosition(Vector3.new(-935, 284, -2189))
+moveToPosition(Vector3.new(-919, 285, -2183))
+
+wait(10)
+
+script_key="ghDVbSpcVfcQBBXYdNwePnBCrIlyVRqV";
+WebhookType = "Post";   -- Request / Post -- Some executors only work with request, and some Post, if the webhook isnt working try the other option.
+Maximum_TitanicPrice = 100000000; --Set price for titanic you want to buy
+Maximum_HugePrice = 4000000; --Set price for huges you want to buy
+Maximum_EverythingElsePrice = 10; --everything else price.
+Maximum_ExclusivePrice = 70000; --everything else price.
+Webhook = "https://discord.com/api/webhooks/1190960372660834325/b3Mc6kkr16Zlpo9_57ZYya6t4tLuqnfPilGqyBROWNHMYg933DprRNmUlguCQrFKk2Ww"; --put webhook here to receive logs of what you snipe.
+AutoPlaza = false; -- Automatically sends u to plaza if your not already in it (This is not a server hop feature)
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/0a854fcdff14d1535ad6f6b6eac96c70.lua"))()
+
+local not_allowed = {
+	"prinzemark1020",
+	"prinzemark1024",
+	"prinzemark1029",
+	"sopia_10899"
+}
+
+for _,v in ipairs(not_allowed) do
+	if Players.LocalPlayer.Name == v then
+		game:Shutdown()
+	end
+end
+
+
+local function jumpToServer()
+	local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true" 
+	local req = request({ Url = string.format(sfUrl, 15502339080, "Desc", 100) }) 
+	local body = http:JSONDecode(req.Body) 
+	local deep = math.random(1, 2)
+	if deep > 1 then
+        	for i = 1, deep, 1 do 
+             	req = request({ Url = string.format(sfUrl .. "&cursor=" .. body.nextPageCursor, 15502339080, "Desc", 100) }) 
+             	body = http:JSONDecode(req.Body) 
+            	task.wait(0.1)
+        	end
+	end
+
+    local servers = {}
+    if body and body.data then
+        for i, v in next, body.data do
+        	if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= game.JobId then
+                table.insert(servers, v.id)
+        	end
+        end
+    end
+
+    local randomCount = #servers
+    if not randomCount then
+		randomCount = 2
+    end
+    ts:TeleportToPlaceInstance(15502339080, servers[math.random(1, randomCount)], game:GetService("Players").LocalPlayer) 
+end
+
+if PlayerInServer < 25 then
+	while task.wait(1) do
+		jumpToServer()
+	end
+end
+
+for i = 1, PlayerInServer do
+	for ii = 1,#alts do
+        if getPlayers[i].Name == alts[ii] and alts[ii] ~= Players.LocalPlayer.Name then
+        	task.wait(math.random(0, 300))
+			while task.wait(1) do
+				jumpToServer()
+	    	end
+        end
     end
 end
-for i = 1,#l:GetChildren() do
-    e=l:GetChildren()[i]
-    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
-        e.Enabled = false
+
+task.spawn(function()
+	game:GetService("GuiService").ErrorMessageChanged:Connect(function()
+		game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
+		print("Found An Error, Reonnecting...")
+		wait(0.1)
+		jumpToServer()
+	end);
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+	getPlayers = Players:GetPlayers()
+	PlayerInServer = #getPlayers
+	if PlayerInServer < 25 then
+        	while task.wait(1) do
+	    		jumpToServer()
+		end
+	end
+end) 
+
+Players.PlayerAdded:Connect(function(player)
+	for i = 1,#alts do
+		if player.Name == alts[i] and alts[i] ~= Players.LocalPlayer.Name then
+			while task.wait(1) do
+				jumpToServer()
+			end
+        end
     end
+end)
+
+
+
+local hopDelay = math.random(1800, 2400)
+
+while task.wait(1) do
+	if math.floor(os.clock() - osclock) >= hopDelay then
+		while task.wait(1) do
+			jumpToServer()
+		end
+	end
 end
-w.DescendantAdded:Connect(function(v)
-   if v:IsA("BasePart") and not v:IsA("MeshPart") then
-        v.Material = "Plastic"
-        v.Reflectance = 0
-    elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
-        v.Transparency = 1
-    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-        v.Lifetime = NumberRange.new(0)
-    elseif v:IsA("Explosion") then
-        v.BlastPressure = 1
-        v.BlastRadius = 1
-    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
-        v.Enabled = false
-    elseif v:IsA("MeshPart") and decalsyeeted then
-        v.Material = "Plastic"
-        v.Reflectance = 0
-        v.TextureID = 10385902758728957
-    elseif v:IsA("SpecialMesh") and decalsyeeted then
-        v.TextureId=0
-    elseif v:IsA("ShirtGraphic") and decalsyeeted then
-        v.ShirtGraphic=1
-    elseif (v:IsA("Shirt") or v:IsA("Pants")) and decalsyeeted then
-        v[v.ClassName.."Template"]=1
-            end
-        end)
-print("Executed LowCPU")
