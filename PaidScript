@@ -13,6 +13,7 @@ local PlayerInServer = #getPlayers
 local http = game:GetService("HttpService")
 local ts = game:GetService("TeleportService")
 local rs = game:GetService("ReplicatedStorage")
+local pid = place or 15502339080
 
 local vu = game:GetService("VirtualUser")
 Players.LocalPlayer.Idled:connect(function()
@@ -46,7 +47,7 @@ script_key="ghDVbSpcVfcQBBXYdNwePnBCrIlyVRqV";
 WebhookType = "Post";   -- Request / Post -- Some executors only work with request, and some Post, if the webhook isnt working try the other option.
 Maximum_TitanicPrice = 100000000; --Set price for titanic you want to buy
 Maximum_HugePrice = 4000000; --Set price for huges you want to buy
-Maximum_EverythingElsePrice = 10; --everything else price.
+Maximum_EverythingElsePrice = 0; --everything else price.
 Maximum_ExclusivePrice = 70000; --everything else price.
 Webhook = "https://discord.com/api/webhooks/1190960372660834325/b3Mc6kkr16Zlpo9_57ZYya6t4tLuqnfPilGqyBROWNHMYg933DprRNmUlguCQrFKk2Ww"; --put webhook here to receive logs of what you snipe.
 AutoPlaza = false; -- Automatically sends u to plaza if your not already in it (This is not a server hop feature)
