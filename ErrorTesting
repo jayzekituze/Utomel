@@ -6,17 +6,17 @@ print("booty works")
 
 local MainPrices = {
 
-    HugePrice = 5000000,
+    HugePrice = 5500000,
     TitanicPetPrice = 500000000,
-    ExclusivePetPrice = 80000,
-	EggPrice = 700000,
+    ExclusivePetPrice = 90000,
+	EggPrice = 800000,
     buyAnything = 5
 
 }
 
 --PS99 ITEMS
 local ItemsPS99 = {
-    ["Titanic Christmas Present"] = 300000,
+    ["Titanic Christmas Present"] = 500000,
     ["X-Large Christmas Present"] = 30000,
     ["2024 New Year"] = 50000,
     ["Spinny Wheel Ticket"]= 5000,
