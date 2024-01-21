@@ -7,7 +7,7 @@ print("booty works")
 local MainPrices = {
 
     HugePrice = 5000000,
-    TitanicPetPrice = 10000000,
+    TitanicPetPrice = 500000000,
     ExclusivePetPrice = 80000,
 	EggPrice = 700000,
     buyAnything = 5
@@ -58,7 +58,6 @@ local Update5 = {
 	["Mini Chest"] = 50000,
 	["Mystery Ticket"] = 50000,
 	["Daycare Slot Voucher"] = 100000,
-	["Bundle O'"] = 5000,
 	["Secret Key"] = 100000,
     ["Secret Key Lower Half"] = 25000,
 	["Secret Key Upper Half"] = 50000
