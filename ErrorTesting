@@ -58,6 +58,7 @@ local Update5 = {
 	["Mini Chest"] = 50000,
 	["Mystery Ticket"] = 50000,
 	["Daycare Slot Voucher"] = 100000,
+	["Bundle O'"] = 5000,
 	["Secret Key"] = 100000,
     ["Secret Key Lower Half"] = 25000,
 	["Secret Key Upper Half"] = 50000
