@@ -30,7 +30,7 @@ local PotionsPS99 = {
     ["The Cocktail"] = 50000,
 	["Shiny Flag"] = 10000,
 	["Rainbow Flag"] = 10000,
-	["Exotic Treasure Flag"] = 50000,
+	["Exotic Treasure Flag"] = 50000
 }
 
 local EnchantsPS99 = {
