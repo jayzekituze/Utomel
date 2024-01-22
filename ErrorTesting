@@ -6,17 +6,17 @@ print("booty works")
 
 local MainPrices = {
 
-    HugePrice = 4000000,
-    TitanicPetPrice = 10000000,
-    ExclusivePetPrice = 70000,
-	EggPrice = 600000,
+    HugePrice = 5500000,
+    TitanicPetPrice = 500000000,
+    ExclusivePetPrice = 90000,
+	EggPrice = 800000,
     buyAnything = 5
 
 }
 
 --PS99 ITEMS
 local ItemsPS99 = {
-    ["Titanic Christmas Present"] = 300000,
+    ["Titanic Christmas Present"] = 500000,
     ["X-Large Christmas Present"] = 30000,
     ["2024 New Year"] = 50000,
     ["Spinny Wheel Ticket"]= 5000,
@@ -27,7 +27,10 @@ local ItemsPS99 = {
 }
 
 local PotionsPS99 = {
-    ["The Cocktail"] = 50000
+    ["The Cocktail"] = 50000,
+	["Shiny Flag"] = 10000,
+	["Rainbow Flag"] = 10000,
+	["Exotic Treasure Flag"] = 50000,
 }
 
 local EnchantsPS99 = {
@@ -39,12 +42,26 @@ local EnchantsPS99 = {
     ["Diamond Chest Mimic"] = 1000000,
     ["Super Lightning"] = 100000,
     ["Massive Comet"] = 1000000,
-    ["Party Time"] = 50000
+    ["Magic Orb"] = 700000,
+	["Chest Breaker"] = 1000000,
+	["Party Time"] = 50000
 }
 
 local CharmsPS99 = {
+	["Overload"] = 1000000,
     ["Royalty"] = 1000000,
     ["Glittering"]= 25000
+}
+
+local Update5 = {
+    ["Mystery Ticket"] = 50000,
+	["Magic Shard"] = 50000,
+	["Mini Chest"] = 50000,
+	["Mystery Ticket"] = 50000,
+	["Daycare Slot Voucher"] = 100000,
+	["Secret Key"] = 100000,
+    ["Secret Key Lower Half"] = 25000,
+	["Secret Key Upper Half"] = 50000
 }
 
 
