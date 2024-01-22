@@ -244,6 +244,10 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 				shouldMention = true
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
 				return
+			elseif (string.find(item, "Ticket") or string.find(item, "Charm") or class == "Charm") and unitGems <= 2000 then
+				shouldMention = true
+				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
+			   return
             end
 
 				--elseif gems <= 49 then
