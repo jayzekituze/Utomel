@@ -53,11 +53,11 @@ local CharmsPS99 = {
 
 local Update5 = {
     ["Mystery Ticket"] = 50000,
-	["Magic Shard"] = 50000,
+	["Magic Shard"] = 25000,
 	["Mini Chest"] = 50000,
 	["Mystery Ticket"] = 50000,
 	["Daycare Slot Voucher"] = 100000,
-	["Magic Orb"] = 600000,
+	["Magic Orb"] = 400000,
 	["Chest Breaker"] = 1000000,
 	["Secret Key"] = 100000,
     ["Secret Key Lower Half"] = 25000,
@@ -244,7 +244,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 				shouldMention = true
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
 				return
-			elseif (string.find(item, "Ticket") or string.find(item, "Charm") or class == "Charm") and unitGems <= 2000 then
+			elseif (string.find(item, "Ticket") or string.find(item, "Charm") or class == "Charm") and unitGems <= 1000 then
 				shouldMention = true
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
 			   return
