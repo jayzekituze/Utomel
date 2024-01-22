@@ -42,7 +42,7 @@ local EnchantsPS99 = {
     ["Diamond Chest Mimic"] = 1000000,
     ["Super Lightning"] = 100000,
     ["Massive Comet"] = 1000000,
-    ["Magic Orb"] = 1000000,
+    ["Magic Orb"] = 700000,
 	["Chest Breaker"] = 1000000,
 	["Party Time"] = 50000
 }
