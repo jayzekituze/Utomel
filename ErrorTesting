@@ -28,8 +28,8 @@ local ItemsPS99 = {
 
 local PotionsPS99 = {
     ["The Cocktail"] = 50000,
-	["Shiny Flag"] = 25000,
-	["Rainbow Flag"] = 25000,
+	["Shiny Flag"] = 10000,
+	["Rainbow Flag"] = 10000,
 	["Exotic Treasure Flag"] = 50000,
 }
 
@@ -48,6 +48,7 @@ local EnchantsPS99 = {
 }
 
 local CharmsPS99 = {
+	["Overload"] = 1000000,
     ["Royalty"] = 1000000,
     ["Glittering"]= 25000
 }
