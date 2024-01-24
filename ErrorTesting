@@ -6,9 +6,9 @@ print("booty works")
 
 local MainPrices = {
 
-    HugePrice = 5500000,
+    HugePrice = 6000000,
     TitanicPetPrice = 500000000,
-    ExclusivePetPrice = 90000,
+    ExclusivePetPrice = 100000,
 	EggPrice = 800000,
     buyAnything = 5
 
