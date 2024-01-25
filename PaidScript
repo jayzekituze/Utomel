@@ -1,11 +1,10 @@
 local osclock = os.clock()
 repeat task.wait() until game:IsLoaded()
 
+wait(20)
 
-print("booty works")
 
 setfpscap(10)
-game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
@@ -13,7 +12,6 @@ local PlayerInServer = #getPlayers
 local http = game:GetService("HttpService")
 local ts = game:GetService("TeleportService")
 local rs = game:GetService("ReplicatedStorage")
-local pid = place or 15502339080
 
 local vu = game:GetService("VirtualUser")
 Players.LocalPlayer.Idled:connect(function()
@@ -23,95 +21,52 @@ Players.LocalPlayer.Idled:connect(function()
 end)
 game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
 
-local character = Player.Character or Player.CharacterAdded:Wait()
-local humanoid = character:FindFirstChildWhichIsA('Humanoid')
-
-local function moveToPosition(position)
-	local moveFinished = false
-	local connection
-	connection = humanoid.MoveToFinished:Connect(function(reached)
-		moveFinished = reached
-		if connection then
-			connection:Disconnect()
+local function jumpToServer(id)
+	repeat
+		local deep
+		local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s" 
+		local req = request({ Url = string.format(sfUrl, id, "Desc", 100) }) 
+		local body = http:JSONDecode(req.Body)
+		if id == 8737899170 then
+			local deep = math.random(1, 4)
+		else
+			local deep = 1
 		end
-	end)
-	humanoid:MoveTo(position)
-	repeat task.wait() until moveFinished
-end
+		if deep > 1 then
+	        for i = 1, deep, 1 do 
+	         	req = request({ Url = string.format(sfUrl .. "&cursor=" .. body.nextPageCursor, id, "Desc", 100) }) 
+	         	body = http:JSONDecode(req.Body) 
+	        	task.wait(0.1)
+	        end
+		end
 	
-moveToPosition(Vector3.new(-970, 284, -2278))
-moveToPosition(Vector3.new(-935, 284, -2189))
-moveToPosition(Vector3.new(-919, 285, -2183))
+	    local servers = {}
+	    if body and body.data then
+	        for i, v in next, body.data do
+	    	    if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing > 35 and v.id ~= game.JobId then
+	            	table.insert(servers, v.id)
+	        	end
+	        end
+	    end
+	
+	    local randomCount = #servers
+	    if not randomCount then
+			randomCount = 2
+	    end
+    	ts:TeleportToPlaceInstance(id, servers[math.random(1, randomCount)], game:GetService("Players").LocalPlayer)
+	until game.JobId ~= game.JobId
+end
 
-script_key="ghDVbSpcVfcQBBXYdNwePnBCrIlyVRqV";
-WebhookType = "Post";   -- Request / Post -- Some executors only work with request, and some Post, if the webhook isnt working try the other option.
-Maximum_TitanicPrice = 100000000; --Set price for titanic you want to buy
-Maximum_HugePrice = 4000000; --Set price for huges you want to buy
-Maximum_EverythingElsePrice = 0; --everything else price.
-Maximum_ExclusivePrice = 70000; --everything else price.
-Webhook = "https://discord.com/api/webhooks/1190960372660834325/b3Mc6kkr16Zlpo9_57ZYya6t4tLuqnfPilGqyBROWNHMYg933DprRNmUlguCQrFKk2Ww"; --put webhook here to receive logs of what you snipe.
-AutoPlaza = false; -- Automatically sends u to plaza if your not already in it (This is not a server hop feature)
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/0a854fcdff14d1535ad6f6b6eac96c70.lua"))()
 
-local not_allowed = {
-	"prinzemark1020",
-	"prinzemark1024",
-	"prinzemark1029",
-	"sopia_10899"
+
+print("HuGe Games STARTING")
+
+wait(5)
+getgenv().AuthKey = "HUGE_HYARsu18jErU"
+getgenv().LoadSettings = {
+    Example_Setting = 2
 }
-
-for _,v in ipairs(not_allowed) do
-	if Players.LocalPlayer.Name == v then
-		game:Shutdown()
-	end
-end
-
-
-local function jumpToServer()
-	local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true" 
-	local req = request({ Url = string.format(sfUrl, 15502339080, "Desc", 100) }) 
-	local body = http:JSONDecode(req.Body) 
-	local deep = math.random(1, 2)
-	if deep > 1 then
-        	for i = 1, deep, 1 do 
-             	req = request({ Url = string.format(sfUrl .. "&cursor=" .. body.nextPageCursor, 15502339080, "Desc", 100) }) 
-             	body = http:JSONDecode(req.Body) 
-            	task.wait(0.1)
-        	end
-	end
-
-    local servers = {}
-    if body and body.data then
-        for i, v in next, body.data do
-        	if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= game.JobId then
-                table.insert(servers, v.id)
-        	end
-        end
-    end
-
-    local randomCount = #servers
-    if not randomCount then
-		randomCount = 2
-    end
-    ts:TeleportToPlaceInstance(15502339080, servers[math.random(1, randomCount)], game:GetService("Players").LocalPlayer) 
-end
-
-if PlayerInServer < 25 then
-	while task.wait(1) do
-		jumpToServer()
-	end
-end
-
-for i = 1, PlayerInServer do
-	for ii = 1,#alts do
-        if getPlayers[i].Name == alts[ii] and alts[ii] ~= Players.LocalPlayer.Name then
-        	task.wait(math.random(0, 300))
-			while task.wait(1) do
-				jumpToServer()
-	    	end
-        end
-    end
-end
+loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
 
 task.spawn(function()
 	game:GetService("GuiService").ErrorMessageChanged:Connect(function()
@@ -122,34 +77,13 @@ task.spawn(function()
 	end);
 end)
 
-Players.PlayerRemoving:Connect(function(player)
-	getPlayers = Players:GetPlayers()
-	PlayerInServer = #getPlayers
-	if PlayerInServer < 25 then
-        	while task.wait(1) do
-	    		jumpToServer()
-		end
-	end
-end) 
 
-Players.PlayerAdded:Connect(function(player)
-	for i = 1,#alts do
-		if player.Name == alts[i] and alts[i] ~= Players.LocalPlayer.Name then
-			while task.wait(1) do
-				jumpToServer()
-			end
-        end
-    end
-end)
-
-
-
-local hopDelay = math.random(1800, 2400)
+local hopDelay = math.random(500000, 500000)
 
 while task.wait(1) do
 	if math.floor(os.clock() - osclock) >= hopDelay then
 		while task.wait(1) do
-			jumpToServer()
+			print("HAHAHHA NO SERVER HOP")
 		end
 	end
 end
