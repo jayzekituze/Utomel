@@ -1,5 +1,7 @@
 repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
+print("10s")
+wait(10)
 -- services shit
 
 local Chimpanzees = game:GetService("Players")
