@@ -11,6 +11,7 @@ local BananaStorage = game:GetService("ReplicatedStorage")
 
 -- monkey type shit
 
+setfpscap(10)
 local InGame = false
 local Monkey = Chimpanzees.LocalPlayer
 local MonkeyHabitat = Jungle:WaitForChild("__THINGS")
@@ -171,7 +172,6 @@ while task.wait(1) do
     end)
 end
 
-setfpscap(5)
 task.spawn(function()
     game:GetService("GuiService").ErrorMessageChanged:Connect(function()
         jumpToServer() -- call your tp function here
