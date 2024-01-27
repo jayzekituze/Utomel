@@ -1,6 +1,7 @@
 local osclock = os.clock()
 repeat task.wait() until game:IsLoaded()
 
+print("waiting 20s")
 wait(20)
 
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))() -- LIB
@@ -16,52 +17,39 @@ local rs = game:GetService("ReplicatedStorage")
 
 local vu = game:GetService("VirtualUser")
 Players.LocalPlayer.Idled:connect(function()
-    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-    task.wait(1)
-    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	task.wait(1)
+	vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
 
-local function jumpToServer(id)
-    local success = false -- Flag to track successful teleportation
-    repeat
-        local deep
-        local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s" 
-        local req = request({ Url = string.format(sfUrl, id, "Desc", 100) }) 
-        local body = http:JSONDecode(req.Body)
-        if id == 8737899170 then
-            deep = math.random(1, 4) -- Remove local declaration to assign value to the existing variable
-        else
-            deep = 1 -- Remove local declaration to assign value to the existing variable
+local function jumpToServer()
+	local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true" 
+	local req = request({ Url = string.format(sfUrl, 8737899170, "Desc", 100) }) 
+	local body = http:JSONDecode(req.Body) 
+	local deep = math.random(1, 2)
+	if deep > 1 then
+        	for i = 1, deep, 1 do 
+             	req = request({ Url = string.format(sfUrl .. "&cursor=" .. body.nextPageCursor, 8737899170, "Desc", 100) }) 
+             	body = http:JSONDecode(req.Body) 
+            	task.wait(0.1)
+        	end
+	end
+
+    local servers = {}
+    if body and body.data then
+        for i, v in next, body.data do
+        	if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= game.JobId then
+                table.insert(servers, v.id)
+        	end
         end
-        if deep > 1 then
-            for i = 1, deep, 1 do 
-                req = request({ Url = string.format(sfUrl .. "&cursor=" .. body.nextPageCursor, id, "Desc", 100) }) 
-                body = http:JSONDecode(req.Body) 
-                task.wait(0.1)
-            end
-        end
-    
-        local servers = {}
-        if body and body.data then
-            for i, v in next, body.data do
-                if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing > 2 and v.id ~= game.JobId then
-                    table.insert(servers, v.id)
-                end
-            end
-        end
-    
-        local randomCount = #servers
-        if not randomCount then
-            randomCount = 2
-        end
-        local newServerId = servers[math.random(1, randomCount)]
-        if newServerId then -- Check if a new server ID is obtained
-            success = true -- Set the flag to indicate successful teleportation
-            ts:TeleportToPlaceInstance(id, newServerId, game:GetService("Players").LocalPlayer)
-        end
-        -- You might want to add more conditions here to determine when to stop looping
-    until game.JobId ~= game.JobId
+    end
+
+    local randomCount = #servers
+    if not randomCount then
+		randomCount = 2
+    end
+    ts:TeleportToPlaceInstance(8737899170, servers[math.random(1, randomCount)], game:GetService("Players").LocalPlayer) 
 end
 
-jumpToServer(8737899170)
+jumpToServer()
