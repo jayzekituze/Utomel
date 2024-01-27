@@ -1,22 +1,11 @@
 repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
-print("10s")
-
-wait(10)
-
 -- services shit
 
 local Chimpanzees = game:GetService("Players")
 local Jungle = game:GetService("Workspace")
 local TreeClimbingService = game:GetService("RunService")
 local BananaStorage = game:GetService("ReplicatedStorage")
-local Players = game:GetService('Players')
-local Player = Players.LocalPlayer
-local getPlayers = Players:GetPlayers()
-local PlayerInServer = #getPlayers
-local http = game:GetService("HttpService")
-local ts = game:GetService("TeleportService")
-local rs = game:GetService("ReplicatedStorage")
 
 -- monkey type shit
 
@@ -28,7 +17,6 @@ local MonkeyDebris = Jungle:WaitForChild("__DEBRIS")
 local MonkeyNetwork = BananaStorage:WaitForChild("Network")
 local OldMonkeyHooks = {}
 local MonkeyFishingGame = Monkey:WaitForChild("PlayerGui"):WaitForChild("_INSTANCES").FishingGame.GameBar
-local CurrentMonkeyFishingModule = require(MonkeyHabitat.__INSTANCE_CONTAINER.Active:WaitForChild("AdvancedFishing").ClientModule.FishingGame)
 
 -- Define a function to teleport the player to the fishing site
 local function teleportToFishingSite()
@@ -39,11 +27,13 @@ local function teleportToFishingSite()
 end
 
 -- Check if there are active fishing instances; if not, teleport the player to the fishing site
-if #ACTIVE:GetChildren() == 0 then
+if #ActiveMonkeys:GetChildren() == 0 then
     teleportToFishingSite()
 else
     print('nah')
 end
+
+local CurrentMonkeyFishingModule = require(MonkeyHabitat.__INSTANCE_CONTAINER.Active:WaitForChild("AdvancedFishing").ClientModule.FishingGame)
 
 --  functions
 
