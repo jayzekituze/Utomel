@@ -16,27 +16,28 @@ local rs = game:GetService("ReplicatedStorage")
 
 local vu = game:GetService("VirtualUser")
 Players.LocalPlayer.Idled:connect(function()
-	vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-	task.wait(1)
-	vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    task.wait(1)
+    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
 
 local function jumpToServer(id)
+    local success = false -- Flag to track successful teleportation
     repeat
         local deep
         local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s" 
         local req = request({ Url = string.format(sfUrl, id, "Desc", 100) }) 
         local body = http:JSONDecode(req.Body)
         if id == 8737899170 then
-            local deep = math.random(1, 4)
+            deep = math.random(1, 4) -- Remove local declaration to assign value to the existing variable
         else
-            local deep = 1
+            deep = 1 -- Remove local declaration to assign value to the existing variable
         end
         if deep > 1 then
             for i = 1, deep, 1 do 
-                 req = request({ Url = string.format(sfUrl .. "&cursor=" .. body.nextPageCursor, id, "Desc", 100) }) 
-                 body = http:JSONDecode(req.Body) 
+                req = request({ Url = string.format(sfUrl .. "&cursor=" .. body.nextPageCursor, id, "Desc", 100) }) 
+                body = http:JSONDecode(req.Body) 
                 task.wait(0.1)
             end
         end
@@ -54,7 +55,12 @@ local function jumpToServer(id)
         if not randomCount then
             randomCount = 2
         end
-        ts:TeleportToPlaceInstance(id, servers[math.random(1, randomCount)], game:GetService("Players").LocalPlayer)
+        local newServerId = servers[math.random(1, randomCount)]
+        if newServerId then -- Check if a new server ID is obtained
+            success = true -- Set the flag to indicate successful teleportation
+            ts:TeleportToPlaceInstance(id, newServerId, game:GetService("Players").LocalPlayer)
+        end
+        -- You might want to add more conditions here to determine when to stop looping
     until game.JobId ~= game.JobId
 end
 
