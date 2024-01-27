@@ -3,8 +3,8 @@ repeat task.wait() until game:IsLoaded()
 
 wait(20)
 
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
-
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))() -- LIB
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/autoRecon'))() -- auto recon
 setfpscap(10)
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
@@ -58,11 +58,11 @@ local function jumpToServer(id)
 	until game.JobId ~= game.JobId
 end
 
-jumpToServer()
+jumpToServer(8737899170)
 
 task.spawn(function()
     game:GetService("GuiService").ErrorMessageChanged:Connect(function()
-        jumpToServer() -- call your tp function here
+        jumpToServer(8737899170) -- call your tp function here
         game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
         print("Found An Error, Reonnecting...")
         wait(0.1)
