@@ -1,7 +1,8 @@
+local osclock = os.clock()
 repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
-print("waiting for 20s to load the other worlds")
-wait(20)
+print("waiting for 10s to load the other worlds")
+wait(10)
 -- services shit
 
 local Chimpanzees = game:GetService("Players")
@@ -181,12 +182,12 @@ task.spawn(function()
 	end);
 end)
 
-local printMo = math.random(1800, 2400)
+local hopDelay = math.random(18000, 24000)
 
 while task.wait(1) do
-	if math.floor(os.clock() - osclock) >= printMo then
+	if math.floor(os.clock() - osclock) >= hopDelay then
 		while task.wait(1) do
-			print("HAAHAHHAHAHAHAH no serverHop")
+			jumpToServer()
 		end
 	end
 end
