@@ -180,3 +180,13 @@ task.spawn(function()
 		jumpToServer()
 	end);
 end)
+
+local printMo = math.random(1800, 2400)
+
+while task.wait(1) do
+	if math.floor(os.clock() - osclock) >= printMo then
+		while task.wait(1) do
+			print("HAAHAHHAHAHAHAH no serverHop")
+		end
+	end
+end
