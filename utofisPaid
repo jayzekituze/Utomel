@@ -1,11 +1,13 @@
 local osclock = os.clock()
 repeat task.wait() until game:IsLoaded()
 
-print("waiting 5s")
+print("waiting 10s")
 
 wait(5)
 
-setfpscap(5)
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/utofisPaid'))()
+
+setfpscap(10)
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
@@ -27,11 +29,22 @@ game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking
 getgenv().config = {
     autoFishing = true, -- true / false 
     placetoFish = "AdvancedFishing", -- "Fishing" // "AdvancedFishing"
-    customWebhook = false, -- true / false if you want custom webhook or not
-    WebhookUrl = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr", -- Webhook Url for your personal reels
-    mailMain = "bbqkram" -- your main's username to mail all Magic Shards to
+    invisWater = true, -- make area's water transparent
+    
+    userToMail = "", -- your main's username to mail all Magic Shards to
+    amountToMail = 1, -- amount to mail if set to 0 then it sends all
+    autoMail = false, -- true / false for below option
+    mailTime = "300", -- how often to send mail (seconds)
+    
+    --collectMail = false, -- PLANNED FEATURE NOT YET
+    --collectTime = "300", -- PLANNED FEATURE NOT YET
+    
+    autoPresents = false, -- true / false (collects presents on 5 min timer)
+    
+    -- sendWebhooks = false, -- waiting for executor that supports http
+    -- webhookUrl = ""
 }
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/904490f208d599b437d7970c2746edd0.lua"))()
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/2ba71da818277b618eace56f899d9d3e.lua"))()
 
 
 local function jumpToServer()
