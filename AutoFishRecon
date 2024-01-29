@@ -5,30 +5,44 @@ print("Waiting for 10s to load the other worlds...")
 wait(10)
 
 -- Services
+local Chimpanzees = game:GetService("Players")
+local Jungle = game:GetService("Workspace")
+local TreeClimbingService = game:GetService("RunService")
+local BananaStorage = game:GetService("ReplicatedStorage")
+
+
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/AutoFishRecon'))()
+
+
+-- monkey type shit
+
+setfpscap(10)
+local InGame = false
+local Monkey = Chimpanzees.LocalPlayer
+local MonkeyHabitat = Jungle:WaitForChild("__THINGS")
+local ActiveMonkeys = MonkeyHabitat:WaitForChild("__INSTANCE_CONTAINER"):WaitForChild("Active")
+local MonkeyDebris = Jungle:WaitForChild("__DEBRIS")
+local MonkeyNetwork = BananaStorage:WaitForChild("Network")
+local OldMonkeyHooks = {}
+local MonkeyFishingGame = Monkey:WaitForChild("PlayerGui"):WaitForChild("_INSTANCES").FishingGame.GameBar
+
 local Players = game:GetService('Players')
+local Player = Players.LocalPlayer
+local getPlayers = Players:GetPlayers()
+local PlayerInServer = #getPlayers
 local http = game:GetService("HttpService")
 local ts = game:GetService("TeleportService")
+local rs = game:GetService("ReplicatedStorage")
 local vu = game:GetService("VirtualUser")
 
--- Set FPS Cap
-setfpscap(10)
-
--- PS99 variables
-local InGame = false
-local Monkey = Players.LocalPlayer
-local MonkeyHabitat = game.Workspace:WaitForChild("__THINGS")
-local ActiveMonkeys = MonkeyHabitat:WaitForChild("__INSTANCE_CONTAINER"):WaitForChild("Active")
-local MonkeyDebris = game.Workspace:WaitForChild("__DEBRIS")
-local MonkeyNetwork = game.ReplicatedStorage:WaitForChild("Network")
-
--- Anti-AFK
 Players.LocalPlayer.Idled:connect(function()
-    vu:Button2Down(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
-    task.wait(1)
-    vu:Button2Up(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+	vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	task.wait(1)
+	vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
+game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
 
--- Function to jump to another server
+
 local function jumpToServer()
     local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true" 
     local req = request({ Url = string.format(sfUrl, 8737899170, "Desc", 100) }) 
@@ -66,9 +80,10 @@ local function jumpToServer()
     end
 end
 
--- Teleport function to fishing site
+-- Define a function to teleport the player to the fishing site
 local function teleportToFishingSite()
-    game.ReplicatedStorage:WaitForChild("Network"):WaitForChild("Teleports_RequestTeleport"):InvokeServer("Cloud Forest")
+    -- Teleport the player to the fishing site
+    game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Teleports_RequestTeleport"):InvokeServer("Cloud Forest")
     wait(20)
     Monkey.Character.HumanoidRootPart.CFrame = MonkeyHabitat.Instances.AdvancedFishing.Teleports.Enter.CFrame
 end
@@ -77,10 +92,8 @@ end
 if #ActiveMonkeys:GetChildren() == 0 then
     teleportToFishingSite()
 else
-    print('No active fishing instances.')
+    print('nah')
 end
-
--- Other functions...
 
 local CurrentMonkeyFishingModule = require(MonkeyHabitat.__INSTANCE_CONTAINER.Active:WaitForChild("AdvancedFishing").ClientModule.FishingGame)
 
@@ -176,10 +189,10 @@ end
 task.spawn(function()
     game:GetService("GuiService").ErrorMessageChanged:Connect(function(errorMessage)
         print("Error message:", errorMessage)
-        jumpToServer() -- Attempt to teleport to another server
         game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
         print("Found An Error, Reconnecting...")
         wait(0.1)
+        jumpToServer() -- Attempt to teleport to another server
     end)
 end)
 
