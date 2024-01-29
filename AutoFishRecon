@@ -10,11 +10,7 @@ local Jungle = game:GetService("Workspace")
 local TreeClimbingService = game:GetService("RunService")
 local BananaStorage = game:GetService("ReplicatedStorage")
 
-
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/AutoFishRecon'))()
-
-
--- monkey type shit
+-- Monkey type stuff
 
 setfpscap(10)
 local InGame = false
@@ -36,12 +32,11 @@ local rs = game:GetService("ReplicatedStorage")
 local vu = game:GetService("VirtualUser")
 
 Players.LocalPlayer.Idled:connect(function()
-	vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-	task.wait(1)
-	vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    task.wait(1)
+    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
-
 
 local function jumpToServer()
     local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true" 
@@ -97,24 +92,28 @@ end
 
 local CurrentMonkeyFishingModule = require(MonkeyHabitat.__INSTANCE_CONTAINER.Active:WaitForChild("AdvancedFishing").ClientModule.FishingGame)
 
---  functions
+-- Functions
 
-for i, v in pairs(CurrentMonkeyFishingModule) do
-    OldMonkeyHooks[i] = v
-end
-
-CurrentMonkeyFishingModule.IsFishInBar = function()
-    return math.random(1, 6) ~= 1
-end
-
-CurrentMonkeyFishingModule.StartGame = function(...)
+-- Initialize OldMonkeyHooks with default functions
+OldMonkeyHooks.StartGame = function(...)
     InGame = true
-    return OldMonkeyHooks.StartGame(...)
+    return CurrentMonkeyFishingModule.StartGame(...)
 end
 
-CurrentMonkeyFishingModule.StopGame = function(...)
+OldMonkeyHooks.StopGame = function(...)
     InGame = false
-    return OldMonkeyHooks.StopGame(...)
+    return CurrentMonkeyFishingModule.StopGame(...)
+end
+
+OldMonkeyHooks.IsFishInBar = function()
+    return CurrentMonkeyFishingModule.IsFishInBar()
+end
+
+-- Assigning functions from CurrentMonkeyFishingModule to OldMonkeyHooks
+for i, v in pairs(CurrentMonkeyFishingModule) do
+    if type(v) == "function" and OldMonkeyHooks[i] == nil then
+        OldMonkeyHooks[i] = v
+    end
 end
 
 local function waitForMonkeyGameState(state)
@@ -153,10 +152,10 @@ local function getMonkeyBubbles(anchor)
     return myBubbles
 end
 
---anti afk shit
+-- Anti-afk
 game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
 
---low cpu nigga optimizer
+-- Low CPU optimization
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
 while task.wait(1) do
@@ -171,11 +170,11 @@ while task.wait(1) do
             until not ActiveMonkeys:FindFirstChild("AdvancedFishing") or (myAnchor and getMonkeyBubbles(myAnchor)) or InGame
 
             if ActiveMonkeys:FindFirstChild("AdvancedFishing") then
-				repeat
-					task.wait()
-					MonkeyNetwork.Instancing_InvokeCustomFromClient:InvokeServer("AdvancedFishing", "Clicked")
-					MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestReel")
-				until getMonkeyRod():FindFirstChild("FishingLine") == nil
+                repeat
+                    task.wait()
+                    MonkeyNetwork.Instancing_InvokeCustomFromClient:InvokeServer("AdvancedFishing", "Clicked")
+                    MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestReel")
+                until getMonkeyRod():FindFirstChild("FishingLine") == nil
             end
 
             repeat
