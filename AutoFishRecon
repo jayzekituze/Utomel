@@ -10,6 +10,8 @@ local Jungle = game:GetService("Workspace")
 local TreeClimbingService = game:GetService("RunService")
 local BananaStorage = game:GetService("ReplicatedStorage")
 
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/AutoFishRecon'))()
+
 -- Monkey type stuff
 
 setfpscap(10)
