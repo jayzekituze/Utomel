@@ -1,0 +1,24 @@
+repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
+
+wait(10)
+-- services shit
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
+setfpscap(10)
+
+--anti afk shit
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
+game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
+
+--low cpu nigga optimizer
+game:GetService("RunService"):Set3dRenderingEnabled(false)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
+
+-- v1 Presentless
+_G.Enabled = true -- true / false for auto
+_G.Area = "AdvancedFishing" -- "Fishing" / "AdvancedFishing"
+
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/8a95df498c5dec0c504add4a48d20cf4.lua"))()
