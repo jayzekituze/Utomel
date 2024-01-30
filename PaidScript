@@ -1,7 +1,7 @@
 repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
 -- services shit
-
+wait(5)
 setfpscap(10)
 local Chimpanzees = game:GetService("Players")
 local Jungle = game:GetService("Workspace")
