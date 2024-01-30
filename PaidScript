@@ -1,6 +1,5 @@
 repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
-wait(10)
 -- services shit
 
 setfpscap(10)
