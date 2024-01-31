@@ -123,11 +123,41 @@ end
 game:GetService("RunService"):Set3dRenderingEnabled(true)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
+local centralX = 1465.7059326171875
+local centralY = 61.62495422363281
+local centralZ = -4453.29052734375
+local range = 10 -- Adjust this value to change the range around the central point
+
+local function getRandomOffset()
+    return math.random(-range, range)
+end
+
+local function getRandomFishingSpot()
+    local offsetX = getRandomOffset()
+    local offsetY = getRandomOffset()
+    local offsetZ = getRandomOffset()
+    
+    return centralX + offsetX, centralY + offsetY, centralZ + offsetZ
+end
+
+local function generateRandomFishingSpots(numSpots)
+    local fishingSpots = {}
+    for i = 1, numSpots do
+        local x, y, z = getRandomFishingSpot()
+        table.insert(fishingSpots, x)
+        table.insert(fishingSpots, y)
+        table.insert(fishingSpots, z)
+    end
+    return fishingSpots
+end
+
+local fishingSpots = generateRandomFishingSpots(3)
+
 while task.wait(1) do
     pcall(function()
         local fishingInstance = MonkeyHabitat.__INSTANCE_CONTAINER.Active:FindFirstChild("AdvancedFishing")
         if fishingInstance and not InGame then
-            MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", Vector3.new(1455, 61, -4453))
+            MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", Vector3.new(fishingSpots))
 
             local myAnchor = getMonkeyRod():WaitForChild("FishingLine").Attachment0
             repeat
