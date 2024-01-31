@@ -1,148 +1,32 @@
-local osclock = os.clock()
-repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
+getgenv().config = {
+    autoFishing = true,              -- farm off execution or not
+    placetoFish = "AdvancedFishing", -- "Fishing" // "AdvancedFishing"
+    sendReels = true,                  -- send reels webhooks
+    reelsUrl = "",                     -- webhook URL for reels
+    invisWater = true,                  -- make water transparent
 
-print("Waiting for 10s to load the other worlds...")
-wait(10)
+    autoPresents = false,              -- auto collect presents
+    sendPresents = true,             -- send presents webhooks
+    presentsUrl = "",                 -- webhook URL for presents
+    
+    autoDaycare = false,              -- configurable auto daycare     
+    petToEnroll = "",                 -- name of pet to enroll
+    enrollpetType = 2,                 -- 1=Golden, 2=Rainbow, 0=Regular
+    
+    autoMerchants = false,             -- auto buy from merchants
+    autoVendings = false,              -- auto buy from machines
 
--- Services
-local Chimpanzees = game:GetService("Players")
-local Jungle = game:GetService("Workspace")
-local TreeClimbingService = game:GetService("RunService")
-local BananaStorage = game:GetService("ReplicatedStorage")
-
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
-
--- Monkey type stuff
-
-setfpscap(10)
-local InGame = false
-local Monkey = Chimpanzees.LocalPlayer
-local MonkeyHabitat = Jungle:WaitForChild("__THINGS")
-local ActiveMonkeys = MonkeyHabitat:WaitForChild("__INSTANCE_CONTAINER"):WaitForChild("Active")
-local MonkeyDebris = Jungle:WaitForChild("__DEBRIS")
-local MonkeyNetwork = BananaStorage:WaitForChild("Network")
-local OldMonkeyHooks = {}
-local MonkeyFishingGame = Monkey:WaitForChild("PlayerGui"):WaitForChild("_INSTANCES").FishingGame.GameBar
-
-local Players = game:GetService('Players')
-local Player = Players.LocalPlayer
-local getPlayers = Players:GetPlayers()
-local PlayerInServer = #getPlayers
-local http = game:GetService("HttpService")
-local ts = game:GetService("TeleportService")
-local rs = game:GetService("ReplicatedStorage")
-local vu = game:GetService("VirtualUser")
-
-Players.LocalPlayer.Idled:connect(function()
-    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-    task.wait(1)
-    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-end)
-game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
-
--- Define a function to teleport the player to the fishing site
-local function teleportToFishingSite()
-    -- Teleport the player to the fishing site
-    game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Teleports_RequestTeleport"):InvokeServer("Cloud Forest")
-    wait(20)
-    Monkey.Character.HumanoidRootPart.CFrame = MonkeyHabitat.Instances.AdvancedFishing.Teleports.Enter.CFrame
-end
-
--- Check if there are active fishing instances; if not, teleport the player to the fishing site
-if #ActiveMonkeys:GetChildren() == 0 then
-    teleportToFishingSite()
-else
-    print('nah')
-end
-
-local CurrentMonkeyFishingModule = require(MonkeyHabitat.__INSTANCE_CONTAINER.Active:WaitForChild("AdvancedFishing").ClientModule.FishingGame)
-
--- Functions
-
--- Initialize OldMonkeyHooks with default functions
-OldMonkeyHooks.StartGame = function(...)
-    InGame = true
-    return CurrentMonkeyFishingModule.StartGame(...)
-end
-
-OldMonkeyHooks.StopGame = function(...)
-    InGame = false
-    return CurrentMonkeyFishingModule.StopGame(...)
-end
-
-OldMonkeyHooks.IsFishInBar = function()
-    return CurrentMonkeyFishingModule.IsFishInBar()
-end
-
--- Assigning functions from CurrentMonkeyFishingModule to OldMonkeyHooks
-for i, v in pairs(CurrentMonkeyFishingModule) do
-    if type(v) == "function" and OldMonkeyHooks[i] == nil then
-        OldMonkeyHooks[i] = v
-    end
-end
-
-local function waitForMonkeyGameState(state)
-    repeat
-        TreeClimbingService.RenderStepped:Wait()
-    until InGame == state
-end
-
-local function getMonkeyRod()
-    return Monkey.Character and Monkey.Character:FindFirstChild("Rod", true)
-end
-
-local function getMonkeyBubbles(anchor)
-    local myBobber = nil
-    local myBubbles = false
-    local closestBobber = math.huge
-
-    for _, v in pairs(ActiveMonkeys.AdvancedFishing.Bobbers:GetChildren()) do
-        local distance = (v.Bobber.CFrame.Position - anchor.CFrame.Position).Magnitude
-
-        if distance <= closestBobber then
-            myBobber = v.Bobber
-            closestBobber = distance
-        end
-    end
-
-    if myBobber then
-        for _, v in pairs(MonkeyDebris:GetChildren()) do
-            if v.Name == "host" and v:FindFirstChild("Attachment") and (v.Attachment:FindFirstChild("Bubbles") or v.Attachment:FindFirstChild("Rare Bubbles")) and (v.CFrame.Position - myBobber.CFrame.Position).Magnitude <= 1 then
-                myBubbles = true
-                break
-            end
-        end
-    end
-
-    return myBubbles
-end
-
---low cpu nigga optimizer
-game:GetService("RunService"):Set3dRenderingEnabled(false)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
-
-while task.wait(1) do
-    pcall(function()
-        local fishingInstance = MonkeyHabitat.__INSTANCE_CONTAINER.Active:FindFirstChild("AdvancedFishing")
-        if fishingInstance and not InGame then
-            MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", Vector3.new(1465.7059326171875, 61.62495422363281, -4453.29052734375))
-
-            local myAnchor = getMonkeyRod():WaitForChild("FishingLine").Attachment0
-            repeat
-                TreeClimbingService.RenderStepped:Wait()
-            until not ActiveMonkeys:FindFirstChild("AdvancedFishing") or (myAnchor and getMonkeyBubbles(myAnchor)) or InGame
-
-            if ActiveMonkeys:FindFirstChild("AdvancedFishing") then
-                repeat
-                    task.wait()
-                    MonkeyNetwork.Instancing_InvokeCustomFromClient:InvokeServer("AdvancedFishing", "Clicked")
-                    MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestReel")
-                until getMonkeyRod():FindFirstChild("FishingLine") == nil
-            end
-
-            repeat
-                TreeClimbingService.RenderStepped:Wait()
-            until not ActiveMonkeys:FindFirstChild("AdvancedFishing") or (getMonkeyRod() and getMonkeyRod().Parent.Bobber.Transparency <= 0)
-        end
-    end)
-end
+    autoMail = false,                  -- true // false
+    userToMail = "",                  -- Username to auto mail
+    amountToMail = 0,                  -- Amount to Mail // 0 sends all
+    mailTimer = 300,                  -- custom timer (seconds)
+    
+    manualMailUsernames = {             -- option to be able to mail different accounts with GUI button
+        "Username1",
+        "Username2",
+    }
+    
+    --autoCollectMail = false,
+    --collectTimer = "300",
+}
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/92e9e3513b3d3359d311cccd6c5ef57c.lua"))()
