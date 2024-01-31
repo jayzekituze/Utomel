@@ -151,15 +151,21 @@ local function generateRandomFishingSpots(numSpots)
     return fishingSpots
 end
 
+
 local fishingSpots = generateRandomFishingSpots(3)
 
+wait(10)
 while task.wait(1) do
     pcall(function()
         local fishingInstance = MonkeyHabitat.__INSTANCE_CONTAINER.Active:FindFirstChild("AdvancedFishing")
         if fishingInstance and not InGame then
             MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", Vector3.new(fishingSpots))
 
-            local myAnchor = getMonkeyRod():WaitForChild("FishingLine").Attachment0
+            local myAnchor = getMonkeyRod() and getMonkeyRod():WaitForChild("FishingLine").Attachment0
+            if not myAnchor then
+                continue -- Skip the rest of the loop iteration if fishing rod not found
+            end
+            
             repeat
                 TreeClimbingService.RenderStepped:Wait()
             until not ActiveMonkeys:FindFirstChild("AdvancedFishing") or (myAnchor and getMonkeyBubbles(myAnchor)) or InGame
