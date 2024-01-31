@@ -144,42 +144,39 @@ local function generateRandomFishingSpots(numSpots)
     local fishingSpots = {}
     for i = 1, numSpots do
         local x, y, z = getRandomFishingSpot()
-        table.insert(fishingSpots, {x, y, z}) -- Store coordinates as a table
+        table.insert(fishingSpots, Vector3.new(x, y, z))
     end
     return fishingSpots
 end
 
-local function getMonkeyRod()
-    return Monkey.Character and Monkey.Character:FindFirstChild("Rod", true)
-end
+local numSpots = 10 -- Number of fishing spots to generate
+local fishingSpots = generateRandomFishingSpots(numSpots)
 
-local fishingSpots = generateRandomFishingSpots(3) -- Generate 3 random fishing spots
-
-while task.wait(1) do
+while true do
     pcall(function()
         local fishingInstance = MonkeyHabitat.__INSTANCE_CONTAINER.Active:FindFirstChild("AdvancedFishing")
         if fishingInstance and not InGame then
-            for _, spot in ipairs(fishingSpots) do -- Iterate over fishing spots
-                local spotVector = Vector3.new(unpack(spot)) -- Convert spot coordinates to Vector3
-                MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", spotVector)
+            local randomIndex = math.random(1, #fishingSpots)
+            local randomSpot = fishingSpots[randomIndex]
 
-                local myAnchor = getMonkeyRod() and getMonkeyRod():WaitForChild("FishingLine").Attachment0
+            MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", randomSpot)
+
+            local myAnchor = getMonkeyRod():WaitForChild("FishingLine").Attachment0
+            repeat
+                task.wait()
+            until not ActiveMonkeys:FindFirstChild("AdvancedFishing") or (myAnchor and getMonkeyBubbles(myAnchor)) or InGame
+
+            if ActiveMonkeys:FindFirstChild("AdvancedFishing") then
                 repeat
-                    TreeClimbingService.RenderStepped:Wait()
-                until not ActiveMonkeys:FindFirstChild("AdvancedFishing") or (myAnchor and getMonkeyBubbles(myAnchor)) or InGame
-
-                if ActiveMonkeys:FindFirstChild("AdvancedFishing") then
-                    repeat
-                        task.wait()
-                        MonkeyNetwork.Instancing_InvokeCustomFromClient:InvokeServer("AdvancedFishing", "Clicked")
-                        MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestReel")
-                    until getMonkeyRod():FindFirstChild("FishingLine") == nil
-                end
-
-                repeat
-                    TreeClimbingService.RenderStepped:Wait()
-                until not ActiveMonkeys:FindFirstChild("AdvancedFishing") or (getMonkeyRod() and getMonkeyRod().Parent.Bobber.Transparency <= 0)
+                    task.wait()
+                    MonkeyNetwork.Instancing_InvokeCustomFromClient:InvokeServer("AdvancedFishing", "Clicked")
+                    MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestReel")
+                until getMonkeyRod():FindFirstChild("FishingLine") == nil
             end
+
+            repeat
+                task.wait()
+            until not ActiveMonkeys:FindFirstChild("AdvancedFishing") or (getMonkeyRod() and getMonkeyRod().Parent.Bobber.Transparency <= 0)
         end
     end)
 end
