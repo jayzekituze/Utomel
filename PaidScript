@@ -46,7 +46,7 @@ local function teleportToFishingSite()
     game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Teleports_RequestTeleport"):InvokeServer("Cloud Forest")
     wait(20)
     Monkey.Character.HumanoidRootPart.CFrame = MonkeyHabitat.Instances.AdvancedFishing.Teleports.Enter.CFrame
-    wait(20)
+    wait(10)
     game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = CFrame.new(Vector3.new(1448.795654296875, 66.5163803100586, -4449.38916015625))
 end
 
@@ -131,7 +131,7 @@ while task.wait(1) do
     pcall(function()
         local fishingInstance = MonkeyHabitat.__INSTANCE_CONTAINER.Active:FindFirstChild("AdvancedFishing")
         if fishingInstance and not InGame then
-            MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", Vector3.new(1465.7059326171875, 61.62495422363281, -4463.29052734375))
+            MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", Vector3.new(1465.7059326171875, 61.62495422363281, -4453.29052734375))
 
             local myAnchor = getMonkeyRod():WaitForChild("FishingLine").Attachment0
             repeat
@@ -139,11 +139,11 @@ while task.wait(1) do
             until not ActiveMonkeys:FindFirstChild("AdvancedFishing") or (myAnchor and getMonkeyBubbles(myAnchor)) or InGame
 
             if ActiveMonkeys:FindFirstChild("AdvancedFishing") then
-                repeat
-                    task.wait()
-                    MonkeyNetwork.Instancing_InvokeCustomFromClient:InvokeServer("AdvancedFishing", "Clicked")
-                    MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestReel")
-                until getMonkeyRod():FindFirstChild("FishingLine") == nil
+				repeat
+					task.wait()
+					MonkeyNetwork.Instancing_InvokeCustomFromClient:InvokeServer("AdvancedFishing", "Clicked")
+					MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestReel")
+				until getMonkeyRod():FindFirstChild("FishingLine") == nil
             end
 
             repeat
