@@ -144,7 +144,7 @@ while task.wait(1) do
     pcall(function()
         local fishingInstance = MonkeyHabitat.__INSTANCE_CONTAINER.Active:FindFirstChild("AdvancedFishing")
         if fishingInstance and not InGame then
-            MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", fishingSpot)
+            MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", Vector3.new(1453.34, 74.90, -4437.77))
 
             local myAnchor = getMonkeyRod():WaitForChild("FishingLine").Attachment0
             repeat
