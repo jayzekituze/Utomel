@@ -136,7 +136,7 @@ local function getRandomFishingSpot()
     local offsetX = getRandomOffset()
     local offsetY = getRandomOffset()
     local offsetZ = getRandomOffset()
-    
+
     return centralX + offsetX, centralY + offsetY, centralZ + offsetZ
 end
 
@@ -144,22 +144,20 @@ local function generateRandomFishingSpots(numSpots)
     local fishingSpots = {}
     for i = 1, numSpots do
         local x, y, z = getRandomFishingSpot()
-        table.insert(fishingSpots, Vector3.new(x, y, z))
+        table.insert(fishingSpots, x)
+        table.insert(fishingSpots, y)
+        table.insert(fishingSpots, z)
     end
     return fishingSpots
 end
 
-local numSpots = 10 -- Number of fishing spots to generate
-local fishingSpots = generateRandomFishingSpots(numSpots)
-
-while true do
+while task.wait(1) do
     pcall(function()
         local fishingInstance = MonkeyHabitat.__INSTANCE_CONTAINER.Active:FindFirstChild("AdvancedFishing")
         if fishingInstance and not InGame then
-            local randomIndex = math.random(1, #fishingSpots)
-            local randomSpot = fishingSpots[randomIndex]
+            local fishingSpots = generateRandomFishingSpots(1) -- Assuming you want one fishing spot
 
-            MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", randomSpot)
+            MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", Vector3.new(unpack(fishingSpots)))
 
             local myAnchor = getMonkeyRod():WaitForChild("FishingLine").Attachment0
             repeat
