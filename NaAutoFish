@@ -2,7 +2,7 @@ repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
 wait(10)
 -- services shit
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/NaAutoFish'))()
 setfpscap(10)
 
 --anti afk shit
@@ -14,11 +14,38 @@ end)
 game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
 
 --low cpu nigga optimizer
-game:GetService("RunService"):Set3dRenderingEnabled(false)
+game:GetService("RunService"):Set3dRenderingEnabled(true)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
--- v1 Presentless
-_G.Enabled = true -- true / false for auto
-_G.Area = "AdvancedFishing" -- "Fishing" / "AdvancedFishing"
+getgenv().config = {
+    autoFishing = true,              -- farm off execution or not
+    placetoFish = "AdvancedFishing", -- "Fishing" // "AdvancedFishing"
+    sendReels = true,                  -- send reels webhooks
+    reelsUrl = "",                     -- webhook URL for reels
+    invisWater = true,                  -- make water transparent
 
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/8a95df498c5dec0c504add4a48d20cf4.lua"))()
+    autoPresents = false,              -- auto collect presents
+    sendPresents = true,             -- send presents webhooks
+    presentsUrl = "",                 -- webhook URL for presents
+    
+    autoDaycare = false,              -- configurable auto daycare     
+    petToEnroll = "",                 -- name of pet to enroll
+    enrollpetType = 2,                 -- 1=Golden, 2=Rainbow, 0=Regular
+    
+    autoMerchants = false,             -- auto buy from merchants
+    autoVendings = false,              -- auto buy from machines
+
+    autoMail = false,                  -- true // false
+    userToMail = "",                  -- Username to auto mail
+    amountToMail = 0,                  -- Amount to Mail // 0 sends all
+    mailTimer = 300,                  -- custom timer (seconds)
+    
+    manualMailUsernames = {             -- option to be able to mail different accounts with GUI button
+        "Username1",
+        "Username2",
+    }
+    
+    --autoCollectMail = false,
+    --collectTimer = "300",
+}
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/92e9e3513b3d3359d311cccd6c5ef57c.lua"))()
