@@ -1,35 +1,51 @@
-local osclock = os.clock()
-repeat task.wait() until game:IsLoaded()
+repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
-
-print("waiting 20s to execute")
-wait(20)
-
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
-
+wait(10)
+-- services shit
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/NaAutoFish'))()
 setfpscap(10)
-local Players = game:GetService('Players')
-local Player = Players.LocalPlayer
-local getPlayers = Players:GetPlayers()
-local PlayerInServer = #getPlayers
-local http = game:GetService("HttpService")
-local ts = game:GetService("TeleportService")
-local rs = game:GetService("ReplicatedStorage")
 
-local vu = game:GetService("VirtualUser")
-Players.LocalPlayer.Idled:connect(function()
-	vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-	task.wait(1)
-	vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+--anti afk shit
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
 end)
 game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
 
+--low cpu nigga optimizer
+game:GetService("RunService"):Set3dRenderingEnabled(false)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
-print("HuGe Games STARTING")
+getgenv().config = {
+    autoFishing = true,              -- farm off execution or not
+    placetoFish = "AdvancedFishing", -- "Fishing" // "AdvancedFishing"
+    sendReels = true,                  -- send reels webhooks
+    reelsUrl = "https://discord.com/api/webhooks/1199761571845525584/WXhXfwqhJBUbaLb4QcX3nMOCJ4ulQLfVIMmz5qcacoi_UkIdvQSbh_54Pd1WzBA3hCih",                     -- webhook URL for reels
+    invisWater = true,                  -- make water transparent
 
-wait(5)
-getgenv().AuthKey = "HUGE_HYARsu18jErU"
-getgenv().LoadSettings = {
-    Example_Setting = 2
+    autoPresents = true,              -- auto collect presents
+    sendPresents = true,             -- send presents webhooks
+    presentsUrl = "https://discord.com/api/webhooks/1199761571845525584/WXhXfwqhJBUbaLb4QcX3nMOCJ4ulQLfVIMmz5qcacoi_UkIdvQSbh_54Pd1WzBA3hCih",                 -- webhook URL for presents
+    
+    autoDaycare = false,              -- configurable auto daycare     
+    petToEnroll = "",                 -- name of pet to enroll
+    enrollpetType = 2,                 -- 1=Golden, 2=Rainbow, 0=Regular
+    
+    autoMerchants = false,             -- auto buy from merchants
+    autoVendings = false,              -- auto buy from machines
+
+    autoMail = false,                  -- true // false
+    userToMail = "",                  -- Username to auto mail
+    amountToMail = 0,                  -- Amount to Mail // 0 sends all
+    mailTimer = 300,                  -- custom timer (seconds)
+    
+    manualMailUsernames = {             -- option to be able to mail different accounts with GUI button
+        "Username1",
+        "Username2",
+    }
+    
+    --autoCollectMail = false,
+    --collectTimer = "300",
 }
-loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/92e9e3513b3d3359d311cccd6c5ef57c.lua"))()
