@@ -1,43 +1,36 @@
 repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
-print("waiting 10s")
-
 wait(10)
 -- services shit
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/NaAutoFish'))()
 setfpscap(10)
 
---anti afk shit
-local VirtualUser=game:service'VirtualUser'
-game:service'Players'.LocalPlayer.Idled:connect(function()
-VirtualUser:CaptureController()
-VirtualUser:ClickButton2(Vector2.new())
-end)
-game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
-
 --low cpu nigga optimizer
+game:GetService("RunService"):Set3dRenderingEnabled(false)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
 getgenv().config = {                 
     autoFishing = true,              -- farm off execution or not
     placetoFish = "AdvancedFishing", -- "Fishing" // "AdvancedFishing"
     invisWater = true,                  -- make water transparent
+    renderer = false,                  -- auto derenderer
     autoPresents = true,              -- auto collect presents
 
     autoMail = false,                  -- true // false
     autoMailUsers = {                 
-        "Username1",                 -- Usernames to auto mail
-        "Username2",                 -- can add as many as you want
+        "bbqkram",                 -- Usernames to auto mail
+        "bbqkram",                 -- can add as many as you want
     },
-    autoMailItem = "",                 -- "Magic Shards" // "Huge Poseidon Corgi"
-    autoMailAmount = 0,              -- amount to auto mail (for shards)
+    autoMailItem = "",                 -- "ALL" // "Magic Shards" // "Huge Poseidon Corgi"
+    sendGems = false,                  -- auto send all gems ONLY FOR autoMail "ALL"
+    autoMailAmount = 0,              -- amount to auto mail (only works for shards)
     autoMailTimer = 300,              -- custom timer (seconds)
 
     manualMailUsers = {
-        "Username1",                 -- Usernames to manual mail
-        "Username2",                 -- can add as many as you want
+        "bbqkram",                 -- Usernames to manual mail
+        "bbqkram",                 -- can add as many as you want
     },
     manualMailItem = "",             -- "Magic Shards" // "Huge Poseidon Corgi"
     manualMailAmount = 0,              -- amount to manually mail
 }
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/e7295942a8e53136487f943515e8fd8b.lua"))()
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/44b68947f7e7829ffaa9421616cd752e.lua"))()
