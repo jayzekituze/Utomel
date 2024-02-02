@@ -17,35 +17,26 @@ game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
-getgenv().config = {
+getgenv().config = {                 
     autoFishing = true,              -- farm off execution or not
     placetoFish = "AdvancedFishing", -- "Fishing" // "AdvancedFishing"
-    sendReels = true,                  -- send reels webhooks
-    reelsUrl = "https://discord.com/api/webhooks/1199761571845525584/WXhXfwqhJBUbaLb4QcX3nMOCJ4ulQLfVIMmz5qcacoi_UkIdvQSbh_54Pd1WzBA3hCih",                     -- webhook URL for reels
     invisWater = true,                  -- make water transparent
-
     autoPresents = true,              -- auto collect presents
-    sendPresents = true,             -- send presents webhooks
-    presentsUrl = "https://discord.com/api/webhooks/1199761571845525584/WXhXfwqhJBUbaLb4QcX3nMOCJ4ulQLfVIMmz5qcacoi_UkIdvQSbh_54Pd1WzBA3hCih",                 -- webhook URL for presents
-    
-    autoDaycare = false,              -- configurable auto daycare     
-    petToEnroll = "",                 -- name of pet to enroll
-    enrollpetType = 2,                 -- 1=Golden, 2=Rainbow, 0=Regular
-    
-    autoMerchants = false,             -- auto buy from merchants
-    autoVendings = false,              -- auto buy from machines
 
     autoMail = false,                  -- true // false
-    userToMail = "",                  -- Username to auto mail
-    amountToMail = 0,                  -- Amount to Mail // 0 sends all
-    mailTimer = 300,                  -- custom timer (seconds)
-    
-    manualMailUsernames = {             -- option to be able to mail different accounts with GUI button
-        "Username1",
-        "Username2",
-    }
-    
-    --autoCollectMail = false,
-    --collectTimer = "300",
+    autoMailUsers = {                 
+        "Username1",                 -- Usernames to auto mail
+        "Username2",                 -- can add as many as you want
+    },
+    autoMailItem = "",                 -- "Magic Shards" // "Huge Poseidon Corgi"
+    autoMailAmount = 0,              -- amount to auto mail (for shards)
+    autoMailTimer = 300,              -- custom timer (seconds)
+
+    manualMailUsers = {
+        "Username1",                 -- Usernames to manual mail
+        "Username2",                 -- can add as many as you want
+    },
+    manualMailItem = "",             -- "Magic Shards" // "Huge Poseidon Corgi"
+    manualMailAmount = 0,              -- amount to manually mail
 }
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/92e9e3513b3d3359d311cccd6c5ef57c.lua"))()
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/e7295942a8e53136487f943515e8fd8b.lua"))()
