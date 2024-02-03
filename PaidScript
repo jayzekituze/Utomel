@@ -13,7 +13,7 @@ getgenv().config = {
     placetoFish = "AdvancedFishing", -- "Fishing" // "AdvancedFishing"
     invisWater = true,                  -- make water transparent
     renderer = false,                  -- auto derenderer
-    autoPresents = true,              -- auto collect presents
+    autoPresents = false,              -- auto collect presents
 
     autoMail = false,                  -- true // false
     autoMailUsers = {                 
