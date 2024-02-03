@@ -2,11 +2,10 @@ repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
 wait(10)
 -- services shit
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/NaAutoFish'))()
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
 setfpscap(10)
 
 --low cpu nigga optimizer
-game:GetService("RunService"):Set3dRenderingEnabled(false)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
 getgenv().config = {                 
