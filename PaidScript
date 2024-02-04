@@ -9,27 +9,8 @@ setfpscap(10)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
 getgenv().config = {                 
-    autoFishing = true,              -- farm off execution or not
+    autoFishing = true,
     placetoFish = "AdvancedFishing", -- "Fishing" // "AdvancedFishing"
-    invisWater = true,                  -- make water transparent
-    renderer = false,                  -- auto derenderer
-    autoPresents = false,              -- auto collect presents
-
-    autoMail = false,                  -- true // false
-    autoMailUsers = {                 
-        "bbqkram",                 -- Usernames to auto mail
-        "bbqkram",                 -- can add as many as you want
-    },
-    autoMailItem = "",                 -- "ALL" // "Magic Shards" // "Huge Poseidon Corgi"
-    sendGems = false,                  -- auto send all gems ONLY FOR autoMail "ALL"
-    autoMailAmount = 0,              -- amount to auto mail (only works for shards)
-    autoMailTimer = 300,              -- custom timer (seconds)
-
-    manualMailUsers = {
-        "bbqkram",                 -- Usernames to manual mail
-        "bbqkram",                 -- can add as many as you want
-    },
-    manualMailItem = "",             -- "Magic Shards" // "Huge Poseidon Corgi"
-    manualMailAmount = 0,              -- amount to manually mail
 }
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/44b68947f7e7829ffaa9421616cd752e.lua"))()
+
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/bacb9d3e21eaf1b2e210fca74933503c.lua"))()
