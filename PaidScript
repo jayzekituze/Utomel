@@ -1,37 +1,113 @@
 repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
-wait(15)
+print("waiting 10s")
+
+wait(10)
 -- services shit
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
 setfpscap(10)
+local Chimpanzees = game:GetService("Players")
+local Jungle = game:GetService("Workspace")
+local TreeClimbingService = game:GetService("RunService")
+local BananaStorage = game:GetService("ReplicatedStorage")
+
+-- monkey type shit
+
+local InGame = false
+local Monkey = Chimpanzees.LocalPlayer
+local MonkeyHabitat = Jungle:WaitForChild("__THINGS")
+local ActiveMonkeys = MonkeyHabitat:WaitForChild("__INSTANCE_CONTAINER"):WaitForChild("Active")
+local MonkeyDebris = Jungle:WaitForChild("__DEBRIS")
+local MonkeyNetwork = BananaStorage:WaitForChild("Network")
+local OldMonkeyHooks = {}
+local MonkeyFishingGame = Monkey:WaitForChild("PlayerGui"):WaitForChild("_INSTANCES").FishingGame.GameBar
+
+-- Define a function to teleport the player to the fishing site
+local function teleportToFishingSite()
+    -- Teleport the player to the fishing site
+    game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Teleports_RequestTeleport"):InvokeServer("Cloud Forest")
+    wait(20)
+    Monkey.Character.HumanoidRootPart.CFrame = MonkeyHabitat.Instances.AdvancedFishing.Teleports.Enter.CFrame
+	if #ActiveMonkeys:GetChildren() >= 1 then
+		print('Successful tp to site')
+	elseif #ActiveMonkeys:GetChildren() == 0 then
+		Monkey.Character.HumanoidRootPart.CFrame = MonkeyHabitat.Instances.AdvancedFishing.Teleports.Enter.CFrame
+	end
+end
+
+-- Check if there are active fishing instances; if not, teleport the player to the fishing site
+if #ActiveMonkeys:GetChildren() == 0 then
+    teleportToFishingSite()
+else
+    print('nah')
+end
+
+--  functions
+local function getMonkeyRod()
+    return Monkey.Character and Monkey.Character:FindFirstChild("Rod", true)
+end
+
+local function getMonkeyBubbles(anchor)
+    local myBobber = nil
+    local myBubbles = false
+    local closestBobber = math.huge
+
+    for _, v in pairs(ActiveMonkeys.AdvancedFishing.Bobbers:GetChildren()) do
+        local distance = (v.Bobber.CFrame.Position - anchor.CFrame.Position).Magnitude
+
+        if distance <= closestBobber then
+            myBobber = v.Bobber
+            closestBobber = distance
+        end
+    end
+
+    if myBobber then
+        for _, v in pairs(MonkeyDebris:GetChildren()) do
+            if v.Name == "host" and v:FindFirstChild("Attachment") and (v.Attachment:FindFirstChild("Bubbles") or v.Attachment:FindFirstChild("Rare Bubbles")) and (v.CFrame.Position - myBobber.CFrame.Position).Magnitude <= 1 then
+                myBubbles = true
+                break
+            end
+        end
+    end
+
+    return myBubbles
+end
+
+--anti afk shit
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
+game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
 
 --low cpu nigga optimizer
+game:GetService("RunService"):Set3dRenderingEnabled(false)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
+while task.wait(1) do
+    pcall(function()
+	task.wait()
+        local fishingInstance = MonkeyHabitat.__INSTANCE_CONTAINER.Active:FindFirstChild("AdvancedFishing")
+        if fishingInstance then
+            MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", Vector3.new(1465.7059326171875, 61.62495422363281, -4453.29052734375))
 
-wait(69)
-getgenv().config = {
-    placetoFish = "AdvancedFishing", -- place to fish "Fishing" or "AdvancedFishing"
-    autoFishing = true, -- fish off execution or not
-    autoPresents = true, -- collect presents
-    updateStats = true, -- update personal stats
-    invisWater = true, --invisible water :-)
-    renderer = false,
-    
-    mailUsers = {
-        "bbqkram", -- change to your usernames for mailing
-        "bbqkram", -- YOU CAN PUT AS MANY ACCOUNTS AS YOU WANT
-        "bbqkram",
-    },
-    mailSetting = "Magic Shard", -- can be "Huge Poseidon Corgi", "Diamonds", "Magic Shard", "Charm Stone"
-    mailAmount = 1, -- amount to mail, less than 1000.  For GEMS it will send all except 100k
-    mailTimer = 900, -- how often you want to send mail if you use automatic
-    mailAuto = false, -- true/false
-}
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/2a7ace7d651c472352ea0589cc6c570e.lua"))()
+            local myAnchor = getMonkeyRod():WaitForChild("FishingLine").Attachment0
+            repeat
+                TreeClimbingService.RenderStepped:Wait()
+            until getMonkeyBubbles(myAnchor)
+
+            if getMonkeyRod():FindFirstChild("FishingLine") then
+				repeat
+					task.wait()
+					MonkeyNetwork.Instancing_InvokeCustomFromClient:InvokeServer("AdvancedFishing", "Clicked")
+					MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestReel")
+				until getMonkeyRod():FindFirstChild("FishingLine") == nil
+            end
+        end
+    end)
+end
 
 wait(15)
-
 _G.WebhookURL = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr" -- you webhook URL   
 _G.DiscUserID = "581283569704370176" -- your discord ID
 
