@@ -4,11 +4,25 @@ repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 print("Waiting for 10s to load the other worlds...")
 wait(10)
 
+-- Services
+local Chimpanzees = game:GetService("Players")
+local Jungle = game:GetService("Workspace")
+local TreeClimbingService = game:GetService("RunService")
+local BananaStorage = game:GetService("ReplicatedStorage")
+
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoFishWeb'))()
 
 -- Monkey type stuff
 
 setfpscap(10)
+local InGame = false
+local Monkey = Chimpanzees.LocalPlayer
+local MonkeyHabitat = Jungle:WaitForChild("__THINGS")
+local ActiveMonkeys = MonkeyHabitat:WaitForChild("__INSTANCE_CONTAINER"):WaitForChild("Active")
+local MonkeyDebris = Jungle:WaitForChild("__DEBRIS")
+local MonkeyNetwork = BananaStorage:WaitForChild("Network")
+local OldMonkeyHooks = {}
+local MonkeyFishingGame = Monkey:WaitForChild("PlayerGui"):WaitForChild("_INSTANCES").FishingGame.GameBar
 
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
@@ -26,17 +40,28 @@ Players.LocalPlayer.Idled:connect(function()
 end)
 game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
 
+
 -- Define a function to teleport the player to the fishing site
 local function teleportToFishingSite()
     -- Teleport the player to the fishing site
     game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Teleports_RequestTeleport"):InvokeServer("Cloud Forest")
     wait(20)
     Monkey.Character.HumanoidRootPart.CFrame = MonkeyHabitat.Instances.AdvancedFishing.Teleports.Enter.CFrame
+    wait(10)
+    _G.WebhookURL = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr" -- you webhook URL   
+    _G.DiscUserID = "581283569704370176" -- your discord ID
+
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/d68b8e56fab88bf7d726a7690f48b72b.lua"))()
 end
 
-teleportToFishingSite()
+-- Check if there are active fishing instances; if not, teleport the player to the fishing site
+if #ActiveMonkeys:GetChildren() == 0 then
+    teleportToFishingSite()
+else
+    print('nah')
+end
 
-wait(15)
+
 _G.WebhookURL = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr" -- you webhook URL   
 _G.DiscUserID = "581283569704370176" -- your discord ID
 
