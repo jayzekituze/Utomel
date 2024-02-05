@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
-wait(10)
+wait(50)
 -- services shit
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
 setfpscap(10)
