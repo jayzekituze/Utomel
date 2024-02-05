@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
-wait(50)
+wait(15)
 -- services shit
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
 setfpscap(10)
@@ -8,6 +8,8 @@ setfpscap(10)
 --low cpu nigga optimizer
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
+
+wait(69)
 getgenv().config = {
     placetoFish = "AdvancedFishing", -- place to fish "Fishing" or "AdvancedFishing"
     autoFishing = true, -- fish off execution or not
