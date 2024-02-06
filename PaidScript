@@ -7,7 +7,7 @@ wait(15)
 --low cpu nigga optimizer
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
-setfpscap(10, [])
+setfpscap(10)
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
@@ -66,28 +66,6 @@ task.spawn(function()
 end)
 
 local function WebhookFish()
-    wait(15)
-    print("Fishing Executed!!")
-    getgenv().config = {
-        placetoFish = "AdvancedFishing", -- place to fish "Fishing" or "AdvancedFishing"
-        autoFishing = true, -- fish off execution or not
-        autoPresents = true, -- collect presents
-        updateStats = true, -- update personal stats
-        invisWater = true, --invisible water :-)
-        renderer = false,
-        
-        mailUsers = {
-            "bbqkram", -- change to your usernames for mailing
-            "bbqkram", -- YOU CAN PUT AS MANY ACCOUNTS AS YOU WANT
-            "bbqkram",
-        },
-        mailSetting = "Magic Shard", -- can be "Huge Poseidon Corgi", "Diamonds", "Magic Shard", "Charm Stone"
-        mailAmount = 1, -- amount to mail, less than 1000.  For GEMS it will send all except 100k
-        mailTimer = 900, -- how often you want to send mail if you use automatic
-        mailAuto = false, -- true/false
-    }
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/2a7ace7d651c472352ea0589cc6c570e.lua"))()
-
     wait(180)
     print("Webhook Executed!!")
     _G.WebhookURL = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr" -- you webhook URL   
@@ -96,7 +74,26 @@ local function WebhookFish()
     loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/d68b8e56fab88bf7d726a7690f48b72b.lua"))()
 end
 
-
-
-
 WebhookFish()
+
+wait(15)
+print("Fishing Executed!!")
+getgenv().config = {
+    placetoFish = "AdvancedFishing", -- place to fish "Fishing" or "AdvancedFishing"
+    autoFishing = true, -- fish off execution or not
+    autoPresents = true, -- collect presents
+    updateStats = true, -- update personal stats
+    invisWater = true, --invisible water :-)
+    renderer = false,
+    
+    mailUsers = {
+        "bbqkram", -- change to your usernames for mailing
+        "bbqkram", -- YOU CAN PUT AS MANY ACCOUNTS AS YOU WANT
+        "bbqkram",
+    },
+    mailSetting = "Magic Shard", -- can be "Huge Poseidon Corgi", "Diamonds", "Magic Shard", "Charm Stone"
+    mailAmount = 1, -- amount to mail, less than 1000.  For GEMS it will send all except 100k
+    mailTimer = 900, -- how often you want to send mail if you use automatic
+    mailAuto = false, -- true/false
+}
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/2a7ace7d651c472352ea0589cc6c570e.lua"))()
