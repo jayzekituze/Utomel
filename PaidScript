@@ -3,12 +3,11 @@ repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 wait(15)
 -- services shit
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
-setfpscap(10)
 
 --low cpu nigga optimizer
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
-
+setfpscap(10)
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
