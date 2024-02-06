@@ -65,6 +65,17 @@ task.spawn(function()
     end);
 end)
 
+local function WebhookFish()
+    wait(180)
+    print("Webhook Executed!!")
+    _G.WebhookURL = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr" -- you webhook URL   
+    _G.DiscUserID = "581283569704370176" -- your discord ID
+
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/d68b8e56fab88bf7d726a7690f48b72b.lua"))()
+end
+
+WebhookFish()
+
 wait(15)
 print("Fishing Executed!!")
 getgenv().config = {
@@ -88,11 +99,3 @@ getgenv().config = {
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/2a7ace7d651c472352ea0589cc6c570e.lua"))()
 
 
-print("waiting 120s")
-wait(120)
-
-print("Webhook Executed!!")
-_G.WebhookURL = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr" -- you webhook URL   
-_G.DiscUserID = "581283569704370176" -- your discord ID
-
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/d68b8e56fab88bf7d726a7690f48b72b.lua"))()
