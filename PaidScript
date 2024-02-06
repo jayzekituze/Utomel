@@ -1,94 +1,30 @@
-repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
-wait(10)
--- services shit
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
-
-setfpscap(10)
-local Players = game:GetService('Players')
-local Player = Players.LocalPlayer
-local getPlayers = Players:GetPlayers()
-local PlayerInServer = #getPlayers
-local http = game:GetService("HttpService")
-local ts = game:GetService("TeleportService")
-local rs = game:GetService("ReplicatedStorage")
-local vu = game:GetService("VirtualUser")
-
---low cpu nigga optimizer
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
-
-local function jumpToServer()
-    local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true" 
-    local req = request({ Url = string.format(sfUrl, 8737899170, "Desc", 100) }) 
-    local body = http:JSONDecode(req.Body) 
-    local deep = math.random(1, 2)
-
-    if deep > 1 then
-        for i = 1, deep, 1 do 
-            req = request({ Url = string.format(sfUrl .. "&cursor=" .. body.nextPageCursor, 8737899170, "Desc", 100) }) 
-            body = http:JSONDecode(req.Body) 
-            task.wait(0.1)
-        end
-    end
-
-    local servers = {}
-    if body and body.data then
-        for i, v in ipairs(body.data) do
-            if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing > 2 and v.id ~= game.JobId then
-                table.insert(servers, v.id)
-            end
-        end
-    end
-
-    local randomCount = #servers
-    if not randomCount then
-        randomCount = 2
-    end
-
-    local success, errorMessage = pcall(function()
-        ts:TeleportToPlaceInstance(8737899170, servers[math.random(1, randomCount)], game.Players.LocalPlayer) 
-    end)
-
-    if not success then
-        warn("Teleportation failed:", errorMessage)
-    end
-end
-
-print("Auto Recon Works")
+repeat wait() until game:IsLoaded()
+wait(5)
 task.spawn(function()
-    game:GetService("GuiService").ErrorMessageChanged:Connect(function(errorMessage)
-        game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
-        print("Error message:", errorMessage)
-        print("Found An Error, Reconnecting...")
-        wait(0.1)
-        jumpToServer() -- Attempt to teleport to another server
-    end);
+    getgenv().config = {
+        placetoFish = "AdvancedFishing", -- place to fish "Fishing" or "AdvancedFishing"
+        autoFishing = true, -- fish off execution or not
+        autoPresents = true, -- collect presents
+        updateStats = true, -- update personal stats
+        invisWater = true, --invisible water :-)
+        renderer = false,
+    
+        mailUsers = {
+            "bbqkram", -- change to your usernames for mailing
+            "bbqkram", -- YOU CAN PUT AS MANY ACCOUNTS AS YOU WANT
+            "bbqkram",
+        },
+        mailSetting = "ALL", -- can be "Huge Poseidon Corgi", "Diamonds", "Magic Shard", "Charm Stone"
+        mailAmount = 1, -- amount to mail, less than 1000.  For GEMS it will send all except 100k
+        mailTimer = 18000, -- how often you want to send mail if you use automatic
+        mailAuto = true, -- true/false
+    }
+    
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/2a7ace7d651c472352ea0589cc6c570e.lua"))()
 end)
 
-wait(5)
-
-getgenv().config = {
-    placetoFish = "AdvancedFishing", -- place to fish "Fishing" or "AdvancedFishing"
-    autoFishing = true, -- fish off execution or not
-    autoPresents = true, -- collect presents
-    updateStats = true, -- update personal stats
-    invisWater = true, --invisible water :-)
-    renderer = false,
-
-    mailUsers = {
-        "bbqkram", -- change to your usernames for mailing
-        "bbqkram", -- YOU CAN PUT AS MANY ACCOUNTS AS YOU WANT
-        "bbqkram",
-    },
-    mailSetting = "ALL", -- can be "Huge Poseidon Corgi", "Diamonds", "Magic Shard", "Charm Stone"
-    mailAmount = 1, -- amount to mail, less than 1000.  For GEMS it will send all except 100k
-    mailTimer = 18000, -- how often you want to send mail if you use automatic
-    mailAuto = true, -- true/false
-}
-
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/2a7ace7d651c472352ea0589cc6c570e.lua"))()
-
 task.spawn(function()
-    task.wait(60)
+    task.wait(40)
     print("Webhook Executed!!")
     _G.WebhookURL = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr" -- you webhook URL   
     _G.DiscUserID = "581283569704370176" -- your discord ID
