@@ -55,8 +55,8 @@ local function jumpToServer()
     end
 end
 
+print("Auto Recon Works")
 task.spawn(function()
-    print("Auto Recon Works")
     game:GetService("GuiService").ErrorMessageChanged:Connect(function(errorMessage)
         game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
         print("Error message:", errorMessage)
@@ -88,7 +88,8 @@ getgenv().config = {
 }
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/2a7ace7d651c472352ea0589cc6c570e.lua"))()
 
-wait(20)
+
+wait(69)
 
 print("Webhook Executed!!")
 _G.WebhookURL = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr" -- you webhook URL   
