@@ -7,7 +7,7 @@ wait(15)
 --low cpu nigga optimizer
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
-setfpscap(10)
+setfpscap(10, [])
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
@@ -74,7 +74,6 @@ local function WebhookFish()
     loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/d68b8e56fab88bf7d726a7690f48b72b.lua"))()
 end
 
-WebhookFish()
 
 wait(15)
 print("Fishing Executed!!")
@@ -99,3 +98,4 @@ getgenv().config = {
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/2a7ace7d651c472352ea0589cc6c570e.lua"))()
 
 
+WebhookFish()
