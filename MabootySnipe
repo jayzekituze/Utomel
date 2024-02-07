@@ -16,30 +16,30 @@ local MainPrices = {
 
 --PS99 ITEMS
 local ItemsPS99 = {
-    ["Titanic Christmas Present"] = 500000,
-    ["X-Large Christmas Present"] = 30000,
+    ["Titanic Christmas Present"] = 1000000,
+    ["X-Large Christmas Present"] = 60000,
     ["2024 New Year"] = 50000,
     ["Spinny Wheel Ticket"]= 5000,
-	["Booth Slot Voucher"]= 50000,
+	["Booth Slot Voucher"]= 100000,
     ["Crystal Key"] = 15000,  -- Direct value for "Crystal Key"
-    ["Crystal Key Lower Half"] = 2500,
+    ["Crystal Key Lower Half"] = 1500,
 	["Crystal Key Upper Half"] = 10000
 }
 
 local PotionsPS99 = {
     ["The Cocktail"] = 50000,
-	["Shiny Flag"] = 10000,
-	["Rainbow Flag"] = 10000,
+	["Shiny Flag"] = 2500,
+	["Rainbow Flag"] = 1000,
 	["Exotic Treasure Flag"] = 50000
 }
 
 local EnchantsPS99 = {
-    ["Fortune"] = 200000,
-    ["Chest Mimic"] = 1000000,
-    ["Lucky Block"] = 1000000,
+    ["Fortune"] = 100000,
+    ["Chest Mimic"] = 10000000,
+    ["Lucky Block"] = 2000000,
     ["Shiny Hunter"] = 50000,
     ["Huge Hunter"] = 1000000,
-    ["Diamond Chest Mimic"] = 1000000,
+    ["Diamond Chest Mimic"] = 5000000,
     ["Super Lightning"] = 100000,
     ["Massive Comet"] = 1000000,
 	["Party Time"] = 50000
@@ -52,16 +52,15 @@ local CharmsPS99 = {
 }
 
 local Update5 = {
-    ["Mystery Ticket"] = 50000,
-	["Magic Shard"] = 25000,
-	["Mini Chest"] = 50000,
-	["Mystery Ticket"] = 50000,
+    ["Mystery Ticket"] = 1000000,
+	["Magic Shard"] = 5000,
+	["Mini Chest"] = 5000,
 	["Daycare Slot Voucher"] = 100000,
-	["Magic Orb"] = 400000,
+	["Magic Orb"] = 100000,
 	["Chest Breaker"] = 1000000,
-	["Secret Key"] = 100000,
-    ["Secret Key Lower Half"] = 25000,
-	["Secret Key Upper Half"] = 50000
+	["Secret Key"] = 50000,
+    ["Secret Key Lower Half"] = 10000,
+	["Secret Key Upper Half"] = 25000
 }
 
 
