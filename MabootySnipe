@@ -219,15 +219,23 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 
 			print(string.format("%s listed %s %s - %s gems, %s gems/unit", tostring(username), tostring(amount), tostring(item), tostring(gems), tostring(unitGems)))
 
-			if type.huge and unitGems <= MainPrices.HugePrice then
-                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+
+
+			if string.find(item, "Huge") and unitGems <= 100 then
+				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
-			elseif type.titanic and unitGems <= MainPrices.TitanicPetPrice then
-                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-				return	
-			elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and unitGems <= MainPrices.ExclusivePetPrice then
-                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-				return
+			elseif class == "Pet" then
+				local type = Library.Directory.Pets[item]
+				if type.exclusiveLevel and gems <= MainPrices.ExclusivePetPrice and item ~= "Banana" and item ~= "Coin" then
+					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+					return
+				elseif type.titanic and unitGems <= MainPrices.TitanicPetPrice then
+					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+					return
+                elseif type.huge and gems <= MainPrices.HugePrice then
+					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+					return
+				end
 			elseif class == "Egg" and unitGems <= MainPrices.EggPrice then
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
