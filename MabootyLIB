@@ -1,0 +1,19 @@
+getgenv().alts = {
+    "llIIlllIlllIIIIl",
+    "lIIIIIllIllIIllII",
+    "kyleuriarte123",
+    "StartedManw2134",
+    "007jimm",
+    "StartedManw2134"
+}
+
+
+getgenv().snipeSuccess = "https://discord.com/api/webhooks/1199761571845525584/WXhXfwqhJBUbaLb4QcX3nMOCJ4ulQLfVIMmz5qcacoi_UkIdvQSbh_54Pd1WzBA3hCih"
+getgenv().snipeFail = "https://discord.com/api/webhooks/1190960682523426897/OM9rdsLFLQl_CYK0Sw4ne_5uNAWInyoqcIjGDgXe1nl7b4sjRhtlTf3yjXJvo9D5zVMe"
+getgenv().place = 15502339080 -- [15588442388] - PRO PLAZA || [15502339080] - NORMAL PLAZA
+
+if game.placeId == 15502339080 or game.placeId == 15588442388 then
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
+else
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/utohopPlaza'))()
+end
