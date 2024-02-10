@@ -1,3 +1,7 @@
+getgenv().webhook = "https://discord.com/api/webhooks/1199761571845525584/WXhXfwqhJBUbaLb4QcX3nMOCJ4ulQLfVIMmz5qcacoi_UkIdvQSbh_54Pd1WzBA3hCih" -- webhook link for successful snipes
+getgenv().webhookFail = "https://discord.com/api/webhooks/1190960682523426897/OM9rdsLFLQl_CYK0Sw4ne_5uNAWInyoqcIjGDgXe1nl7b4sjRhtlTf3yjXJvo9D5zVMe" -- webhook link for successful snipes
+getgenv().userid = "581283569704370176" -- pings your discord id if it snipes a huge or titanic
+getgenv().place = 15502339080
 getgenv().alts = {
     "llIIlllIlllIIIIl",
     "lIIIIIllIllIIllII",
@@ -6,17 +10,16 @@ getgenv().alts = {
     "FriendlyRanger588",
     "007jimm",
     "StartedManw2134"
-}
+} -- put usernames to hop if more than two of them are in the same server
 
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootyLIB'))()
 
 
-getgenv().snipeSuccess = "https://discord.com/api/webhooks/1199761571845525584/WXhXfwqhJBUbaLb4QcX3nMOCJ4ulQLfVIMmz5qcacoi_UkIdvQSbh_54Pd1WzBA3hCih"
-getgenv().snipeFail = "https://discord.com/api/webhooks/1190960682523426897/OM9rdsLFLQl_CYK0Sw4ne_5uNAWInyoqcIjGDgXe1nl7b4sjRhtlTf3yjXJvo9D5zVMe"
-getgenv().place = 15502339080 -- [15588442388] - PRO PLAZA || [15502339080] - NORMAL PLAZA
-
-if game.placeId == 15502339080 or game.placeId == 15588442388 then
+getgenv().snipeNormalPets = true -- snipes other items that are priced at 1
+getgenv().normalwebhook = "https://discord.com/api/webhooks/1199761571845525584/WXhXfwqhJBUbaLb4QcX3nMOCJ4ulQLfVIMmz5qcacoi_UkIdvQSbh_54Pd1WzBA3hCih"
+repeat wait() until game:IsLoaded()
+if game.PlaceId == 15502339080 then
     loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 else
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/utohopPlaza'))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/bop/main/tp-to-plaza.lua"))()
 end
