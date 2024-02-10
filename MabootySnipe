@@ -65,7 +65,13 @@ local Update5 = {
 
 
 
-setfpscap(10)
+--[[
+Credits List
+ethereum: creating the base sniper
+chocolog: providing type.huge
+Edmond: offered tips for optimization and hop check functions
+Root: kept the script uptodate
+]]--
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local Players = game:GetService('Players')
@@ -75,6 +81,7 @@ local PlayerInServer = #getPlayers
 local http = game:GetService("HttpService")
 local ts = game:GetService("TeleportService")
 local rs = game:GetService("ReplicatedStorage")
+local pid = place or 15502339080
 
 local vu = game:GetService("VirtualUser")
 Players.LocalPlayer.Idled:connect(function()
@@ -105,23 +112,18 @@ moveToPosition(Vector3.new(-935, 284, -2189))
 moveToPosition(Vector3.new(-919, 285, -2183))
 
 local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
-local mentionUserID = "402681518197047306"
-
-local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtPet, class, boughtMessage, ping, shouldMention, webhook)
+	
+local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtPet, class, boughtMessage, ping)
 	local gemamount = Player.leaderstats["💎 Diamonds"] and Player.leaderstats["💎 Diamonds"].Value or 0
     local versionVal = { [2] = "Rainbow", [1] = "Golden" }
     local versionStr = versionVal[version] or (version == nil and "Normal" or "")
     local snipeMessage = string.format("Found a %s%s%s!", versionStr, shiny and " Shiny " or " ", item)
-    local mention = string.format("<@%s> ", mentionUserID)
+    local tag = string.find(item, "Huge") and "@everyone" or ""
     local colourcheck = boughtPet and 0x05ff00 or 0xff000f
 	local failMessage = boughtPet and "Sniped! No errors occured!" or tostring(boughtMessage)
-    local mentionUser = shouldMention and mention or ""
-	local webhook = getgenv().snipeSuccess or getgenv().snipeFail
-	local webhookFail = getgenv().snipeFail
-
 
     local message1 = {
-    	['content'] = mentionUser,
+    	['content'] = tag,
     	['embeds'] = {
 		{
 			['title'] = snipeMessage,
@@ -142,36 +144,35 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
                 }, 
 				},
                 	['footer'] = {
-                    ['text'] = "Kyle the Sniper V1"
+                    ['text'] = "V 3.2 by edmond.yv"
                 },
             ['thumbnail'] = {
-            	['url'] = "https://cdn.discordapp.com/attachments/911765351132430366/971374855989657620/unknown.png?ex=65a7bbd4&is=659546d4&hm=3d232aa4e41297f2033bb04f27199c0e6733cd3e0aa2375d1bebef3a255ccde0&"
+            	['url'] = "https://cdn.discordapp.com/attachments/1057080336313495614/1190229689126621235/target_PNG42.png?ex=65a10ac7&is=658e95c7&hm=51fb914c7330c90326660077f6487ce9238a26ad483ad38bbccc41cbc216ad59&"
             },
         },
     }
 	}
-	local jsonMessage = http:JSONEncode(message1)
+    local jsonMessage = http:JSONEncode(message1)
 	local success, webMessage = pcall(function()
 		http:PostAsync(webhook, jsonMessage)
 	end)
-	if success == false then
-		local response = request({
-			Url = webhook,
-			Method = "POST",
-			Headers = {["Content-Type"] = "application/json"},
-			Body = jsonMessage
-		})
+    if success == false then
+	local response = request({
+		Url = webhook,
+		Method = "POST",
+		Headers = {["Content-Type"] = "application/json"},
+		Body = jsonMessage
+	})
 	end
 end
 
-
-local function tryPurchase(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
-    local ping = Player:GetNetworkPing()
-    if buytimestamp > listTimestamp then
-        task.wait(3.4 - ping)
-    end
-    local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
-    processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, class, boughtMessage, math.floor(ping * 1000), shouldMention, webhook)
+local function tryPurchase(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+	local ping = Player:GetNetworkPing()
+	if buytimestamp > listTimestamp then
+		task.wait(3.4 - ping)
+	end
+	local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+	processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, class, boughtMessage, math.floor(ping*1000))
 end
 
 local not_allowed = {
@@ -215,39 +216,28 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 			local playerid = message['PlayerID']
 			local class = tostring(listing["ItemData"]["class"])
 			local unitGems = gems/amount
-			local type = {}
-			pcall(function()
-			type = Library.Directory.Pets[item]
-			end)
 
 			print(string.format("%s listed %s %s - %s gems, %s gems/unit", tostring(username), tostring(amount), tostring(item), tostring(gems), tostring(unitGems)))
 
-
-            local shouldMention = false
-
 			if type.huge and unitGems <= MainPrices.HugePrice then
-                shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
+                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
-				
 			elseif type.titanic and unitGems <= MainPrices.TitanicPetPrice then
-                shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
-				return
-				
+                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+				return	
 			elseif type.exclusiveLevel and not string.find(item, 'Coin') and not string.find(item, 'Banana') and unitGems <= MainPrices.ExclusivePetPrice then
-                shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
+                coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
 			elseif class == "Egg" and unitGems <= MainPrices.EggPrice then
-				shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
+				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
 			elseif (string.find(item, "Ticket") or string.find(item, "Charm") or class == "Charm") and unitGems <= 1000 then
-				shouldMention = true
-				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
+				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 			   return
-            end
+			elseif gems <= 2 then
+        	    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+				return
+			end
 
 				--elseif gems <= 49 then
 				--shouldMention = false
@@ -258,16 +248,14 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
             
             for i, v in pairs(ItemsPS99) do
 				if item == i and unitGems <= v then
-                    shouldMention = true
-					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
 			end
 
             for i, v in pairs(PotionsPS99) do
 				if item == i and unitGems <= v then
-                    shouldMention = true
-					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
 			end
@@ -275,67 +263,97 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 
 			for i, v in pairs(EnchantsPS99) do
 				if item == i and unitGems <= v then
-                    shouldMention = true
-					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
 			end
 
 			for i, v in pairs(CharmsPS99) do
 				if item == i and unitGems <= v then
-                    shouldMention = true
-					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
 			end
 
 			for i, v in pairs(Update5) do
 				if item == i and unitGems <= v then
-                    shouldMention = true
-					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, shouldMention, webhook)
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
 			end
-		
+
 		end
     end
-
 end)
 
-
-local function jumpToServer()
-	local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true" 
-	local req = request({ Url = string.format(sfUrl, 8737899170, "Desc", 100) }) 
-	local body = http:JSONDecode(req.Body) 
-	local deep = math.random(1, 2)
-	if deep > 1 then
-        	for i = 1, deep, 1 do 
-             	req = request({ Url = string.format(sfUrl .. "&cursor=" .. body.nextPageCursor, 8737899170, "Desc", 100) }) 
-             	body = http:JSONDecode(req.Body) 
-            	task.wait(0.1)
-        	end
+local function serverHop(id)
+	local deep
+	local HttpService = game:GetService("HttpService")
+	local TeleportService = game:GetService("TeleportService")
+	local Players = game:GetService("Players")
+	local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s"
+	local req = request({
+		Url = string.format(sfUrl, id, "Desc", 100)
+	})
+	local body = HttpService:JSONDecode(req.Body)
+	task.wait(0.2)
+	req = request({
+		Url = string.format(sfUrl .. "&cursor=" ..body.nextPageCursor, id, "Desc", 100)
+	})
+	body = HttpService:JSONDecode(req.Body)
+	task.wait(0.1)
+	local servers = {}
+	if body and body.data then
+		for i, v in next, body.data do
+			if type(v) == "table" and v.playing >= 35 and v.id ~= game.JobId then
+				table.insert(servers, 1, v.id)
+			end
+		end
 	end
-
-    local servers = {}
-    if body and body.data then
-        for i, v in next, body.data do
-        	if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= game.JobId then
-                table.insert(servers, v.id)
-        	end
-        end
-    end
-
-	
-    local randomCount = #servers
-    if not randomCount then
+	local randomCount = #servers
+	if not randomCount then
 		randomCount = 2
+	end
+	TeleportService:TeleportToPlaceInstance(id, servers[math.random(1, randomCount)], Players.LocalPlayer)
+end
+
+local lighting = game.Lighting
+local terrain = game.Workspace.Terrain
+terrain.WaterWaveSize = 0
+terrain.WaterWaveSpeed = 0
+terrain.WaterReflectance = 0
+terrain.WaterTransparency = 0
+lighting.GlobalShadows = false
+lighting.FogStart = 0
+lighting.FogEnd = 0
+lighting.Brightness = 0
+
+for i, v in pairs(game:GetDescendants()) do
+    if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+        v.Enabled = false
+    elseif v:IsA("MeshPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
     end
-    ts:TeleportToPlaceInstance(8737899170, servers[math.random(1, randomCount)], game:GetService("Players").LocalPlayer) 
+end
+
+for i, e in pairs(lighting:GetChildren()) do
+    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+        e.Enabled = false
+    end
 end
 
 if PlayerInServer < 25 then
 	while task.wait(1) do
-		jumpToServer()
+		serverHop(place)
 	end
 end
 
@@ -344,49 +362,39 @@ for i = 1, PlayerInServer do
         if getPlayers[i].Name == alts[ii] and alts[ii] ~= Players.LocalPlayer.Name then
         	task.wait(math.random(0, 300))
 			while task.wait(1) do
-				jumpToServer()
+				serverHop(place)
 	    	end
         end
     end
 end
 
 task.spawn(function()
-    game:GetService("GuiService").ErrorMessageChanged:Connect(function()
-        jumpToServer() -- call your tp function here
-        game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
-        print("Found An Error, Reonnecting...")
-        wait(0.1)
-    end);
+	game:GetService("GuiService").ErrorMessageChanged:Connect(function()
+		serverHop(place)
+		game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
+		print("Found An Error, Reonnecting...")
+		wait(0.1)
+	end)
 end)
 
 Players.PlayerRemoving:Connect(function(player)
 	getPlayers = Players:GetPlayers()
 	PlayerInServer = #getPlayers
 	if PlayerInServer < 25 then
-        	while task.wait(1) do
-	    		jumpToServer()
+        while task.wait(1) do
+	    	serverHop(place)
 		end
 	end
-end) 
-
-Players.PlayerAdded:Connect(function(player)
-	for i = 1,#alts do
-		if player.Name == alts[i] and alts[i] ~= Players.LocalPlayer.Name then
-			while task.wait(1) do
-				jumpToServer()
-			end
-        end
-    end
 end)
 
+local hopDelay = math.random(1000, 2000)
 
-
-local hopDelay = math.random(2400, 3600)
-
-while task.wait(1) do
-	if math.floor(os.clock() - osclock) >= hopDelay then
-		while task.wait(1) do
-			jumpToServer()
+task.spawn(function ()
+	while task.wait(1) do
+		if math.floor(os.clock() - osclock) >= hopDelay then
+			while task.wait(1) do
+				serverHop(place)
+			end
 		end
 	end
-end
+end)
