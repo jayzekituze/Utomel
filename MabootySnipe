@@ -6,10 +6,10 @@ print("booty works")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
 
-    HugePrice = 11000000,
+    HugePrice = 10000000,
     TitanicPetPrice = 500000000,
     ExclusivePetPrice = 150000,
-	EggPrice = 2000000,
+	EggPrice = 1000000,
     buyAnything = 5
 
 }
@@ -30,7 +30,7 @@ local PotionsPS99 = {
     ["The Cocktail"] = 50000,
 	["Shiny Flag"] = 2500,
 	["Rainbow Flag"] = 1000,
-	["Exotic Treasure Flag"] = 50000
+	["Exotic Treasure Flag"] = 25000
 }
 
 local EnchantsPS99 = {
@@ -351,12 +351,12 @@ for i = 1, PlayerInServer do
 end
 
 task.spawn(function()
-	game:GetService("GuiService").ErrorMessageChanged:Connect(function()
-		game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
-		print("Found An Error, Reonnecting...")
-		wait(0.1)
-		jumpToServer()
-	end);
+    game:GetService("GuiService").ErrorMessageChanged:Connect(function()
+        jumpToServer() -- call your tp function here
+        game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
+        print("Found An Error, Reonnecting...")
+        wait(0.1)
+    end);
 end)
 
 Players.PlayerRemoving:Connect(function(player)
@@ -381,7 +381,7 @@ end)
 
 
 
-local hopDelay = math.random(1800, 2400)
+local hopDelay = math.random(2400, 3600)
 
 while task.wait(1) do
 	if math.floor(os.clock() - osclock) >= hopDelay then
