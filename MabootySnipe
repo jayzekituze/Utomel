@@ -35,7 +35,7 @@ local PotionsPS99 = {
 
 local EnchantsPS99 = {
     ["Fortune"] = 100000,
-    ["Chest Mimic"] = 10000000,
+    ["Chest Mimic"] = 5000000,
     ["Lucky Block"] = 2000000,
     ["Shiny Hunter"] = 50000,
     ["Huge Hunter"] = 1000000,
