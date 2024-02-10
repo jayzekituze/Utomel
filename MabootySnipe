@@ -2,7 +2,7 @@ local osclock = os.clock()
 repeat task.wait() until game:IsLoaded()
 
 
-print("booty works")
+print("booty works V5")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
 
@@ -59,8 +59,8 @@ local Update5 = {
 	["Magic Orb"] = 100000,
 	["Chest Breaker"] = 1000000,
 	["Secret Key"] = 50000,
-    ["Secret Key Lower Half"] = 10000,
-	["Secret Key Upper Half"] = 25000
+    ["Secret Key Lower Half"] = 5000,
+	["Secret Key Upper Half"] = 30000
 }
 
 
