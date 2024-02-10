@@ -12,6 +12,8 @@ local MainPrices = {
 	EggPrice = 1000000,
     buyAnything = 5
 
+	ChestMimic = 10000000,
+
 }
 
 --PS99 ITEMS
@@ -35,7 +37,6 @@ local PotionsPS99 = {
 
 local EnchantsPS99 = {
     ["Fortune"] = 100000,
-    ["Chest Mimic"] = 10000000,
     ["Lucky Block"] = 2000000,
     ["Shiny Hunter"] = 50000,
     ["Huge Hunter"] = 1000000,
@@ -118,7 +119,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     local versionVal = { [2] = "Rainbow", [1] = "Golden" }
     local versionStr = versionVal[version] or (version == nil and "Normal" or "")
     local snipeMessage = string.format("Found a %s%s%s!", versionStr, shiny and " Shiny " or " ", item)
-    local tag = string.find(item, "Huge") and "@everyone" or ""
+    local tag = string.find(item, "Huge") and "<@581283569704370176>" or ""
     local colourcheck = boughtPet and 0x05ff00 or 0xff000f
 	local failMessage = boughtPet and "Sniped! No errors occured!" or tostring(boughtMessage)
 
@@ -239,9 +240,18 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 			elseif class == "Egg" and unitGems <= MainPrices.EggPrice then
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
-			elseif (string.find(item, "Ticket") or string.find(item, "Charm") or class == "Charm") and unitGems <= 1000 then
+		    elseif ((string.find(item, "Key") and not string.find(item, "Lower")) or string.find(item, "Ticket") or string.find(item, "Charm") or class == "Charm") and gems <= 500 then
 				coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-			   return
+				return
+			elseif class == "Enchant" and unitGems <= 30000 then
+				if item == "Fortune" then
+					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+					return
+				elseif string.find(item, "Chest Mimic") and unitGems <= MainPrices.ChestMimic  then
+					coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+					return
+				end
+
 			elseif gems <= 2 then
         	    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 				return
