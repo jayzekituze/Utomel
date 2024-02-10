@@ -3,9 +3,12 @@ getgenv().alts = {
     "lIIIIIllIllIIllII",
     "kyleuriarte123",
     "StartedManw2134",
+    "FriendlyRanger588",
     "007jimm",
     "StartedManw2134"
 }
+
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootyLIB'))()
 
 
 getgenv().snipeSuccess = "https://discord.com/api/webhooks/1199761571845525584/WXhXfwqhJBUbaLb4QcX3nMOCJ4ulQLfVIMmz5qcacoi_UkIdvQSbh_54Pd1WzBA3hCih"
