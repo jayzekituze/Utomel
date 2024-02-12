@@ -4,12 +4,12 @@ getgenv().userid = "581283569704370176" -- pings your discord id if it snipes a 
 getgenv().place = 15502339080
 getgenv().alts = {
     "HolyKram",
-    "lIIIIIllIllIIllII",
+    "KramATK",
     "kyleuriarte123",
     "StartedManw2134",
     "FriendlyRanger588",
     "007jimm",
-    "StartedManw2134"
+    "addmemore"
 } -- put usernames to hop if more than two of them are in the same server
 
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootyLIB'))()
