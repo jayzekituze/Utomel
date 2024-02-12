@@ -6,7 +6,7 @@ print("booty works V5")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
 
-    HugePrice = 11000000,
+    HugePrice = 11500000,
     TitanicPetPrice = 500000000,
     ExclusivePetPrice = 200000,
 	EggPrice = 3000000,
@@ -395,7 +395,7 @@ Players.PlayerRemoving:Connect(function(player)
 	end
 end)
 
-local hopDelay = math.random(1400, 1800)
+local hopDelay = math.random(1200, 1500)
 
 task.spawn(function ()
 	while task.wait(1) do
