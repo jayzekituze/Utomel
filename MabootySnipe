@@ -9,7 +9,7 @@ local MainPrices = {
     TitanicPetPrice = 500000000,
     ExclusivePetPrice = 200000,
 	EggPrice = 3000000,
-    buyAnything = 5
+    buyAnything = 2
 
 }
 
@@ -180,10 +180,49 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
             elseif ((string.find(item, "Key") and not string.find(item, "Lower")) or string.find(item, "Ticket") or string.find(item, "Charm") or class == "Charm") and gems <= 400 then
                 coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                 return
-            elseif gems <= 2 then
+            elseif gems <= MainPrices.buyAnything then
                 coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                 return
             end
+
+            for i, v in pairs(ItemsPS99) do
+				if item == i and unitGems <= v then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+					return
+				end
+			end
+
+            for i, v in pairs(PotionsPS99) do
+				if item == i and unitGems <= v then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+					return
+				end
+			end
+			
+
+			for i, v in pairs(EnchantsPS99) do
+				if item == i and unitGems <= v then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+					return
+				end
+			end
+
+			for i, v in pairs(CharmsPS99) do
+				if item == i and unitGems <= v then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+					return
+				end
+			end
+
+			for i, v in pairs(Update5) do
+				if item == i and unitGems <= v then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+					return
+				end
+			end
+
+
+
         end
     end
 end)
