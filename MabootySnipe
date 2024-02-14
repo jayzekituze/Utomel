@@ -21,7 +21,6 @@ local ItemsPS99 = {
     ["2024 New Year"] = 50000,
     ["Spinny Wheel Ticket"]= 5000,
 	["Booth Slot Voucher"]= 150000,
-	["Clan Voucher"]= 1000000,
     ["Crystal Key"] = 15000,  -- Direct value for "Crystal Key"
     ["Crystal Key Lower Half"] = 1500,
 	["Crystal Key Upper Half"] = 10000
