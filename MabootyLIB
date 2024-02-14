@@ -1,6 +1,6 @@
-getgenv().webhook = "https://discord.com/api/webhooks/1199761571845525584/WXhXfwqhJBUbaLb4QcX3nMOCJ4ulQLfVIMmz5qcacoi_UkIdvQSbh_54Pd1WzBA3hCih" -- webhook link for successful snipes
-getgenv().webhookFail = "https://discord.com/api/webhooks/1190960682523426897/OM9rdsLFLQl_CYK0Sw4ne_5uNAWInyoqcIjGDgXe1nl7b4sjRhtlTf3yjXJvo9D5zVMe" -- webhook link for successful snipes
-getgenv().userid = "581283569704370176" -- pings your discord id if it snipes a huge or titanic
+getgenv().webhook = "https://discord.com/api/webhooks/1207252883460849684/I8IGlcrpEcTEcm6VsO7RsI3uqb9_t2NMl4eHOxtzUaCMq5-L9FZXf1u79VXcbKDfLZ9y" -- webhook link for successful snipes
+getgenv().webhookFail = "https://discord.com/api/webhooks/1207253726058778644/njDskbXUTXkN8t2iRFu7wra69-LgSNYbMqAbWcXyzQ8c3wBNR6ALagyLwjmPp9IcCwfm" -- webhook link for successful snipes
+getgenv().userid = "402681518197047306" -- pings your discord id if it snipes a huge or titanic
 getgenv().place = 15502339080
 getgenv().alts = {
     "HolyKram",
