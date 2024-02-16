@@ -5,7 +5,7 @@ print("booty works V7")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
 
-    HugePrice = 14400000,
+    HugePrice = 14600000,
     TitanicPetPrice = 900000000,
     ExclusivePetPrice = 250000,
 	EggPrice = 3000000,
