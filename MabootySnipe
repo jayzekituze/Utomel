@@ -5,17 +5,18 @@ print("booty works V5")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
 
-    HugePrice = 13700000,
+    HugePrice = 14000000,
     TitanicPetPrice = 900000000,
     ExclusivePetPrice = 200000,
 	EggPrice = 3000000,
+    ChestMimic = 20000000,
     buyAnything = 2
 
 }
 
 --PS99 ITEMS
 local ItemsPS99 = {
-    ["Titanic Christmas Present"] = 1000000,
+    ["Titanic Christmas Present"] = 3000000,
     ["X-Large Christmas Present"] = 60000,
     ["2024 New Year"] = 50000,
     ["Spinny Wheel Ticket"]= 5000,
@@ -35,13 +36,12 @@ local PotionsPS99 = {
 
 local EnchantsPS99 = {
     ["Fortune"] = 100000,
-    ["Chest Mimic"] = 5000000,
-    ["Lucky Block"] = 2000000,
-    ["Shiny Hunter"] = 50000,
-    ["Huge Hunter"] = 1000000,
-    ["Diamond Chest Mimic"] = 5000000,
-    ["Super Lightning"] = 100000,
-    ["Massive Comet"] = 1000000,
+    -- ["Chest Mimic"] = 8000000,
+    ["Lucky Block"] = 5000000,
+    ["Shiny Hunter"] = 100000,
+    ["Huge Hunter"] = 2000000,
+    ["Diamond Chest Mimic"] = 15000000,
+    ["Massive Comet"] = 5000000,
 	["Party Time"] = 50000
 }
 
@@ -182,6 +182,11 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
             elseif ((string.find(item, "Key") and not string.find(item, "Lower")) or string.find(item, "Ticket") or string.find(item, "Charm") or class == "Charm") and gems <= 400 then
                 coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                 return
+            elseif class == "Enchant" then
+                if string.find(item, "Chest Mimic") and unitGems <= MainPrices.ChestMimic then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                    return
+                end
                 -- elseif gems <= MainPrices.buyAnything then
                 --     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                 --     return
