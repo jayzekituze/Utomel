@@ -1,13 +1,13 @@
 local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
 
-print("booty works V5")
+print("booty works V7")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
 
-    HugePrice = 14000000,
+    HugePrice = 14200000,
     TitanicPetPrice = 900000000,
-    ExclusivePetPrice = 200000,
+    ExclusivePetPrice = 250000,
 	EggPrice = 3000000,
     ChestMimic = 20000000,
     buyAnything = 2
