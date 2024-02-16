@@ -23,7 +23,7 @@ local ItemsPS99 = {
 	["Booth Slot Voucher"]= 150000,
 	["Clan Voucher"]= 1000000,
     ["Crystal Key"] = 15000,  -- Direct value for "Crystal Key"
-    ["Crystal Key Lower Half"] = 1500,
+    ["Crystal Key Lower Half"] = 1000,
 	["Crystal Key Upper Half"] = 10000
 }
 
