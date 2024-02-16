@@ -47,7 +47,7 @@ local EnchantsPS99 = {
 
 local CharmsPS99 = {
 	["Overload"] = 1000000,
-    ["Royalty"] = 1000000,
+    ["Royalty"] = 5000000,
     ["Glittering"]= 25000
 }
 
