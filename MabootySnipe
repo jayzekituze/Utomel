@@ -5,7 +5,7 @@ print("booty works V7")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
 
-    HugePrice = 14900000,
+    HugePrice = 15500000,
     TitanicPetPrice = 900000000,
     ExclusivePetPrice = 250000,
 	EggPrice = 3000000,
@@ -35,9 +35,9 @@ local PotionsPS99 = {
 }
 
 local EnchantsPS99 = {
-    ["Fortune"] = 100000,
+    ["Fortune"] = 50000,
     -- ["Chest Mimic"] = 8000000,
-    ["Lucky Block"] = 10000000,
+    ["Lucky Block"] = 11000000,
     ["Shiny Hunter"] = 100000,
     ["Huge Hunter"] = 2000000,
     ["Diamond Chest Mimic"] = 15000000,
