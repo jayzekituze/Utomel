@@ -5,18 +5,18 @@ print("booty works V7")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
 
-    HugePrice = 17800000,
+    HugePrice = 18000000,
     TitanicPetPrice = 900000000,
-    ExclusivePetPrice = 300000,
-	EggPrice = 3000000,
-    ChestMimic = 20000000,
+    ExclusivePetPrice = 350000,
+	EggPrice = 4000000,
+    ChestMimic = 50000000,
     buyAnything = 2
 
 }
 
 --PS99 ITEMS
 local ItemsPS99 = {
-    ["Titanic Christmas Present"] = 3000000,
+    ["Titanic Christmas Present"] = 5000000,
     ["X-Large Christmas Present"] = 60000,
     ["2024 New Year"] = 50000,
     ["Spinny Wheel Ticket"]= 5000,
@@ -179,7 +179,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
             elseif class == "Egg" and gems <= MainPrices.EggPrice then
                 coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                 return
-            elseif ((string.find(item, "Key") and not string.find(item, "Lower")) or string.find(item, "Ticket") or string.find(item, "Charm") or class == "Charm") and gems <= 400 then
+            elseif ((string.find(item, "Key") and not string.find(item, "Lower")) or string.find(item, "Ticket") or string.find(item, "Charm") or class == "Charm") and gems <= 200 then
                 coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                 return
             elseif class == "Enchant" then
