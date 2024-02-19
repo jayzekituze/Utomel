@@ -9,7 +9,7 @@ getgenv().alts = {
     "StartedManw2134",
     "FriendlyRanger588",
     "007jimm",
-    "addmemore"
+    "KramDEFF"
 } -- put usernames to hop if more than two of them are in the same server
 
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootyLIB'))()
