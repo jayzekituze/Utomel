@@ -9,7 +9,7 @@ local MainPrices = {
     TitanicPetPrice = 900000000,
     ExclusivePetPrice = 350000,
 	EggPrice = 4000000,
-    ChestMimic = 50000000,
+    ChestMimic = 30000000,
     buyAnything = 2
 
 }
