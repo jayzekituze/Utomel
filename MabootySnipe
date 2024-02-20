@@ -1,7 +1,7 @@
 local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
 
-print("booty works V8")
+print("booty works V8.1")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
 
@@ -63,6 +63,7 @@ local Update5 = {
 	["Secret Key Upper Half"] = 30000
 }
 
+game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
@@ -71,25 +72,6 @@ local PlayerInServer = #getPlayers
 local http = game:GetService("HttpService")
 local vu = game:GetService("VirtualUser")
 local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
-
-local hopDelay = math.random(1000, 1500) -- How long till it hops in seconds
-local remainingTime = hopDelay -- Initialize remaining time to hopDelay
-local lastSnipeTime = os.clock() -- Initialize the last snipe time variable
-
--- Create a ScreenGui to hold the GUI elements
-local gui = Instance.new("ScreenGui")
-gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-
--- Create a TextLabel to display the remaining time
-local textLabel = Instance.new("TextLabel")
-textLabel.Name = "HopDelayLabel"
-textLabel.Size = UDim2.new(0, 200, 0, 50)
-textLabel.Position = UDim2.new(0.5, -100, 0, 50)
-textLabel.Font = Enum.Font.SourceSans
-textLabel.TextSize = 20
-textLabel.TextColor3 = Color3.new(1, 1, 1)
-textLabel.BackgroundTransparency = 1
-textLabel.Parent = gui
 
 Players.LocalPlayer.Idled:connect(function()
     vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
@@ -343,7 +325,24 @@ Players.PlayerRemoving:Connect(function(player)
     end
 end)
 
+local hopDelay = math.random(1000, 1500)
+local remainingTime = hopDelay -- Initialize remaining time to hopDelay
+local lastSnipeTime = os.clock() -- Initialize the last snipe time variable
 
+-- Create a ScreenGui to hold the GUI elements
+local gui = Instance.new("ScreenGui")
+gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create a TextLabel to display the remaining time
+local textLabel = Instance.new("TextLabel")
+textLabel.Name = "HopDelayLabel"
+textLabel.Size = UDim2.new(0, 200, 0, 50)
+textLabel.Position = UDim2.new(0.5, -100, 0, 50)
+textLabel.Font = Enum.Font.SourceSans
+textLabel.TextSize = 20
+textLabel.TextColor3 = Color3.new(1, 1, 1)
+textLabel.BackgroundTransparency = 1
+textLabel.Parent = gui
 
 -- Function to update the remaining time displayed in the GUI
 local function updateRemainingTimeDisplay()
@@ -368,6 +367,9 @@ local function updateHopDelayAndSnipeTime()
     lastSnipeTime = os.clock()
     hopDelay = hopDelay + 300 -- Increase hop delay by 300 seconds (5 minutes)
     remainingTime = hopDelay -- Reset remaining time to hopDelay
-    print("Purchase Successfully Added Another 5 mins")
     updateRemainingTimeDisplay() -- Update the GUI to reflect the new remaining time
 end
+
+-- Example usage when a snipe or purchase occurs
+-- Inside the processListingInfo function or wherever applicable
+-- Call updateHopDelayAndSnipeTime() after a successful snipe or purchase
