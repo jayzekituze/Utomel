@@ -63,7 +63,6 @@ local Update5 = {
 	["Secret Key Upper Half"] = 30000
 }
 
-game:GetService("RunService"):Set3dRenderingEnabled(true)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
@@ -369,5 +368,6 @@ local function updateHopDelayAndSnipeTime()
     lastSnipeTime = os.clock()
     hopDelay = hopDelay + 300 -- Increase hop delay by 300 seconds (5 minutes)
     remainingTime = hopDelay -- Reset remaining time to hopDelay
+    print("Purchase Successfully Added Another 5 mins")
     updateRemainingTimeDisplay() -- Update the GUI to reflect the new remaining time
 end
