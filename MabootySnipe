@@ -1,14 +1,14 @@
 local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
 
-print("booty works V7")
+print("booty works V8")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
 
-    HugePrice = 19500000,
+    HugePrice = 18800000,
     TitanicPetPrice = 950000000,
     ExclusivePetPrice = 350000,
-	EggPrice = 5000000,
+	EggPrice = 4500000,
     ChestMimic = 30000000,
     buyAnything = 2
 
@@ -72,6 +72,25 @@ local PlayerInServer = #getPlayers
 local http = game:GetService("HttpService")
 local vu = game:GetService("VirtualUser")
 local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
+
+local hopDelay = math.random(1000, 1500) -- How long till it hops in seconds
+local remainingTime = hopDelay -- Initialize remaining time to hopDelay
+local lastSnipeTime = os.clock() -- Initialize the last snipe time variable
+
+-- Create a ScreenGui to hold the GUI elements
+local gui = Instance.new("ScreenGui")
+gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create a TextLabel to display the remaining time
+local textLabel = Instance.new("TextLabel")
+textLabel.Name = "HopDelayLabel"
+textLabel.Size = UDim2.new(0, 200, 0, 50)
+textLabel.Position = UDim2.new(0.5, -100, 0, 50)
+textLabel.Font = Enum.Font.SourceSans
+textLabel.TextSize = 20
+textLabel.TextColor3 = Color3.new(1, 1, 1)
+textLabel.BackgroundTransparency = 1
+textLabel.Parent = gui
 
 Players.LocalPlayer.Idled:connect(function()
     vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
@@ -325,14 +344,30 @@ Players.PlayerRemoving:Connect(function(player)
     end
 end)
 
-local hopDelay = math.random(1000, 1500)
+
+
+-- Function to update the remaining time displayed in the GUI
+local function updateRemainingTimeDisplay()
+    textLabel.Text = "Time until server hop: " .. tostring(math.ceil(remainingTime)) .. " seconds"
+end
 
 task.spawn(function ()
     while task.wait(1) do
-        if math.floor(os.clock() - osclock) >= hopDelay then
+        remainingTime = math.max(0, remainingTime - 1) -- Decrease remaining time by 1 second
+        updateRemainingTimeDisplay() -- Update the GUI to reflect the new remaining time
+        
+        if math.floor(os.clock() - lastSnipeTime) >= hopDelay then
             while task.wait(1) do
                 serverHop(place)
             end
         end
     end
 end)
+
+-- Function to update the last snipe time and increase hop delay
+local function updateHopDelayAndSnipeTime()
+    lastSnipeTime = os.clock()
+    hopDelay = hopDelay + 300 -- Increase hop delay by 300 seconds (5 minutes)
+    remainingTime = hopDelay -- Reset remaining time to hopDelay
+    updateRemainingTimeDisplay() -- Update the GUI to reflect the new remaining time
+end
