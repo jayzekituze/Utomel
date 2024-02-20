@@ -5,7 +5,7 @@ print("booty works V8")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
 
-    HugePrice = 18800000,
+    HugePrice = 19500000,
     TitanicPetPrice = 950000000,
     ExclusivePetPrice = 350000,
 	EggPrice = 4500000,
@@ -63,7 +63,7 @@ local Update5 = {
 	["Secret Key Upper Half"] = 30000
 }
 
-game:GetService("RunService"):Set3dRenderingEnabled(false)
+game:GetService("RunService"):Set3dRenderingEnabled(true)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
