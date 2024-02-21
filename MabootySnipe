@@ -1,5 +1,6 @@
 repeat wait() until game:IsLoaded()
 wait(5)
+print("AutoFismsh")
 
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
 local Players = game:GetService('Players')
