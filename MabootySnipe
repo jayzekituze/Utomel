@@ -7,8 +7,8 @@ local MainPrices = {
 
     HugePrice = 15000000,
     TitanicPetPrice = 950000000,
-    ExclusivePetPrice = 350000,
-	EggPrice = 4500000,
+    ExclusivePetPrice = 300000,
+	EggPrice = 4000000,
     ChestMimic = 30000000,
     buyAnything = 2
 
@@ -16,15 +16,15 @@ local MainPrices = {
 
 --PS99 ITEMS
 local ItemsPS99 = {
-    ["Titanic Christmas Present"] = 5000000,
+    ["Titanic Christmas Present"] = 3000000,
     ["X-Large Christmas Present"] = 60000,
-    ["2024 New Year"] = 50000,
+    ["2024 New Year"] = 10000,
     ["Spinny Wheel Ticket"]= 5000,
-	["Booth Slot Voucher"]= 150000,
-	["Clan Voucher"]= 1000000,
-    ["Crystal Key"] = 15000,  -- Direct value for "Crystal Key"
-    ["Crystal Key Lower Half"] = 1000,
-	["Crystal Key Upper Half"] = 10000
+	["Booth Slot Voucher"]= 100000,
+	["Clan Voucher"]= 500000,
+    ["Crystal Key"] = 5000,  -- Direct value for "Crystal Key"
+    ["Crystal Key Lower Half"] = 500,
+	["Crystal Key Upper Half"] = 5000
 }
 
 local PotionsPS99 = {
@@ -37,12 +37,12 @@ local PotionsPS99 = {
 local EnchantsPS99 = {
     ["Fortune"] = 50000,
     -- ["Chest Mimic"] = 8000000,
-    ["Lucky Block"] = 11000000,
+    ["Lucky Block"] = 10000000,
     ["Shiny Hunter"] = 100000,
     ["Huge Hunter"] = 2000000,
     ["Diamond Chest Mimic"] = 15000000,
-    ["Massive Comet"] = 5000000,
-	["Party Time"] = 50000
+    ["Massive Comet"] = 3000000,
+	["Party Time"] = 10000
 }
 
 local CharmsPS99 = {
@@ -53,7 +53,7 @@ local CharmsPS99 = {
 
 local Update5 = {
     ["Mystery Ticket"] = 1000000,
-	["Magic Shard"] = 5000,
+	["Magic Shard"] = 3000,
 	["Mini Chest"] = 5000,
 	["Daycare Slot Voucher"] = 100000,
 	["Magic Orb"] = 100000,
