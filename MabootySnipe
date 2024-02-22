@@ -5,9 +5,9 @@ print("booty works V7")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
 
-    HugePrice = 16000000,
+    HugePrice = 18000000,
     TitanicPetPrice = 950000000,
-    ExclusivePetPrice = 300000,
+    ExclusivePetPrice = 350000,
 	EggPrice = 4000000,
     ChestMimic = 30000000,
     buyAnything = 2
@@ -16,11 +16,11 @@ local MainPrices = {
 
 --PS99 ITEMS
 local ItemsPS99 = {
-    ["Titanic Christmas Present"] = 3000000,
+    ["Titanic Christmas Present"] = 5000000,
     ["X-Large Christmas Present"] = 60000,
     ["2024 New Year"] = 10000,
     ["Spinny Wheel Ticket"]= 5000,
-	["Booth Slot Voucher"]= 100000,
+	["Booth Slot Voucher"]= 150000,
 	["Clan Voucher"]= 500000,
     ["Crystal Key"] = 5000,  -- Direct value for "Crystal Key"
     ["Crystal Key Lower Half"] = 500,
@@ -47,19 +47,19 @@ local EnchantsPS99 = {
 
 local CharmsPS99 = {
 	["Overload"] = 1000000,
-    ["Royalty"] = 5000000,
+    ["Royalty"] = 6000000,
     ["Glittering"]= 25000
 }
 
 local Update5 = {
-    ["Mystery Ticket"] = 1000000,
+    ["Mystery Ticket"] = 5000000,
 	["Magic Shard"] = 3000,
 	["Mini Chest"] = 5000,
 	["Daycare Slot Voucher"] = 100000,
 	["Magic Orb"] = 100000,
 	["Chest Breaker"] = 1000000,
 	["Secret Key"] = 50000,
-    ["Secret Key Lower Half"] = 5000,
+    ["Secret Key Lower Half"] = 1000,
 	["Secret Key Upper Half"] = 30000
 }
 
