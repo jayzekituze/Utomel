@@ -13,6 +13,7 @@ local rs = game:GetService("ReplicatedStorage")
 local vu = game:GetService("VirtualUser")
 
 --low cpu nigga optimizer
+game:GetService("RunService"):Set3dRenderingEnabled(false)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
 local function jumpToServer()
