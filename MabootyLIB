@@ -41,5 +41,22 @@ end
 
 
 task.spawn(function()
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/MoronDev/MoronDev/main/autoegg.lua'))()
+    task.wait(20)
+
+	hookfunction(getsenv(game.Players.LocalPlayer.PlayerScripts.Scripts.Game["Egg Opening Frontend"]).PlayEggAnimation, function()
+        return
+    end)
+    
+    _G.loop = true
+    _G.loopDelay = 1 -- in seconds
+    
+    local args = {
+        [1] = "Tech Ciruit Egg",
+        [2] = 
+    }
+    
+    while _G.loop do
+        game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Eggs_RequestPurchase"):InvokeServer(unpack(args))
+        task.wait(loopDelay)
+    end
 end)
