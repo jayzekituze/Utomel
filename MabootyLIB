@@ -3,60 +3,51 @@ repeat task.wait() until game:IsLoaded()
 
 
 print("waiting 20s to execute")
-wait(20)
+wait(10)
 
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/PaidScript'))()
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/utoHatched'))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
-
-local lighting = game.Lighting
-local terrain = game.Workspace.Terrain
-terrain.WaterWaveSize = 0
-terrain.WaterWaveSpeed = 0
-terrain.WaterReflectance = 0
-terrain.WaterTransparency = 0
-lighting.GlobalShadows = false
-lighting.FogStart = 0
-lighting.FogEnd = 0
-lighting.Brightness = 0
-
-for _, v in pairs(game:GetDescendants()) do
-    if v:IsA("BasePart") or v:IsA("MeshPart") then
-        v.Material = "Plastic"
-        v.Reflectance = 0
-    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-        v.Lifetime = NumberRange.new(0)
-    elseif v:IsA("Explosion") then
-        v.BlastPressure = 1
-        v.BlastRadius = 1
-    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
-        v.Enabled = false
-    end
+local function serverHop(id)
+	local deep
+	local HttpService = game:GetService("HttpService")
+	local TeleportService = game:GetService("TeleportService")
+	local Players = game:GetService("Players")
+	local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s"
+	local req = request({
+		Url = string.format(sfUrl, id, "Desc", 100)
+	})
+	local body = HttpService:JSONDecode(req.Body)
+	task.wait(0.2)
+	req = request({
+		Url = string.format(sfUrl .. "&cursor=" ..body.nextPageCursor, id, "Desc", 100)
+	})
+	body = HttpService:JSONDecode(req.Body)
+	task.wait(0.1)
+	local servers = {}
+	if body and body.data then
+		for i, v in next, body.data do
+			if type(v) == "table" and v.playing >= 2 and v.id ~= game.JobId then
+				table.insert(servers, 1, v.id)
+			end
+		end
+	end
+	local randomCount = #servers
+	if not randomCount then
+		randomCount = 2
+	end
+	TeleportService:TeleportToPlaceInstance(id, servers[math.random(1, randomCount)], Players.LocalPlayer)
 end
 
-for _, e in pairs(lighting:GetChildren()) do
-    if e:IsA("PostEffect") then
-        e.Enabled = false
-    end
-end
-
+task.spawn(function()
+    game:GetService("GuiService").ErrorMessageChanged:Connect(function()
+        serverHop(16498369169)
+        game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
+        wait(0.1)
+    end)
+end)
 
 task.spawn(function()
     task.wait(20)
-
-	hookfunction(getsenv(game.Players.LocalPlayer.PlayerScripts.Scripts.Game["Egg Opening Frontend"]).PlayEggAnimation, function()
-        return
-    end)
-    
-    _G.loop = true
-    _G.loopDelay = 1 -- in seconds
-    
-    local args = {
-        [1] = "Tech Ciruit Egg",
-        [2] = 28
-    }
-    
-    while _G.loop do
-        game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Eggs_RequestPurchase"):InvokeServer(unpack(args))
-        task.wait(loopDelay)
-    end
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/utoHatched'))()
 end)
