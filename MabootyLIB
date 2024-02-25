@@ -3,22 +3,42 @@ repeat task.wait() until game:IsLoaded()
 
 
 print("waiting 20s to execute")
-wait(10)
+wait(15)
 
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
 local PlayerInServer = #getPlayers
 local http = game:GetService("HttpService")
-local vu = game:GetService("VirtualUser")
-local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
+local ts = game:GetService("TeleportService")
+local rs = game:GetService("ReplicatedStorage")
 
+local vu = game:GetService("VirtualUser")
 Players.LocalPlayer.Idled:connect(function()
-    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-    task.wait(1)
-    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	task.wait(1)
+	vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
-game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
+game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
+
+local character = Player.Character or Player.CharacterAdded:Wait()
+local humanoid = character:FindFirstChildWhichIsA('Humanoid')
+
+local function moveToPosition(position)
+	local moveFinished = false
+	local connection
+	connection = humanoid.MoveToFinished:Connect(function(reached)
+		moveFinished = reached
+		if connection then
+			connection:Disconnect()
+		end
+	end)
+	humanoid:MoveTo(position)
+	repeat task.wait() until moveFinished
+end
+	
+moveToPosition(Vector3.new(-10042.6162109375, 16.804433822631836, -315.94561767578125))
+
 
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/utoHatched'))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
