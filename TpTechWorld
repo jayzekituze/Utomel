@@ -26,12 +26,12 @@ local function serverHop(id)
 	local Players = game:GetService("Players")
 	local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s"
 	local req = request({
-		Url = string.format(sfUrl, id, "Desc", 100)
+		Url = string.format(sfUrl, id, "Asc", 100)
 	})
 	local body = HttpService:JSONDecode(req.Body)
 	task.wait(0.2)
 	req = request({
-		Url = string.format(sfUrl .. "&cursor=" ..body.nextPageCursor, id, "Desc", 100)
+		Url = string.format(sfUrl .. "&cursor=" ..body.nextPageCursor, id, "Asc", 100)
 	})
 	body = HttpService:JSONDecode(req.Body)
 	task.wait(0.1)
