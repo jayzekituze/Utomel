@@ -1,3 +1,76 @@
+-- Function to make HTTP requests
+local function httpRequest(url)
+    local success, response = pcall(function()
+        return game:GetService("HttpService"):RequestAsync({
+            Url = url,
+            Method = "GET",
+            Headers = {
+                ["Content-Type"] = "application/json"
+            }
+        })
+    end)
+
+    if success and response.Success then
+        return response
+    else
+        warn("Error making HTTP request:", response and response.StatusCode or "Unknown error")
+        return nil
+    end
+end
+
+local function serverHop(id)
+    local HttpService = game:GetService("HttpService")
+    local TeleportService = game:GetService("TeleportService")
+    local Players = game:GetService("Players")
+    local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s"
+
+    local function getServers(url)
+        local req = httpRequest(url)
+        if not req or not req.Body then
+            return {}
+        end
+
+        local body = HttpService:JSONDecode(req.Body)
+        if not body or not body.data then
+            return {}
+        end
+
+        local servers = {}
+        for i, v in ipairs(body.data) do
+            if type(v) == "table" and v.playing >= 2 and v.id ~= game.JobId then
+                table.insert(servers, v.id)
+            end
+        end
+
+        return servers
+    end
+
+    local servers = getServers(string.format(sfUrl, id, "Desc", 100))
+    task.wait(0.2)
+
+    local nextPageCursor = nil
+    repeat
+        local url = string.format(sfUrl .. "&cursor=" .. nextPageCursor, id, "Desc", 100)
+        local additionalServers = getServers(url)
+        for _, v in ipairs(additionalServers) do
+            table.insert(servers, v)
+        end
+
+        task.wait(0.1)
+    until nextPageCursor == nil
+
+    local randomCount = #servers
+    if randomCount > 0 then
+        TeleportService:TeleportToPlaceInstance(id, servers[math.random(1, randomCount)], Players.LocalPlayer)
+    else
+        warn("No available servers.")
+    end
+end
+
+-- Assuming 'request' is the HTTP library you are using
+-- Make sure to replace this with the appropriate HTTP library if it's different
+local request = require(game:GetService("ReplicatedStorage").Modules:WaitForChild("Request"))
+
 repeat wait() until game:IsLoaded()
 wait(10)
 
@@ -13,43 +86,12 @@ local magnanakaw = {
     "sofia_10899"
 }
 
-for _,v in ipairs(magnanakaw) do
+for _, v in ipairs(magnanakaw) do
     if Players.LocalPlayer.Name == v then
         game:Shutdown()
     end
 end
 
-local function serverHop(id)
-	local deep
-	local HttpService = game:GetService("HttpService")
-	local TeleportService = game:GetService("TeleportService")
-	local Players = game:GetService("Players")
-	local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s"
-	local req = request({
-		Url = string.format(sfUrl, id, "Desc", 100)
-	})
-	local body = HttpService:JSONDecode(req.Body)
-	task.wait(0.2)
-	req = request({
-		Url = string.format(sfUrl .. "&cursor=" ..body.nextPageCursor, id, "Desc", 100)
-	})
-	body = HttpService:JSONDecode(req.Body)
-	task.wait(0.1)
-	local servers = {}
-	if body and body.data then
-		for i, v in next, body.data do
-			if type(v) == "table" and v.playing >= 2 and v.id ~= game.JobId then
-				table.insert(servers, 1, v.id)
-			end
-		end
-	end
-	local randomCount = #servers
-	if not randomCount then
-		randomCount = 2
-	end
-	TeleportService:TeleportToPlaceInstance(id, servers[math.random(1, randomCount)], Players.LocalPlayer)
-end
-
 while wait(1) do
-	serverHop(16498369169)
+    serverHop(place)
 end
