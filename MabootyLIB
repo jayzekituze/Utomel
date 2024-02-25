@@ -73,3 +73,14 @@ task.spawn(function()
 end)
 
 
+local hopDelay = math.random(2400, 3600)
+
+task.spawn(function ()
+    while task.wait(1) do
+        if math.floor(os.clock() - osclock) >= hopDelay then
+            while task.wait(1) do
+                serverHop(place)
+            end
+        end
+    end
+end)
