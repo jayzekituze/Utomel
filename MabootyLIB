@@ -93,7 +93,7 @@ task.spawn(function()
 end)
 
 
-local hopDelay = math.random(3600, 6000)
+local hopDelay = math.random(7200, 8000)
 
 task.spawn(function ()
     while task.wait(1) do
