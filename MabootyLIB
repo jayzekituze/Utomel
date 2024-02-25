@@ -52,7 +52,7 @@ task.spawn(function()
     
     local args = {
         [1] = "Tech Ciruit Egg",
-        [2] = 
+        [2] = 28
     }
     
     while _G.loop do
