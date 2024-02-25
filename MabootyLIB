@@ -5,6 +5,21 @@ repeat task.wait() until game:IsLoaded()
 print("waiting 20s to execute")
 wait(10)
 
+local Players = game:GetService('Players')
+local Player = Players.LocalPlayer
+local getPlayers = Players:GetPlayers()
+local PlayerInServer = #getPlayers
+local http = game:GetService("HttpService")
+local vu = game:GetService("VirtualUser")
+local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
+
+Players.LocalPlayer.Idled:connect(function()
+    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    task.wait(1)
+    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
+
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/utoHatched'))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
