@@ -41,10 +41,5 @@ end
 
 
 task.spawn(function()
-	print("HuGe Games STARTING")
-    getgenv().AuthKey = "HUGE_HYARsu18jErU"
-	getgenv().LoadSettings = {
-		Example_Setting = 2
-	}
-	loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/MoronDev/MoronDev/main/autoegg.lua'))()
 end)
