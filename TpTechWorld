@@ -93,5 +93,7 @@ for _, v in ipairs(magnanakaw) do
 end
 
 while wait(1) do
-    serverHop(place)
+    serverHop(16498369169)
 end
+
+
