@@ -1,11 +1,19 @@
-
 getgenv().autoHatch = true
 
-local EGG_TO_HATCH = "Tech Ciruit Egg"
+local amountsToHatch = {
+    ["bbqkram"] = 61,
+    -- Add more usernames and corresponding amounts as needed
+}
+
+local username = game.Players.LocalPlayer.Name
+
 local AMOUNT_TO_HATCH = 29
 
+if amountsToHatch[username] then
+    AMOUNT_TO_HATCH = amountsToHatch[username]
+end
 
-
+local EGG_TO_HATCH = "Tech Circuit Egg"
 
 local function getEgg()
     local counterEggs = 113
