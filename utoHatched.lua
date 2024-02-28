@@ -79,12 +79,12 @@ end)
 
 task.spawn(function()
     task.wait(20)
-	-- getgenv().AuthKey = "HUGE_HYARsu18jErU"
-	-- getgenv().LoadSettings = {
-	-- 	Example_Setting = 2
-	-- }
-	-- loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoHatchedV1.5'))()
+	getgenv().AuthKey = "HUGE_HYARsu18jErU"
+	getgenv().LoadSettings = {
+		Example_Setting = 2
+	}
+	loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+    --loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoHatchedV1.5'))()
 end)
 
 
