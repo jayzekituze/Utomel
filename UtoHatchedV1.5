@@ -11,7 +11,6 @@ local PlayerInfo = Library.Save.Get()
 local EggAnim : {PlayEggAnimation: () -> nil} = getsenv(Player.PlayerScripts.Scripts.Game["Egg Opening Frontend"])
 local Eggs: Folder = Things.Eggs:FindFirstChild("Main") or Things.Eggs:FindFirstChild("World2")
 local Egg = Eggs[EggNumber .. " - Egg Capsule"] :: Model & {Tier: Part}
-local Teleport = Egg.Tier.CFrame
 
 hookfunction(EggAnim.PlayEggAnimation, function()
     return
@@ -21,7 +20,6 @@ while task.wait(0.1) do
     local BestEggName = EggsUtilMod.GetIdByNumber(EggNumber)
     local EggHatchCount = PlayerInfo.EggHatchCount
 
-    Player.Character.HumanoidRootPart.CFrame = Teleport
 
     repeat
         local success: boolean = ReplicatedStorage.Network.Eggs_RequestPurchase:InvokeServer(BestEggName, EggHatchCount)
