@@ -41,7 +41,8 @@ moveToPosition(Vector3.new(-10042.6162109375, 16.804433822631836, -315.945617675
 
 
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/utoHatched'))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
+-- loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/jayzekituze/Utomel/main/lowCPU"))()
 
 local function serverHop(id)
     local HttpService = game:GetService("HttpService")
