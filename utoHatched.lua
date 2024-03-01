@@ -71,7 +71,7 @@ end
 
 task.spawn(function()
     game:GetService("GuiService").ErrorMessageChanged:Connect(function()
-        serverHop(16498369169)
+        serverHop(8737899170)
         game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
         wait(0.1)
     end)
@@ -94,7 +94,7 @@ task.spawn(function()
     while task.wait(1) do
         if math.floor(os.clock() - osclock) >= hopDelay then
             while task.wait(1) do
-                serverHop(16498369169)
+                serverHop(8737899170)
             end
         end
     end
