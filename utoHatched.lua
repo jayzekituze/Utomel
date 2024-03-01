@@ -86,3 +86,16 @@ task.spawn(function()
 	loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
     --loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoHatchedV1.5'))()
 end)
+
+
+local hopDelay = math.random(7200, 8400)
+
+task.spawn(function()
+    while task.wait(1) do
+        if math.floor(os.clock() - osclock) >= hopDelay then
+            while task.wait(1) do
+                serverHop(place)
+            end
+        end
+    end
+end)
