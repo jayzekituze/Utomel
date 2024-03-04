@@ -5,7 +5,7 @@ print("booty works V7")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
 
-    HugePrice = 20000000,
+    HugePrice = 15000000,
     TitanicPetPrice = 950000000,
     ExclusivePetPrice = 350000,
 	EggPrice = 4000000,
@@ -128,11 +128,17 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
 end
 
 local function tryPurchase(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+    local args = {
+        [1] = playerid, --sellers roblox id
+        [2] = {
+            [tostring(uid)] = amount --id of the item and the amount
+        }
+    }
     local ping = Player:GetNetworkPing()
     if buytimestamp > listTimestamp then
         task.wait(3.4 - ping)
     end
-    local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+    local boughtPet, boughtMessage = game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Booths_RequestPurchase"):InvokeServer(unpack(args))
     processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, class, boughtMessage, math.floor(ping*1000))
 end
 
