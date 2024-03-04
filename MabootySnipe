@@ -68,6 +68,7 @@ local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChi
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
+local PlayerInServer = #getPlayers
 local http = game:GetService("HttpService")
 local vu = game:GetService("VirtualUser")
 local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
@@ -264,7 +265,6 @@ local function serverHop(id)
     TeleportService:TeleportToPlaceInstance(id, servers[math.random(1, randomCount)], Players.LocalPlayer)
 end
 
-local PlayerInServer = #getPlayers
 if PlayerInServer < 25 then
     while task.wait(1) do
         serverHop(place)
