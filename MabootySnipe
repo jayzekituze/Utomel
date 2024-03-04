@@ -167,7 +167,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 
             print(string.format("%s listed %s %s - %s gems, %s gems/unit", tostring(username), tostring(amount), tostring(item), tostring(gems), tostring(unitGems)))
 
-            if string.find(item, "Huge") and unitGems <= 100 then
+            if string.find(item, "Huge") and gems <= 100 then
                 coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                 return
             elseif class == "Pet" then
@@ -175,7 +175,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
                 if type.exclusiveLevel and gems <= MainPrices.ExclusivePetPrice and item ~= "Banana" and item ~= "Coin" then
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                     return
-                elseif type.titanic and unitGems <= MainPrices.TitanicPetPrice then
+                elseif type.titanic and gems <= MainPrices.TitanicPetPrice then
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                     return
                 elseif type.huge and gems <= MainPrices.HugePrice then
@@ -189,7 +189,7 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
                 coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                 return
             elseif class == "Enchant" then
-                if string.find(item, "Chest Mimic") and unitGems <= MainPrices.ChestMimic then
+                if string.find(item, "Chest Mimic") and gems <= MainPrices.ChestMimic then
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                     return
                 end
@@ -199,14 +199,14 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
             end
 
             for i, v in pairs(ItemsPS99) do
-				if item == i and unitGems <= v then
+				if item == i and gems <= v then
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
 			end
 
             for i, v in pairs(PotionsPS99) do
-				if item == i and unitGems <= v then
+				if item == i and gems <= v then
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
@@ -214,21 +214,21 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 			
 
 			for i, v in pairs(EnchantsPS99) do
-				if item == i and unitGems <= v then
+				if item == i and gems <= v then
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
 			end
 
 			for i, v in pairs(CharmsPS99) do
-				if item == i and unitGems <= v then
+				if item == i and gems <= v then
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
 			end
 
 			for i, v in pairs(Update5) do
-				if item == i and unitGems <= v then
+				if item == i and gems <= v then
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
