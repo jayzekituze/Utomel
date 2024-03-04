@@ -68,6 +68,7 @@ local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChi
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
+local PlayerInServer = #getPlayers
 local http = game:GetService("HttpService")
 local vu = game:GetService("VirtualUser")
 local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
@@ -128,17 +129,11 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
 end
 
 local function tryPurchase(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-    local args = {
-        [1] = playerid, --sellers roblox id
-        [2] = {
-            [tostring(uid)] = amount --id of the item and the amount
-        }
-    }
     local ping = Player:GetNetworkPing()
     if buytimestamp > listTimestamp then
         task.wait(3.4 - ping)
     end
-    local boughtPet, boughtMessage = game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Booths_RequestPurchase"):InvokeServer(unpack(args))
+    local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
     processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, class, boughtMessage, math.floor(ping*1000))
 end
 
@@ -264,14 +259,12 @@ local function serverHop(id)
     TeleportService:TeleportToPlaceInstance(id, servers[math.random(1, randomCount)], Players.LocalPlayer)
 end
 
-local PlayerInServer = #getPlayers
 
 if PlayerInServer < 25 then
     while task.wait(1) do
         serverHop(place)
     end
 end
-
 
 for i = 1, PlayerInServer do
     for _, alt in pairs(alts) do
