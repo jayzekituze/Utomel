@@ -8,8 +8,8 @@ local MainPrices = {
     HugePrice = 15000000,
     TitanicPetPrice = 950000000,
     ExclusivePetPrice = 350000,
-	EggPrice = 4000000,
-    ChestMimic = 30000000,
+	EggPrice = 5000000,
+    ChestMimic = 50000000,
     buyAnything = 2
 
 }
@@ -19,7 +19,7 @@ local ItemsPS99 = {
     ["Titanic Christmas Present"] = 5000000,
     ["X-Large Christmas Present"] = 60000,
     ["2024 New Year"] = 10000,
-    ["Spinny Wheel Ticket"]= 5000,
+    ["Spinny Wheel Ticket"]= 2000,
 	["Booth Slot Voucher"]= 150000,
 	["Clan Voucher"]= 500000,
     ["Crystal Key"] = 5000,  -- Direct value for "Crystal Key"
@@ -28,26 +28,23 @@ local ItemsPS99 = {
 }
 
 local PotionsPS99 = {
-    ["The Cocktail"] = 180000,
-	["Shiny Flag"] = 2500,
-	["Rainbow Flag"] = 1000,
+    ["The Cocktail"] = 100000,
 	["Exotic Treasure Flag"] = 25000
 }
 
 local EnchantsPS99 = {
-    ["Fortune"] = 50000,
+    ["Fortune"] = 10000,
     -- ["Chest Mimic"] = 8000000,
-    ["Lucky Block"] = 10000000,
+    ["Lucky Block"] = 15000000,
     ["Shiny Hunter"] = 100000,
     ["Huge Hunter"] = 1000000,
     ["Diamond Chest Mimic"] = 15000000,
-    ["Massive Comet"] = 3000000,
-	["Party Time"] = 10000
+    ["Massive Comet"] = 5000000
 }
 
 local CharmsPS99 = {
 	["Overload"] = 1000000,
-    ["Royalty"] = 6000000,
+    ["Royalty"] = 5000000,
     ["Glittering"]= 25000
 }
 
@@ -74,12 +71,13 @@ local http = game:GetService("HttpService")
 local vu = game:GetService("VirtualUser")
 local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
 
-Players.LocalPlayer.Idled:connect(function()
-    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-    task.wait(1)
-    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+local virtualuser = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:Connect(function()
+    virtualuser:CaptureController()
+    virtualuser:ClickButton2(Vector2.new())
 end)
-game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
+game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
+game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
 
 local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtPet, class, boughtMessage, ping)
     local gemamount = Player.leaderstats["💎 Diamonds"] and Player.leaderstats["💎 Diamonds"].Value or 0
