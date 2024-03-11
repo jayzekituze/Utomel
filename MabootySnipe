@@ -2,7 +2,6 @@ local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
 
 
-wait(15)
 print("booty works V7")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 local MainPrices = {
