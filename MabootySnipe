@@ -1,67 +1,73 @@
 local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
 
-print("booty works V7")
+
+print("booty works V8")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
+
 local MainPrices = {
 
-    HugePrice = 23000000,
-    TitanicPetPrice = 1500000000,
-    ExclusivePetPrice = 700000,
-	EggPrice = 6000000,
-    ChestMimic = 50000000,
+    HugePrice = 15000000,
+    TitanicPetPrice = 950000000,
+    ExclusivePetPrice = 350000,
+	EggPrice = 5000000,
     buyAnything = 2
-
 }
+
+local MgaLibro = {
+
+    BossChestMimic = 50000000,
+    ChestMimic = 70000000,
+    DiamondChestMimic = 30000000,
+	LuckyBlock = 20000000,
+    MassiveComet = 10000000,
+    ChestBreaker = 10000000,
+    HugeHunter = 1000000
+}
+
 
 --PS99 ITEMS
 local ItemsPS99 = {
+    ["Exotic Treasure Flag"] = 50000,
+    ["Mystery Ticket"] = 5000000,
     ["Titanic Christmas Present"] = 5000000,
     ["X-Large Christmas Present"] = 60000,
     ["2024 New Year"] = 10000,
     ["Spinny Wheel Ticket"]= 2000,
+    ["Tech Wheel Ticket"]= 5000,
 	["Booth Slot Voucher"]= 150000,
+    ["Daycare Slot Voucher"] = 100000,
 	["Clan Voucher"]= 500000,
     ["Crystal Key"] = 5000,  -- Direct value for "Crystal Key"
-    ["Crystal Key Lower Half"] = 300,
-	["Crystal Key Upper Half"] = 5000
+    ["Crystal Key Lower Half"] = 500,
+	["Crystal Key Upper Half"] = 5000,
+    ["Secret Key"] = 50000,
+    ["Secret Key Lower Half"] = 500,
+	["Secret Key Upper Half"] = 30000,
+    ["Tech Key"] = 50000,
+    ["Tech Key Lower Half"] = 500,
+	["Tech Key Upper Half"] = 30000
 }
 
+--ulitmates
+local Ultimates = {
+    ["Black Hole"] = 50000000,
+	["Chest Spell"] = 100000000,
+    ["Tornado"] = 1000000
+}
+
+--potions
 local PotionsPS99 = {
-    ["The Cocktail"] = 100000,
-	["Exotic Treasure Flag"] = 25000
+    ["The Cocktail"] = 50000,
 }
 
-local EnchantsPS99 = {
-    ["Fortune"] = 10000,
-    -- ["Chest Mimic"] = 8000000,
-    ["Lucky Block"] = 20000000,
-    ["Shiny Hunter"] = 100000,
-    ["Huge Hunter"] = 1000000,
-    ["Diamond Chest Mimic"] = 20000000,
-    ["Boss Chest Mimic"] = 50000000,
-    ["Massive Comet"] = 5000000
-}
-
+--charms
 local CharmsPS99 = {
-    ["Black Hole"] = 10000000,
-    ["Chest Spell"] = 10000000,
 	["Overload"] = 1000000,
     ["Royalty"] = 5000000,
     ["Glittering"]= 25000
 }
 
-local Update5 = {
-    ["Mystery Ticket"] = 5000000,
-	["Magic Shard"] = 3000,
-	["Mini Chest"] = 5000,
-	["Daycare Slot Voucher"] = 80000,
-	["Magic Orb"] = 100000,
-	["Chest Breaker"] = 1000000,
-	["Secret Key"] = 50000,
-    ["Secret Key Lower Half"] = 1000,
-	["Secret Key Upper Half"] = 30000
-}
 
 wait(10)
 game:GetService("RunService"):Set3dRenderingEnabled(false)
@@ -187,13 +193,31 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
             elseif class == "Egg" and gems <= MainPrices.EggPrice then
                 coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                 return
-            elseif ((string.find(item, "Key") and not string.find(item, "Lower")) or string.find(item, "Ticket") or string.find(item, "Charm") or class == "Charm") and gems <= 100 then
+            elseif ((string.find(item, "Key") and not string.find(item, "Lower")) or string.find(item, "Ticket") or string.find(item, "Charm") or class == "Charm") and gems <= 200 then
                 coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                 return
             elseif class == "Enchant" then
-                if string.find(item, "Chest Mimic") and gems <= MainPrices.ChestMimic then
+                if string.find(item, "Boss Chest Mimic") and gems <= MgaLibro.BossChestMimic then
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                     return
+                elseif string.find(item, "Chest Mimic") and gems <= MgaLibro.ChestMimic then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                    return
+                elseif string.find(item, "Diamond Chest Mimic") and gems <= MgaLibro.DiamondChestMimic then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                    return
+                elseif string.find(item, "Lucky Block") and gems <= MgaLibro.LuckyBlock then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                    return
+                elseif string.find(item, "Massive Comet") and gems <= MgaLibro.MassiveComet then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                    return
+                elseif string.find(item, "Chest Breaker") and gems <= MgaLibro.ChestBreaker then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                    return
+                elseif string.find(item, "Huge Hunter") and gems <= MgaLibro.HugeHunter then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                    return    
                 end
                 -- elseif gems <= MainPrices.buyAnything then
                 --     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
@@ -201,6 +225,13 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
             end
 
             for i, v in pairs(ItemsPS99) do
+				if item == i and gems <= v then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+					return
+				end
+			end
+
+            for i, v in pairs(Ultimates) do
 				if item == i and gems <= v then
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
@@ -215,28 +246,12 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 			end
 			
 
-			for i, v in pairs(EnchantsPS99) do
-				if item == i and gems <= v then
-                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-					return
-				end
-			end
-
 			for i, v in pairs(CharmsPS99) do
 				if item == i and gems <= v then
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
 					return
 				end
 			end
-
-			for i, v in pairs(Update5) do
-				if item == i and gems <= v then
-                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
-					return
-				end
-			end
-
-
 
         end
     end
