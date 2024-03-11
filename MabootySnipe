@@ -44,6 +44,8 @@ local EnchantsPS99 = {
 }
 
 local CharmsPS99 = {
+    ["Black Hole"] = 10000000,
+    ["Chest Spell"] = 10000000,
 	["Overload"] = 1000000,
     ["Royalty"] = 5000000,
     ["Glittering"]= 25000
