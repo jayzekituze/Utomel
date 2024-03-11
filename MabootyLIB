@@ -3,6 +3,7 @@ getgenv().webhookFail = "https://discord.com/api/webhooks/1207253726058778644/nj
 getgenv().userid = "402681518197047306" -- pings your discord id if it snipes a huge or titanic
 getgenv().place = 15502339080
 getgenv().alts = {
+    "ps99rank7",
     "HolyKram",
     "KramATK",
     "kyleuriarte123",
