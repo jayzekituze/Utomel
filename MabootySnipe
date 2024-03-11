@@ -17,7 +17,7 @@ local MainPrices = {
 local MgaLibro = {
 
     BossChestMimic = 50000000,
-    ChestMimic = 70000000,
+    ChestMimic = 50000000,
     DiamondChestMimic = 30000000,
 	LuckyBlock = 20000000,
     MassiveComet = 10000000,
