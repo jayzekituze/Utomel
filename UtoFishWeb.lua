@@ -1,7 +1,7 @@
 local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
 
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoFishWeb'))()
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoFishWeb.lua'))()
 wait(10)
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
