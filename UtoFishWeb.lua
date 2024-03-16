@@ -33,7 +33,7 @@ local function serverHop(id)
     local servers = {}
     if body and body.data then
         for i, v in next, body.data do
-            if type(v) == "table" and v.playing >= 35 and v.id ~= game.JobId then
+            if type(v) == "table" and v.playing >= 2 and v.id ~= game.JobId then
                 table.insert(servers, 1, v.id)
             end
         end
