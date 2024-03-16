@@ -1,15 +1,13 @@
 local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
 
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoFishWeb.lua'))()
+
 wait(10)
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
 local PlayerInServer = #getPlayers
 local http = game:GetService("HttpService")
-local vu = game:GetService("VirtualUser")
-local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
 local vu = game:GetService("VirtualUser")
 print("Anti AFKEY")
 
