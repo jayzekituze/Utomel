@@ -11,11 +11,14 @@ local http = game:GetService("HttpService")
 local vu = game:GetService("VirtualUser")
 print("Anti AFKEY")
 
-local VirtualUser=game:service'VirtualUser'
-game:service'Players'.LocalPlayer.Idled:connect(function()
-VirtualUser:CaptureController()
-VirtualUser:ClickButton2(Vector2.new())
+local virtualuser = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:Connect(function()
+    virtualuser:CaptureController()
+    virtualuser:ClickButton2(Vector2.new())
 end)
+game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
+game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
+
 
 local function serverHop(id)
     local HttpService = game:GetService("HttpService")
