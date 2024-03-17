@@ -1,15 +1,36 @@
 local osclock = os.clock()
-repeat task.wait(1) until game:IsLoaded()
+repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
-
+print("Waiting for 10s to load the other worlds...")
 wait(10)
+
+-- Services
+local Chimpanzees = game:GetService("Players")
+local Jungle = game:GetService("Workspace")
+local TreeClimbingService = game:GetService("RunService")
+local BananaStorage = game:GetService("ReplicatedStorage")
+
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoFishWeb'))()
+
+-- Monkey type stuff
+
+local InGame = false
+local Monkey = Chimpanzees.LocalPlayer
+local MonkeyHabitat = Jungle:WaitForChild("__THINGS")
+local ActiveMonkeys = MonkeyHabitat:WaitForChild("__INSTANCE_CONTAINER"):WaitForChild("Active")
+local MonkeyDebris = Jungle:WaitForChild("__DEBRIS")
+local MonkeyNetwork = BananaStorage:WaitForChild("Network")
+local OldMonkeyHooks = {}
+local MonkeyFishingGame = Monkey:WaitForChild("PlayerGui"):WaitForChild("_INSTANCES").FishingGame.GameBar
+
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
 local PlayerInServer = #getPlayers
 local http = game:GetService("HttpService")
+local ts = game:GetService("TeleportService")
+local rs = game:GetService("ReplicatedStorage")
 local vu = game:GetService("VirtualUser")
-print("Anti AFKEY")
 
 Players.LocalPlayer.Idled:connect(function()
     vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
@@ -18,32 +39,6 @@ Players.LocalPlayer.Idled:connect(function()
 end)
 game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
 game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
-
-
-local function serverHop(id)
-    local HttpService = game:GetService("HttpService")
-    local TeleportService = game:GetService("TeleportService")
-    local Players = game:GetService("Players")
-    local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true"
-    local req = request({
-        Url = string.format(sfUrl, id, "Desc", 100)
-    })
-    local body = HttpService:JSONDecode(req.Body)
-    task.wait(0.2)
-    local servers = {}
-    if body and body.data then
-        for i, v in next, body.data do
-            if type(v) == "table" and v.playing >= 2 and v.id ~= game.JobId then
-                table.insert(servers, 1, v.id)
-            end
-        end
-    end
-    local randomCount = #servers
-    if not randomCount then
-        randomCount = 2
-    end
-    TeleportService:TeleportToPlaceInstance(id, servers[math.random(1, randomCount)], Players.LocalPlayer)
-end
 
 task.spawn(function()
     game:GetService("GuiService").ErrorMessageChanged:Connect(function()
@@ -61,8 +56,28 @@ local niggaJump = coroutine.create(function ()
 end)
 coroutine.resume(niggaJump)
 
-getgenv().AuthKey = "HUGE_HYARsu18jErU"
-getgenv().LoadSettings = {
-    Example_Setting = 2
-}
-loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+-- Define a function to teleport the player to the fishing site
+local function teleportToFishingSite()
+    -- Teleport the player to the fishing site
+    game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Teleports_RequestTeleport"):InvokeServer("Cloud Forest")
+    wait(20)
+    Monkey.Character.HumanoidRootPart.CFrame = MonkeyHabitat.Instances.AdvancedFishing.Teleports.Enter.CFrame
+    wait(10)
+    _G.WebhookURL = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr" -- you webhook URL   
+    _G.DiscUserID = "581283569704370176" -- your discord ID
+
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/d68b8e56fab88bf7d726a7690f48b72b.lua"))()
+end
+
+-- Check if there are active fishing instances; if not, teleport the player to the fishing site
+if #ActiveMonkeys:GetChildren() == 0 then
+    teleportToFishingSite()
+else
+    print('nah')
+end
+
+
+_G.WebhookURL = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr" -- you webhook URL   
+_G.DiscUserID = "581283569704370176" -- your discord ID
+
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/d68b8e56fab88bf7d726a7690f48b72b.lua"))()
