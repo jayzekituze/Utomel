@@ -1,18 +1,14 @@
-local osclock = os.clock()
 repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
-print("Waiting for 10s to load the other worlds...")
 wait(10)
-
--- Services
+-- services shit
+-- loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoFishWeb'))()
 local Chimpanzees = game:GetService("Players")
 local Jungle = game:GetService("Workspace")
 local TreeClimbingService = game:GetService("RunService")
 local BananaStorage = game:GetService("ReplicatedStorage")
 
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoFishWeb'))()
-
--- Monkey type stuff
+-- monkey type shit
 
 local InGame = false
 local Monkey = Chimpanzees.LocalPlayer
@@ -20,41 +16,6 @@ local MonkeyHabitat = Jungle:WaitForChild("__THINGS")
 local ActiveMonkeys = MonkeyHabitat:WaitForChild("__INSTANCE_CONTAINER"):WaitForChild("Active")
 local MonkeyDebris = Jungle:WaitForChild("__DEBRIS")
 local MonkeyNetwork = BananaStorage:WaitForChild("Network")
-local OldMonkeyHooks = {}
-local MonkeyFishingGame = Monkey:WaitForChild("PlayerGui"):WaitForChild("_INSTANCES").FishingGame.GameBar
-
-local Players = game:GetService('Players')
-local Player = Players.LocalPlayer
-local getPlayers = Players:GetPlayers()
-local PlayerInServer = #getPlayers
-local http = game:GetService("HttpService")
-local ts = game:GetService("TeleportService")
-local rs = game:GetService("ReplicatedStorage")
-local vu = game:GetService("VirtualUser")
-
-Players.LocalPlayer.Idled:connect(function()
-    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-    task.wait(1)
-    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-end)
-game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
-game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
-
-task.spawn(function()
-    game:GetService("GuiService").ErrorMessageChanged:Connect(function()
-        serverHop(8737899170)
-        game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
-        wait(0.1)
-    end)
-end)
-
-local niggaJump = coroutine.create(function ()
-    while 1 do
-        wait(5)
-        game.Players.LocalPlayer.Character.Humanoid.Jump = true
-    end
-end)
-coroutine.resume(niggaJump)
 
 -- Define a function to teleport the player to the fishing site
 local function teleportToFishingSite()
@@ -62,11 +23,31 @@ local function teleportToFishingSite()
     game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Teleports_RequestTeleport"):InvokeServer("Cloud Forest")
     wait(20)
     Monkey.Character.HumanoidRootPart.CFrame = MonkeyHabitat.Instances.AdvancedFishing.Teleports.Enter.CFrame
-    wait(10)
-    _G.WebhookURL = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr" -- you webhook URL   
-    _G.DiscUserID = "581283569704370176" -- your discord ID
+    wait(20)
+    local Player = game.Players.LocalPlayer
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local humanoid = character:FindFirstChildWhichIsA('Humanoid')
 
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/d68b8e56fab88bf7d726a7690f48b72b.lua"))()
+    local function moveToPosition(position)
+        local moveFinished = false
+        local connection
+        connection = humanoid.MoveToFinished:Connect(function(reached)
+            moveFinished = reached
+            if connection then
+                connection:Disconnect()
+            end
+        end)
+        humanoid:MoveTo(position)
+        repeat task.wait() until moveFinished
+    end
+        
+    moveToPosition(Vector3.new(1451.0006103515625, 66.06719207763672, -4451.95263671875))
+
+	if #ActiveMonkeys:GetChildren() >= 1 then
+		print('Successful tp to site')
+	elseif #ActiveMonkeys:GetChildren() == 0 then
+		Monkey.Character.HumanoidRootPart.CFrame = MonkeyHabitat.Instances.AdvancedFishing.Teleports.Enter.CFrame
+	end
 end
 
 -- Check if there are active fishing instances; if not, teleport the player to the fishing site
@@ -76,8 +57,93 @@ else
     print('nah')
 end
 
+--  functions
+local function getMonkeyRod()
+    return Monkey.Character and Monkey.Character:FindFirstChild("Rod", true)
+end
 
-_G.WebhookURL = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr" -- you webhook URL   
-_G.DiscUserID = "581283569704370176" -- your discord ID
+local function getMonkeyBubbles(anchor)
+    local myBobber = nil
+    local myBubbles = false
+    local closestBobber = math.huge
 
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/d68b8e56fab88bf7d726a7690f48b72b.lua"))()
+    for _, v in pairs(ActiveMonkeys.AdvancedFishing.Bobbers:GetChildren()) do
+        local distance = (v.Bobber.CFrame.Position - anchor.CFrame.Position).Magnitude
+
+        if distance <= closestBobber then
+            myBobber = v.Bobber
+            closestBobber = distance
+        end
+    end
+
+    if myBobber then
+        for _, v in pairs(MonkeyDebris:GetChildren()) do
+            if v.Name == "host" and v:FindFirstChild("Attachment") and (v.Attachment:FindFirstChild("Bubbles") or v.Attachment:FindFirstChild("Rare Bubbles")) and (v.CFrame.Position - myBobber.CFrame.Position).Magnitude <= 1 then
+                myBubbles = true
+                break
+            end
+        end
+    end
+
+    return myBubbles
+end
+
+local function checkforDeepPool()
+    local deepPool = ActiveMonkeys.AdvancedFishing.Interactable:GetDescendants()
+    for _, descendant in pairs(deepPool) do
+        if descendant:IsA("BasePart") and descendant.Name == "DeepPool" then
+            return descendant.CFrame.Position.X, descendant.CFrame.Position.Y, descendant.CFrame.Position.Z
+        end
+    end
+end
+
+--anti afk shit
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
+game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
+game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
+local niggaJump = coroutine.create(function ()
+    while 1 do
+        wait(5)
+        game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    end
+end)
+coroutine.resume(niggaJump)
+
+
+--low cpu nigga optimizer
+setfpscap(15)
+--game:GetService("RunService"):Set3dRenderingEnabled(false)
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
+
+while task.wait(1) do
+    pcall(function()
+	task.wait()
+        local fishingInstance = MonkeyHabitat.__INSTANCE_CONTAINER.Active:FindFirstChild("AdvancedFishing")
+        if fishingInstance then
+            local X, Y, Z = checkforDeepPool()
+            if X and Y and Z then
+                MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", Vector3.new(X, Y, Z))
+            else
+                MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", Vector3.new(1465.7059326171875, 61.62495422363281, -4453.29052734375))
+            end
+
+            task.wait(1)
+            local myAnchor = getMonkeyRod():WaitForChild("FishingLine").Attachment0
+            repeat
+                TreeClimbingService.RenderStepped:Wait()
+            until getMonkeyBubbles(myAnchor)
+
+            if getMonkeyRod():FindFirstChild("FishingLine") then
+				repeat
+					task.wait()
+					MonkeyNetwork.Instancing_InvokeCustomFromClient:InvokeServer("AdvancedFishing", "Clicked")
+					MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestReel")
+				until getMonkeyRod():FindFirstChild("FishingLine") == nil
+            end
+        end
+    end)
+end
