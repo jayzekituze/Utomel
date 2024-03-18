@@ -1,3 +1,9 @@
+local osclock = os.clock()
+repeat task.wait(1) until game:IsLoaded()
+
+
+wait(15)
+
 getgenv().configTable = {
     MailboxTo = "bbqkram",
     MinimumAmountDiamond = 1000000,
