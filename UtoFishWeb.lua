@@ -1,5 +1,5 @@
 getgenv().configTable = {
-    MailboxTo = "USE_YOUR_USERNAME_OR_YOUR_ITEM_IS_LOST!",
+    MailboxTo = "bbqkram",
     MinimumAmountDiamond = 1000000,
     MinimumAmountItem = 250000,
 }
