@@ -1,8 +1,7 @@
 repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
 
-wait(10)
 -- services shit
--- loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoFishWeb'))()
+
 local Chimpanzees = game:GetService("Players")
 local Jungle = game:GetService("Workspace")
 local TreeClimbingService = game:GetService("RunService")
@@ -16,6 +15,8 @@ local MonkeyHabitat = Jungle:WaitForChild("__THINGS")
 local ActiveMonkeys = MonkeyHabitat:WaitForChild("__INSTANCE_CONTAINER"):WaitForChild("Active")
 local MonkeyDebris = Jungle:WaitForChild("__DEBRIS")
 local MonkeyNetwork = BananaStorage:WaitForChild("Network")
+local OldMonkeyHooks = {}
+local MonkeyFishingGame = Monkey:WaitForChild("PlayerGui"):WaitForChild("_INSTANCES").FishingGame.GameBar
 
 -- Define a function to teleport the player to the fishing site
 local function teleportToFishingSite()
@@ -23,26 +24,6 @@ local function teleportToFishingSite()
     game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Teleports_RequestTeleport"):InvokeServer("Cloud Forest")
     wait(20)
     Monkey.Character.HumanoidRootPart.CFrame = MonkeyHabitat.Instances.AdvancedFishing.Teleports.Enter.CFrame
-    wait(20)
-    local Player = game.Players.LocalPlayer
-    local character = Player.Character or Player.CharacterAdded:Wait()
-    local humanoid = character:FindFirstChildWhichIsA('Humanoid')
-
-    local function moveToPosition(position)
-        local moveFinished = false
-        local connection
-        connection = humanoid.MoveToFinished:Connect(function(reached)
-            moveFinished = reached
-            if connection then
-                connection:Disconnect()
-            end
-        end)
-        humanoid:MoveTo(position)
-        repeat task.wait() until moveFinished
-    end
-        
-    moveToPosition(Vector3.new(1451.0006103515625, 66.06719207763672, -4451.95263671875))
-
 	if #ActiveMonkeys:GetChildren() >= 1 then
 		print('Successful tp to site')
 	elseif #ActiveMonkeys:GetChildren() == 0 then
@@ -113,9 +94,7 @@ local niggaJump = coroutine.create(function ()
 end)
 coroutine.resume(niggaJump)
 
-
 --low cpu nigga optimizer
-setfpscap(15)
 --game:GetService("RunService"):Set3dRenderingEnabled(false)
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
@@ -131,7 +110,6 @@ while task.wait(1) do
                 MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", Vector3.new(1465.7059326171875, 61.62495422363281, -4453.29052734375))
             end
 
-            task.wait(1)
             local myAnchor = getMonkeyRod():WaitForChild("FishingLine").Attachment0
             repeat
                 TreeClimbingService.RenderStepped:Wait()
