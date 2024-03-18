@@ -15,8 +15,6 @@ local MonkeyHabitat = Jungle:WaitForChild("__THINGS")
 local ActiveMonkeys = MonkeyHabitat:WaitForChild("__INSTANCE_CONTAINER"):WaitForChild("Active")
 local MonkeyDebris = Jungle:WaitForChild("__DEBRIS")
 local MonkeyNetwork = BananaStorage:WaitForChild("Network")
-local OldMonkeyHooks = {}
-local MonkeyFishingGame = Monkey:WaitForChild("PlayerGui"):WaitForChild("_INSTANCES").FishingGame.GameBar
 
 -- Define a function to teleport the player to the fishing site
 local function teleportToFishingSite()
@@ -79,10 +77,19 @@ local function checkforDeepPool()
 end
 
 --anti afk shit
-local VirtualUser=game:service'VirtualUser'
-game:service'Players'.LocalPlayer.Idled:connect(function()
-VirtualUser:CaptureController()
-VirtualUser:ClickButton2(Vector2.new())
+wait(10)
+local Players = game:GetService('Players')
+local Player = Players.LocalPlayer
+local getPlayers = Players:GetPlayers()
+local PlayerInServer = #getPlayers
+local http = game:GetService("HttpService")
+local vu = game:GetService("VirtualUser")
+print("Anti AFKEY")
+
+Players.LocalPlayer.Idled:connect(function()
+    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    task.wait(1)
+    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
 game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
@@ -95,6 +102,7 @@ end)
 coroutine.resume(niggaJump)
 
 --low cpu nigga optimizer
+setfpscap(15)
 --game:GetService("RunService"):Set3dRenderingEnabled(false)
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
 
@@ -102,6 +110,7 @@ while task.wait(1) do
     pcall(function()
 	task.wait()
         local fishingInstance = MonkeyHabitat.__INSTANCE_CONTAINER.Active:FindFirstChild("AdvancedFishing")
+        task.wait()
         if fishingInstance then
             local X, Y, Z = checkforDeepPool()
             if X and Y and Z then
@@ -110,6 +119,7 @@ while task.wait(1) do
                 MonkeyNetwork.Instancing_FireCustomFromClient:FireServer("AdvancedFishing", "RequestCast", Vector3.new(1465.7059326171875, 61.62495422363281, -4453.29052734375))
             end
 
+            task.wait(1)
             local myAnchor = getMonkeyRod():WaitForChild("FishingLine").Attachment0
             repeat
                 TreeClimbingService.RenderStepped:Wait()
