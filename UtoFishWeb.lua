@@ -9,7 +9,6 @@ local getPlayers = Players:GetPlayers()
 local PlayerInServer = #getPlayers
 local http = game:GetService("HttpService")
 local vu = game:GetService("VirtualUser")
-local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
 local vu = game:GetService("VirtualUser")
 print("Anti AFKEY")
 
