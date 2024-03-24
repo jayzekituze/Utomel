@@ -69,7 +69,7 @@ local CharmsPS99 = {
 }
 
 
-wait(20)
+wait()
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local Players = game:GetService('Players')
@@ -165,6 +165,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
 end
 
 local function tryPurchase(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+    print("tryPurchase function called!")
     local args = {
         [1] = playerid, --sellers roblox id
         [2] = {
@@ -180,6 +181,9 @@ local function tryPurchase(uid, gems, item, version, shiny, amount, username, cl
 end
 
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
+    print("Booths_Broadcast event triggered!")
+    print("Username:", username)
+    print("Message:", message)
     if type(message) == "table" then
         local highestTimestamp = -math.huge
         local key, listing
@@ -201,7 +205,8 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
             local amount = tonumber(data["_am"]) or 1
             local class, unitGems = tostring(listing["ItemData"]["class"]), gems / amount
 
-            print(string.format("%s listed %s %s - %s gems, %s gems/unit", tostring(username), tostring(amount), tostring(item), tostring(gems), tostring(unitGems)))
+            print(string.format("%s listed %s %s - %s gems, %s gems/unit, Listing ID: %s", tostring(username), tostring(amount), tostring(item), tostring(gems), tostring(unitGems), tostring(uid)))
+
 
             if string.find(item, "Huge") and gems <= 100 then
                 coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
@@ -322,17 +327,6 @@ end)
 if PlayerInServer < 25 then
     while task.wait(1) do
         serverHop(place)
-    end
-end
-
-for i = 1, PlayerInServer do
-    for _, alt in pairs(alts) do
-        if getPlayers[i].Name == alt and alt ~= Players.LocalPlayer.Name then
-            task.wait(math.random(0, 300))
-            while task.wait(1) do
-                serverHop(place)
-            end
-        end
     end
 end
 
