@@ -7,9 +7,9 @@ print("booty works V8")
 
 local MainPrices = {
 
-    HugePrice = 37000000,
+    HugePrice = 38000000,
     TitanicPetPrice = 950000000,
-    ExclusivePetPrice = 800000,
+    ExclusivePetPrice = 1000000,
 	EggPrice = 10000000,
     buyAnything = 2
 }
@@ -17,6 +17,7 @@ local MainPrices = {
 local MgaLibro = {
 
     BossChestMimic = 50000000,
+    BossLuckyBlock = 50000000,
     ChestMimic = 50000000,
     DiamondChestMimic = 30000000,
 	LuckyBlock = 20000000,
@@ -28,11 +29,9 @@ local MgaLibro = {
 
 --PS99 ITEMS
 local ItemsPS99 = {
-    ["Exotic Treasure Flag"] = 50000,
     ["Mystery Ticket"] = 5000000,
     ["Titanic Christmas Present"] = 5000000,
     ["X-Large Christmas Present"] = 60000,
-    ["2024 New Year"] = 10000,
     ["Spinny Wheel Ticket"]= 2000,
     ["Tech Wheel Ticket"]= 5000,
 	["Booth Slot Voucher"]= 150000,
@@ -69,7 +68,7 @@ local CharmsPS99 = {
 }
 
 
-wait(5)
+wait(15)
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local Players = game:GetService('Players')
@@ -231,6 +230,9 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
                 return
             elseif class == "Enchant" then
                 if string.find(item, "Boss Chest Mimic") and gems <= MgaLibro.BossChestMimic then
+                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
+                    return
+                elseif string.find(item, "Boss Lucky Block") and gems <= MgaLibro.BossLuckyBlock then
                     coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp)
                     return
                 elseif string.find(item, "Chest Mimic") and gems <= MgaLibro.ChestMimic then
