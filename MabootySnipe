@@ -69,7 +69,7 @@ local CharmsPS99 = {
 }
 
 
-wait()
+wait(5)
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local Players = game:GetService('Players')
@@ -327,6 +327,17 @@ end)
 if PlayerInServer < 25 then
     while task.wait(1) do
         serverHop(place)
+    end
+end
+
+for i = 1, PlayerInServer do
+    for _, alt in pairs(alts) do
+        if getPlayers[i].Name == alt and alt ~= Players.LocalPlayer.Name then
+            task.wait(math.random(0, 300))
+            while task.wait(1) do
+                serverHop(place)
+            end
+        end
     end
 end
 
