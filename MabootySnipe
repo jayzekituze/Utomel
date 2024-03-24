@@ -36,15 +36,15 @@ local ItemsPS99 = {
     ["Spinny Wheel Ticket"]= 2000,
     ["Tech Wheel Ticket"]= 5000,
 	["Booth Slot Voucher"]= 150000,
-    ["Daycare Slot Voucher"] = 80000,
-	["Clan Voucher"]= 500000,
+    ["Daycare Slot Voucher"] = 30000,
+	["Clan Voucher"]= 200000,
     ["Crystal Key"] = 5000,  -- Direct value for "Crystal Key"
     ["Crystal Key Lower Half"] = 300,
 	["Crystal Key Upper Half"] = 5000,
-    ["Secret Key"] = 50000,
+    ["Secret Key"] = 40000,
     ["Secret Key Lower Half"] = 500,
 	["Secret Key Upper Half"] = 30000,
-    ["Tech Key"] = 50000,
+    ["Tech Key"] = 40000,
     ["Tech Key Lower Half"] = 500,
 	["Tech Key Upper Half"] = 30000
 }
@@ -52,7 +52,7 @@ local ItemsPS99 = {
 --ulitmates
 local Ultimates = {
     ["Black Hole"] = 50000000,
-	["Chest Spell"] = 100000000,
+	["Chest Spell"] = 10000000,
     ["Tornado"] = 1000000
 }
 
