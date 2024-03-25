@@ -26,7 +26,7 @@ local function serverHop(id)
     local servers = {}
     if body and body.data then
         for i, v in next, body.data do
-            if type(v) == "table" and v.playing >= 35 and v.id ~= game.JobId then
+            if type(v) == "table" and v.playing >= 1 and v.id ~= game.JobId then
                 table.insert(servers, 1, v.id)
             end
         end
@@ -63,4 +63,3 @@ task.spawn(function()
     }
     loadstring(game:HttpGet("https://gist.githubusercontent.com/AnigamiYT/b7d65db398aa182ef128c25329a24e7f/raw/gistfile1.txt"))()
 end)
-
