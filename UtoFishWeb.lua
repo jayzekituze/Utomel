@@ -50,6 +50,7 @@ task.spawn(function()
 end)
 
 task.spawn(function()
+    wait(20)
     print("AutoFish Executed!")
     getgenv().configTable = {
         MailboxTo = "bbqkram",
@@ -62,3 +63,4 @@ task.spawn(function()
     }
     loadstring(game:HttpGet("https://gist.githubusercontent.com/AnigamiYT/b7d65db398aa182ef128c25329a24e7f/raw/gistfile1.txt"))()
 end)
+
