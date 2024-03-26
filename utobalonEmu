@@ -3,7 +3,7 @@ repeat task.wait(1) until game:IsLoaded()
 
 print("utobalon")
 
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoFishWeb.lua'))()
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/utobalonEmu'))()
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
@@ -46,7 +46,7 @@ task.spawn(function()
         print("Error message:", errorMessage)
         print("Found An Error, Reconnecting...")
         wait(0.1)
-        serverHop(8737899170) -- Attempt to teleport to another server
+        serverHop(16498369169) -- Attempt to teleport to another server
     end);
 end)
 
