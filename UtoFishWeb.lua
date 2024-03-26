@@ -52,14 +52,9 @@ end)
 task.spawn(function()
     wait(20)
     print("AutoFish Executed!")
-    getgenv().configTable = {
-        MailboxTo = "bbqkram",
-        MinimumAmountDiamond = 1000000,
-        MinimumAmountItem = 250000,
-        AutoMailbox = false,
-        AutoMailboxClaim = false,
-        Whitelist = {"Diamonds"},
-        Optimizer = false,
+    getgenv().AuthKey = "HUGE_HYARsu18jErU"
+    getgenv().LoadSettings = {
+        Example_Setting = 2
     }
-    loadstring(game:HttpGet("https://gist.githubusercontent.com/AnigamiYT/b7d65db398aa182ef128c25329a24e7f/raw/gistfile1.txt"))()
+    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
 end)
