@@ -7,7 +7,7 @@ print("booty works V8")
 
 local MainPrices = {
 
-    HugePrice = 38000000,
+    HugePrice = 38500000,
     TitanicPetPrice = 950000000,
     ExclusivePetPrice = 1000000,
 	EggPrice = 10000000,
@@ -351,7 +351,7 @@ Players.PlayerRemoving:Connect(function(player)
     end
 end)
 
-local hopDelay = math.random(1500, 1800)
+local hopDelay = math.random(1200, 1500)
 
 task.spawn(function ()
     while task.wait(1) do
