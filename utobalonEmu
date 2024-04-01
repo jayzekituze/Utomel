@@ -1,9 +1,8 @@
-local osclock = os.clock()
-repeat task.wait(1) until game:IsLoaded()
+repeat wait() until game:IsLoaded()
+wait(15)
+print("AutoFismsh")
 
-
-wait(16)
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/utobalonEmu'))()
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoFishWeb.lua'))()
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
@@ -46,16 +45,20 @@ task.spawn(function()
         print("Error message:", errorMessage)
         print("Found An Error, Reconnecting...")
         wait(0.1)
-        serverHop(16498369169) -- Attempt to teleport to another server
+        serverHop(8737899170) -- Attempt to teleport to another server
     end);
 end)
 
 task.spawn(function()
-    wait(10)
-    print("Auto balon Executed!")
-    getgenv().AuthKey = "HUGE_HYARsu18jErU"
-    getgenv().LoadSettings = {
-        Example_Setting = 2
+    wait(20)
+    print("AutoFish Executed!")
+    getgenv().configTable = {
+        MailboxTo = "007jimm",
+        MinimumAmountDiamond = 1000000,
+        MinimumAmountItem = 250000,
+        AutoMailbox = false,
+        AutoMailboxClaim = false,
+        Blacklist = {"Old Boot", "Diamond Fishing Rod", "Diamond Shovel"}
     }
-    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AnigamiYT/b7d65db398aa182ef128c25329a24e7f/raw/gistfile1.txt"))()
 end)
