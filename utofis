@@ -60,17 +60,6 @@ for i = 1, PlayerInServer do
     end
 end
 
-
-Players.PlayerRemoving:Connect(function(player)
-    getPlayers = Players:GetPlayers()
-    PlayerInServer = #getPlayers
-    if PlayerInServer < 25 then
-        while task.wait(1) do
-            serverHop(8737899170)
-        end
-    end
-end)
-
 task.spawn(function()
     wait(20)
     print("AutoFish Executed!")
