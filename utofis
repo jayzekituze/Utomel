@@ -1,27 +1,99 @@
-EggNumber = 113;
+repeat wait() until game:IsLoaded()
+wait(15)
+print("AutoFismsh")
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage") :: ReplicatedStorage & {Library: ModuleScript; Network: ModuleScript & {Eggs_RequestPurchase: RemoteFunction}}
-local Workspace = game:GetService("Workspace") :: Workspace & {__THINGS: Folder & {Eggs: Folder}}
-local Things = Workspace.__THINGS
-local Players = game:GetService("Players")
-local Player = Players.LocalPlayer :: Player & {PlayerScripts: Folder & {Scripts: Folder & {Game: Folder & {["Egg Opening Frontend"]: LocalScript}}}, Character: Model & {HumanoidRootPart: Part}}
-local Library: {Save: {Get: () -> {MaximumAvailableEgg: number; EggHatchCount: number;}}}  = require(ReplicatedStorage.Library)
-local EggsUtilMod: {GetIdByNumber: (number) -> number} = require(ReplicatedStorage.Library.Util.EggsUtil)
-local PlayerInfo = Library.Save.Get()
-local EggAnim : {PlayEggAnimation: () -> nil} = getsenv(Player.PlayerScripts.Scripts.Game["Egg Opening Frontend"])
-local Eggs: Folder = Things.Eggs:FindFirstChild("Main") or Things.Eggs:FindFirstChild("World2")
-local Egg = Eggs[EggNumber .. " - Egg Capsule"] :: Model & {Tier: Part}
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoFishWeb.lua'))()
+local Players = game:GetService('Players')
+local Player = Players.LocalPlayer
+local getPlayers = Players:GetPlayers()
+local PlayerInServer = #getPlayers
+local http = game:GetService("HttpService")
+local ts = game:GetService("TeleportService")
+local rs = game:GetService("ReplicatedStorage")
+local vu = game:GetService("VirtualUser")
 
-hookfunction(EggAnim.PlayEggAnimation, function()
-    return
+
+local function serverHop(id)
+    local HttpService = game:GetService("HttpService")
+    local TeleportService = game:GetService("TeleportService")
+    local Players = game:GetService("Players")
+    local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true"
+    local req = request({
+        Url = string.format(sfUrl, id, "Desc", 100)
+    })
+    local body = HttpService:JSONDecode(req.Body)
+    task.wait(0.2)
+    local servers = {}
+    if body and body.data then
+        for i, v in next, body.data do
+            if type(v) == "table" and v.playing >= 1 and v.id ~= game.JobId then
+                table.insert(servers, 1, v.id)
+            end
+        end
+    end
+    local randomCount = #servers
+    if not randomCount then
+        randomCount = 2
+    end
+    TeleportService:TeleportToPlaceInstance(id, servers[math.random(1, randomCount)], Players.LocalPlayer)
+end
+
+task.spawn(function()
+    print("Auto Reconnect Executed!")
+    game:GetService("GuiService").ErrorMessageChanged:Connect(function(errorMessage)       
+        game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
+        print("Error message:", errorMessage)
+        print("Found An Error, Reconnecting...")
+        wait(0.1)
+        serverHop(8737899170) -- Attempt to teleport to another server
+    end);
 end)
 
-while task.wait(0.1) do
-    local BestEggName = EggsUtilMod.GetIdByNumber(EggNumber)
-    local EggHatchCount = PlayerInfo.EggHatchCount
-
-
-    repeat
-        local success: boolean = ReplicatedStorage.Network.Eggs_RequestPurchase:InvokeServer(BestEggName, EggHatchCount)
-    until success       
+for i = 1, PlayerInServer do
+    for _, alt in pairs(alts) do
+        if getPlayers[i].Name == alt and alt ~= Players.LocalPlayer.Name then
+            task.wait(math.random(0, 300))
+            while task.wait(1) do
+                serverHop(8737899170)
+            end
+        end
+    end
 end
+
+
+Players.PlayerRemoving:Connect(function(player)
+    getPlayers = Players:GetPlayers()
+    PlayerInServer = #getPlayers
+    if PlayerInServer < 25 then
+        while task.wait(1) do
+            serverHop(8737899170)
+        end
+    end
+end)
+
+task.spawn(function()
+    wait(20)
+    print("AutoFish Executed!")
+    getgenv().configTable = {
+        MailboxTo = "007jimm",
+        MinimumAmountDiamond = 1000000, 
+        MinimumAmountItem = 250000,
+        AutoMailbox = false,
+        AutoMailboxClaim = false,
+        Blacklist = {"Old Boot", "Diamond Fishing Rod", "Diamond Shovel"}
+    }
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AnigamiYT/b7d65db398aa182ef128c25329a24e7f/raw/gistfile1.txt"))()
+end)
+
+
+task.spawn(function()
+    wait(10)
+    print("Anti AFK")
+    local VirtualInputManager = game:GetService("VirtualInputManager")
+    while task.wait() do
+        VirtualInputManager:SendKeyEvent(true, "Space", false, game)
+        task.wait(.2)
+        VirtualInputManager:SendKeyEvent(false, "Space", false, game)
+        task.wait(300)
+    end
+end)
