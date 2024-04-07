@@ -7,8 +7,8 @@ print("booty works V8")
 
 local MainPrices = {
 
-    HugePrice = 38500000,
-    TitanicPetPrice = 950000000,
+    HugePrice = 40000000,
+    TitanicPetPrice = 2000000000,
     ExclusivePetPrice = 1000000,
 	EggPrice = 10000000,
     buyAnything = 2
@@ -177,7 +177,6 @@ local function tryPurchase(uid, gems, item, version, shiny, amount, username, cl
 end
 
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
-    print("Booths_Broadcast event triggered!")
     if type(message) == "table" then
         local highestTimestamp = -math.huge
         local key, listing
