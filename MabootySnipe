@@ -283,8 +283,6 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 			end
 
         end
-    else
-        print("Received message is not a table:", message)
     end
 end)
 
