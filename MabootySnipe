@@ -1,6 +1,24 @@
-local osclock = os.clock()
-repeat task.wait(1) until game:IsLoaded()
+repeat
+    task.wait(1)
+until game:IsLoaded()
 
+repeat
+    task.wait(1)
+until game.PlaceId ~= nil
+
+repeat
+    task.wait(1)
+until game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+
+repeat
+    task.wait(1)
+until game:GetService("Workspace"):FindFirstChild("Map") or game:GetService("Workspace"):FindFirstChild("Map2")
+
+repeat
+    task.wait(1)
+until game:GetService("Workspace").__THINGS and game:GetService("Workspace").__DEBRIS
+
+print("[CLIENT] Loaded Game")
 
 print("booty works V8")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
@@ -178,8 +196,6 @@ end
 
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
     print("Booths_Broadcast event triggered!")
-    print("Username:", username)
-    print("Message:", message)
     if type(message) == "table" then
         local highestTimestamp = -math.huge
         local key, listing
