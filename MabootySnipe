@@ -1,6 +1,7 @@
 local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
 
+
 print("booty works V8")
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/MabootySnipe'))()
 
@@ -177,6 +178,7 @@ end
 
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
     print("Booths_Broadcast event triggered!")
+    print("Message:", message)
     if type(message) == "table" then
         local highestTimestamp = -math.huge
         local key, listing
