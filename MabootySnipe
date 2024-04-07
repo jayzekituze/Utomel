@@ -7,7 +7,7 @@ print("booty works V8")
 
 local MainPrices = {
 
-    HugePrice = 42000000,
+    HugePrice = 38500000,
     TitanicPetPrice = 950000000,
     ExclusivePetPrice = 1000000,
 	EggPrice = 10000000,
@@ -65,7 +65,7 @@ local CharmsPS99 = {
 }
 
 
-wait(5)
+wait(15)
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local Players = game:GetService('Players')
@@ -286,6 +286,8 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 			end
 
         end
+    else
+        print("Received message is not a table:", message)
     end
 end)
 
