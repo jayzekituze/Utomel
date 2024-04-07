@@ -178,7 +178,6 @@ end
 
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
     print("Booths_Broadcast event triggered!")
-    print("Message:", message)
     if type(message) == "table" then
         local highestTimestamp = -math.huge
         local key, listing
