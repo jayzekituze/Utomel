@@ -55,8 +55,8 @@ task.spawn(function()
     wait(15)
     print("Auto DIGGG Executed!")
     getgenv().configTable = {
-        hop = true,
-        gui = false,
+        hop = false,
+        gui = true,
         users = {}
     }
     
