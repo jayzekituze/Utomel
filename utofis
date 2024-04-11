@@ -49,16 +49,16 @@ task.spawn(function()
     end);
 end)
 
-for i = 1, PlayerInServer do
-    for _, alt in pairs(alts) do
-        if getPlayers[i].Name == alt and alt ~= Players.LocalPlayer.Name then
-            task.wait(math.random(0, 300))
-            while task.wait(1) do
-                serverHop(8737899170)
-            end
-        end
-    end
-end
+-- for i = 1, PlayerInServer do
+--     for _, alt in pairs(alts) do
+--         if getPlayers[i].Name == alt and alt ~= Players.LocalPlayer.Name then
+--             task.wait(math.random(0, 300))
+--             while task.wait(1) do
+--                 serverHop(8737899170)
+--             end
+--         end
+--     end
+-- end
 
 task.spawn(function()
     wait(20)
@@ -70,7 +70,7 @@ task.spawn(function()
         discordID = "1227237902992543877",
     }
     
-    spawn(loadstring(game:HttpGet("https://gist.githubusercontent.com/AnigamiYT/6b47b64a42c0d859e3e80bdd1a1522f8/raw/gistfile1.txt")))
+    spawn(loadstring(game:HttpGet("https://gist.githubusercontent.com/AnigamiYT/f0624b7e49108f409334ecb9d1324259/raw/gistfile1.txt")))
 end)
 
 
