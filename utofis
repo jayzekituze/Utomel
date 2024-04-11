@@ -62,7 +62,7 @@ end
 
 task.spawn(function()
     wait(20)
-    print("AutoFish Executed!")
+    print("uto hukay Executed!")
     getgenv().configTable = {
         hop = false,
         gui = true,
@@ -70,7 +70,7 @@ task.spawn(function()
         discordID = "1227237902992543877",
     }
     
-    spawn(loadstring(game:HttpGet("https://gist.githubusercontent.com/AnigamiYT/f0624b7e49108f409334ecb9d1324259/raw/gistfile1.txt")))
+    spawn(loadstring(game:HttpGet("https://gist.githubusercontent.com/AnigamiYT/6b47b64a42c0d859e3e80bdd1a1522f8/raw/gistfile1.txt")))
 end)
 
 
