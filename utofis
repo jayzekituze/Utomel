@@ -1,8 +1,9 @@
-repeat wait() until game:IsLoaded()
-wait(15)
-print("utobaZic")
+local osclock = os.clock()
+repeat task.wait(1) until game:IsLoaded()
 
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/UtoFishWeb.lua'))()
+print("utobalon")
+
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/utobalonEmu'))()
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
@@ -45,43 +46,25 @@ task.spawn(function()
         print("Error message:", errorMessage)
         print("Found An Error, Reconnecting...")
         wait(0.1)
-        serverHop(8737899170) -- Attempt to teleport to another server
+        serverHop(16498369169) -- Attempt to teleport to another server
     end);
 end)
 
--- for i = 1, PlayerInServer do
---     for _, alt in pairs(alts) do
---         if getPlayers[i].Name == alt and alt ~= Players.LocalPlayer.Name then
---             task.wait(math.random(0, 300))
---             while task.wait(1) do
---                 serverHop(8737899170)
---             end
---         end
---     end
--- end
-
-task.spawn(function()
-    wait(20)
-    print("uto hukay Executed!")
-    getgenv().configTable = {
-        hop = false,
-        gui = true,
-        users = {},
-        discordID = "1227237902992543877",
-    }
-    
-    spawn(loadstring(game:HttpGet("https://gist.githubusercontent.com/AnigamiYT/f0624b7e49108f409334ecb9d1324259/raw/gistfile1.txt")))
-end)
-
-
 task.spawn(function()
     wait(10)
-    print("Anti AFK")
-    local VirtualInputManager = game:GetService("VirtualInputManager")
-    while task.wait() do
-        VirtualInputManager:SendKeyEvent(true, "Space", false, game)
-        task.wait(.2)
-        VirtualInputManager:SendKeyEvent(false, "Space", false, game)
-        task.wait(300)
-    end
+    getgenv().MoneyPrinter = {
+        toolName = "Slingshot",
+        autoBalloons = true,
+        autoPresents = true,
+    
+        serverHopper = true,
+        avoidCooldown = false,
+        minServerTime = 0, -- Avoid 268 if multi-accounting : Force stay in server for x time even if no Balloons
+    
+        sendWeb = true,
+        webURL = "https://discord.com/api/webhooks/1220607766230466661/KGrDgMnLGjo3Opk0g4Nrx38wXt0qEWpUH3HP8H7hgP1bp2q4Rm0B1dOd-BPJLV3My86H",
+    
+        maybeCPUReducer = true,
+    }
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/jayzekituze/Utomel/main/utobalon"))()
 end)
