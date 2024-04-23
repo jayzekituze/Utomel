@@ -117,11 +117,11 @@ end
 function getBalloonUID(zoneName) 
 	for i,v in pairs(BreakMod.AllByZoneAndClass(zoneName, "Chest")) do
 		if v:GetAttribute("OwnerUsername") == Player.Name and string.find(v:GetAttribute("BreakableID"), "Balloon Gift") then
-			print("Balloon UID found:", GetAttribute)
 			return v:GetAttribute("BreakableUID")
 		elseif v:GetAttribute("OwnerUserName") ~= Player.Name and string.find(v:GetAttribute("BreakableID"), "Balloon Gift") then
 			return "Skip"
 		end
+		print("Balloon UID found:", v:GetAttribute("BreakableUID"))
 	end
 end
 
