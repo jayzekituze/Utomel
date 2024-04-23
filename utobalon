@@ -293,7 +293,7 @@ while getgenv().MoneyPrinter.autoBalloons do
             while Library.Network.Invoke("BalloonGifts_GetActiveBalloons")[Balloon.Id] do task.wait(0.03)
                 local currentTime = os.time()
                 if currentTime - startTime >= 7 then -- Check if 7 seconds have passed
-                    print("Balloon didn't pop within 5 seconds. Skipping.")
+                    print("Balloon didn't pop within 7 seconds. Skipping.")
                     break
                 end
                 if not getTool() then equipTool(getgenv().MoneyPrinter.toolName) end
