@@ -123,21 +123,19 @@ end
 -- 	end
 -- end
 
-function getBalloonUID(zoneName)
-    local balloonIDs = {}  -- Table to store balloon IDs
+function getBalloonUID(zoneName) 
     for i, v in pairs(BreakMod.AllByZoneAndClass(zoneName, "Chest")) do
-        local ownerName = v:GetAttribute("OwnerUsername")
-        local breakableID = v:GetAttribute("BreakableID")
-        if ownerName == Player.Name and string.find(breakableID, "Balloon Gift") then
-            local balloonUID = v:GetAttribute("BreakableUID")
-            table.insert(balloonIDs, balloonUID)  -- Add balloon UID to the table
-            print("Found balloon with UID:", balloonUID)  -- Print the balloon UID
-        elseif ownerName ~= Player.Name and string.find(breakableID, "Balloon Gift") then
-            -- Do nothing or handle other conditions
+        local balloonUID = v:GetAttribute("BreakableUID")
+        if v:GetAttribute("OwnerUsername") == Player.Name and string.find(v:GetAttribute("BreakableID"), "Balloon Gift") then
+            print("Balloon UID found:", balloonUID)
+            return balloonUID
+        elseif v:GetAttribute("OwnerUserName") ~= Player.Name and string.find(v:GetAttribute("BreakableID"), "Balloon Gift") then
+            print("Skipping balloon with UID:", balloonUID)
+            return "Skip"
         end
     end
-    return balloonIDs  -- Return the table of balloon IDs
 end
+
 
 -- Define the numbers to choose from
 local numbers = {1, 2, 3, 4, 5, 6}
