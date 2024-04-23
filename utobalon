@@ -114,27 +114,17 @@ function sendNotif(msg)
 	end
 end
 
--- function getBalloonUID(zoneName) 
--- 	for i,v in pairs(BreakMod.AllByZoneAndClass(zoneName, "Chest")) do
--- 		if v:GetAttribute("OwnerUsername") == Player.Name and string.find(v:GetAttribute("BreakableID"), "Balloon Gift") then
--- 			return v:GetAttribute("BreakableUID")
--- 		elseif v:GetAttribute("OwnerUserName") ~= Player.Name and string.find(v:GetAttribute("BreakableID"), "Balloon Gift") then
--- 			return "Skip"
--- 		end
--- 	end
--- end
-
 function getBalloonUID(zoneName) 
 	for i,v in pairs(BreakMod.AllByZoneAndClass(zoneName, "Chest")) do
 		if v:GetAttribute("OwnerUsername") == Player.Name and string.find(v:GetAttribute("BreakableID"), "Balloon Gift") then
-			local balloonUID = v:GetAttribute("BreakableUID")
-			print("Balloon UID found:", balloonUID)
-			return balloonUID
+			return v:GetAttribute("BreakableUID")
 		elseif v:GetAttribute("OwnerUserName") ~= Player.Name and string.find(v:GetAttribute("BreakableID"), "Balloon Gift") then
 			return "Skip"
 		end
 	end
 end
+
+
 
 
 -- Define the numbers to choose from
