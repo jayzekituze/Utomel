@@ -85,7 +85,7 @@ if game:IsLoaded() and getgenv().MoneyPrinter.maybeCPUReducer then
 		clearTextures(v)
 	end)
     	game:GetService("RunService"):Set3dRenderingEnabled(false)
-	setfpscap(8)
+	
 end	
 local LargeRAP = 11000; local SmallRAP = 2800
 local RunService = game:GetService("RunService")
