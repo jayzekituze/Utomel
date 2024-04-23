@@ -113,6 +113,7 @@ function sendNotif(msg)
 		local response = request({Url = getgenv().MoneyPrinter.webURL,Method = "POST",Headers = {["Content-Type"] = "application/json"},Body = jsonMessage})
 	end
 end
+
 -- function getBalloonUID(zoneName) 
 -- 	for i,v in pairs(BreakMod.AllByZoneAndClass(zoneName, "Chest")) do
 -- 		if v:GetAttribute("OwnerUsername") == Player.Name and string.find(v:GetAttribute("BreakableID"), "Balloon Gift") then
@@ -124,16 +125,15 @@ end
 -- end
 
 function getBalloonUID(zoneName) 
-    for i, v in pairs(BreakMod.AllByZoneAndClass(zoneName, "Chest")) do
-        local balloonUID = v:GetAttribute("BreakableUID")
-        if v:GetAttribute("OwnerUsername") == Player.Name and string.find(v:GetAttribute("BreakableID"), "Balloon Gift") then
-            print("Balloon UID found:", balloonUID)
-            return balloonUID
-        elseif v:GetAttribute("OwnerUserName") ~= Player.Name and string.find(v:GetAttribute("BreakableID"), "Balloon Gift") then
-            print("Skipping balloon with UID:", balloonUID)
-            return "Skip"
-        end
-    end
+	for i,v in pairs(BreakMod.AllByZoneAndClass(zoneName, "Chest")) do
+		if v:GetAttribute("OwnerUsername") == Player.Name and string.find(v:GetAttribute("BreakableID"), "Balloon Gift") then
+			local balloonUID = v:GetAttribute("BreakableUID")
+			print("Balloon UID found:", balloonUID)
+			return balloonUID
+		elseif v:GetAttribute("OwnerUserName") ~= Player.Name and string.find(v:GetAttribute("BreakableID"), "Balloon Gift") then
+			return "Skip"
+		end
+	end
 end
 
 
