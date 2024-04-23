@@ -262,27 +262,56 @@ task.spawn(function()
 	wait(1140)
 	Jump("Normal")
 end)
-while getgenv().MoneyPrinter.autoBalloons do task.wait()
-	if getgenv().MoneyPrinter.autoPresents then getPresents() end
-	for _,Balloon in pairs(Library.Network.Invoke("BalloonGifts_GetActiveBalloons")) do task.wait(0.03)
-		if Balloon.Id then
-			while Library.Network.Invoke("BalloonGifts_GetActiveBalloons")[Balloon.Id] do task.wait(0.03)
-				if not getTool() then equipTool(getgenv().MoneyPrinter.toolName) end
-				local breakableId = getBalloonUID(getCurrentZone())
-				if breakableId == "Skip" then break end
-				if breakableId then
-					HRP.CFrame = CFrame.new(Balloon.LandPosition)
-					Library.Network.Fire("Breakables_PlayerDealDamage", breakableId)
-				elseif not Balloon.Popped then
-					HRP.CFrame = CFrame.new(Balloon.Position + Vector3.new(0,30,0))
-					Slingshot.fireWeapon()
-					Library.Network.Fire("BalloonGifts_BalloonHit", Balloon.Id)
-					task.wait()
-				end
-			end
-		end
-	end
-	local currentTime = os.time()
+-- while getgenv().MoneyPrinter.autoBalloons do task.wait()
+-- 	if getgenv().MoneyPrinter.autoPresents then getPresents() end
+-- 	for _,Balloon in pairs(Library.Network.Invoke("BalloonGifts_GetActiveBalloons")) do task.wait(0.03)
+-- 		if Balloon.Id then
+-- 			while Library.Network.Invoke("BalloonGifts_GetActiveBalloons")[Balloon.Id] do task.wait(0.03)
+-- 				if not getTool() then equipTool(getgenv().MoneyPrinter.toolName) end
+-- 				local breakableId = getBalloonUID(getCurrentZone())
+-- 				if breakableId == "Skip" then break end
+-- 				if breakableId then
+-- 					HRP.CFrame = CFrame.new(Balloon.LandPosition)
+-- 					Library.Network.Fire("Breakables_PlayerDealDamage", breakableId)
+-- 				elseif not Balloon.Popped then
+-- 					HRP.CFrame = CFrame.new(Balloon.Position + Vector3.new(0,30,0))
+-- 					Slingshot.fireWeapon()
+-- 					Library.Network.Fire("BalloonGifts_BalloonHit", Balloon.Id)
+-- 					task.wait()
+-- 				end
+-- 			end
+-- 		end
+-- 	end
+-- 	local currentTime = os.time()
+while getgenv().MoneyPrinter.autoBalloons do
+    task.wait()
+    if getgenv().MoneyPrinter.autoPresents then getPresents() end
+    
+    for _,Balloon in pairs(Library.Network.Invoke("BalloonGifts_GetActiveBalloons")) do task.wait(0.03)
+        local startTime = os.time()
+        if Balloon.Id then
+            while Library.Network.Invoke("BalloonGifts_GetActiveBalloons")[Balloon.Id] do task.wait(0.03)
+                local currentTime = os.time()
+                if currentTime - startTime >= 7 then -- Check if 7 seconds have passed
+                    print("Balloon didn't pop within 5 seconds. Skipping.")
+                    break
+                end
+                if not getTool() then equipTool(getgenv().MoneyPrinter.toolName) end
+                local breakableId = getBalloonUID(getCurrentZone())
+                if breakableId == "Skip" then break end
+                if breakableId then
+                    HRP.CFrame = CFrame.new(Balloon.LandPosition)
+                    Library.Network.Fire("Breakables_PlayerDealDamage", breakableId)
+                elseif not Balloon.Popped then
+                    HRP.CFrame = CFrame.new(Balloon.Position + Vector3.new(0, 30, 0))
+                    Slingshot.fireWeapon()
+                    Library.Network.Fire("BalloonGifts_BalloonHit", Balloon.Id)
+                    task.wait()
+                end
+            end
+        end
+    end
+    local currentTime = os.time()
 	if getgenv().MoneyPrinter.serverHopper then
 		if not getgenv().MoneyPrinter.avoidCooldown or (getgenv().MoneyPrinter.avoidCooldown and currentTime - startTime >= getgenv().MoneyPrinter.minServerTime) then
 			local endGifts = 0
