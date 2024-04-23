@@ -2,6 +2,7 @@
 repeat task.wait(1) until game.PlaceId ~= nil
 repeat task.wait(1) until game:GetService("Players") and game:GetService("Players").LocalPlayer
 repeat task.wait(1) until not game.Players.LocalPlayer.PlayerGui:FindFirstChild("__INTRO")
+print("UtoBalloon V2")
 if game:IsLoaded() and getgenv().MoneyPrinter.maybeCPUReducer then
 	pcall(function()
 		for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
@@ -292,8 +293,8 @@ while getgenv().MoneyPrinter.autoBalloons do
         if Balloon.Id then
             while Library.Network.Invoke("BalloonGifts_GetActiveBalloons")[Balloon.Id] do task.wait(0.03)
                 local currentTime = os.time()
-                if currentTime - startTime >= 7 then -- Check if 7 seconds have passed
-                    print("Balloon didn't pop within 7 seconds. Skipping.")
+                if currentTime - startTime >= 5 then -- Check if 5 seconds have passed
+                    print("Balloon didn't pop within 5 seconds. Skipping.")
                     break
                 end
                 if not getTool() then equipTool(getgenv().MoneyPrinter.toolName) end
