@@ -2,8 +2,8 @@ local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
 print("utohatt")
 
-wait(15)
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/utobalonEmu'))()
+wait(16)
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/AllforOne'))()
 
 local function serverHop(id)
     local HttpService = game:GetService("HttpService")
@@ -44,21 +44,9 @@ end)
 task.spawn(function()
     wait(10)
     print("hatsing")
-
-
-
-    getgenv().config = {
-        autoHatch = true,
-        minHatch = 100, -- min # of hatches available before teleporting to egg and opening ; will multiply by your # of egghatch slots
-    
-        bestEggs = true, -- true for best or false for custom
-        customEgg = nil, -- put custom egg #
+    getgenv().AuthKey = "HUGE_HYARsu18jErU"
+    getgenv().LoadSettings = {
+        Example_Setting = 2
     }
-    
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/4001b57ebc0a2bc21e6005978c651e1f.lua"))()
-    -- getgenv().AuthKey = "HUGE_HYARsu18jErU"
-    -- getgenv().LoadSettings = {
-    --     Example_Setting = 2
-    -- }
-    -- loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
 end)
