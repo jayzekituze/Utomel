@@ -1,18 +1,9 @@
 local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
+print("utohatt")
 
-print("utobalon")
-
+wait(15)
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/utobalonEmu'))()
-local Players = game:GetService('Players')
-local Player = Players.LocalPlayer
-local getPlayers = Players:GetPlayers()
-local PlayerInServer = #getPlayers
-local http = game:GetService("HttpService")
-local ts = game:GetService("TeleportService")
-local rs = game:GetService("ReplicatedStorage")
-local vu = game:GetService("VirtualUser")
-
 
 local function serverHop(id)
     local HttpService = game:GetService("HttpService")
@@ -46,25 +37,28 @@ task.spawn(function()
         print("Error message:", errorMessage)
         print("Found An Error, Reconnecting...")
         wait(0.1)
-        serverHop(16498369169) -- Attempt to teleport to another server
+        serverHop(8737899170) -- Attempt to teleport to another server
     end);
 end)
 
 task.spawn(function()
     wait(10)
-    getgenv().MoneyPrinter = {
-        toolName = "Slingshot",
-        autoBalloons = true,
-        autoPresents = true,
+    print("hatsing")
+
+
+
+    getgenv().config = {
+        autoHatch = true,
+        minHatch = 100, -- min # of hatches available before teleporting to egg and opening ; will multiply by your # of egghatch slots
     
-        serverHopper = true,
-        avoidCooldown = false,
-        minServerTime = 0, -- Avoid 268 if multi-accounting : Force stay in server for x time even if no Balloons
-    
-        sendWeb = true,
-        webURL = "https://discord.com/api/webhooks/1220607766230466661/KGrDgMnLGjo3Opk0g4Nrx38wXt0qEWpUH3HP8H7hgP1bp2q4Rm0B1dOd-BPJLV3My86H",
-    
-        maybeCPUReducer = true,
+        bestEggs = true, -- true for best or false for custom
+        customEgg = nil, -- put custom egg #
     }
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/jayzekituze/Utomel/main/utobalon"))()
+    
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/4001b57ebc0a2bc21e6005978c651e1f.lua"))()
+    -- getgenv().AuthKey = "HUGE_HYARsu18jErU"
+    -- getgenv().LoadSettings = {
+    --     Example_Setting = 2
+    -- }
+    -- loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
 end)
