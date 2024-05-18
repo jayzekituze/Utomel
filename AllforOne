@@ -2,7 +2,7 @@ local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
 print("utohatt")
 
-wait(16)
+wait(10)
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/AllforOne'))()
 
 local function serverHop(id)
@@ -42,7 +42,7 @@ task.spawn(function()
 end)
 
 task.spawn(function()
-    wait(10)
+    wait(5)
     print("hatsing")
     getgenv().AuthKey = "HUGE_HYARsu18jErU"
     getgenv().LoadSettings = {
