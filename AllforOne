@@ -2,7 +2,6 @@ local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
 print("utohatt")
 
-wait(5)
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/AllforOne'))()
 
 local function serverHop(id)
@@ -42,7 +41,6 @@ task.spawn(function()
 end)
 
 task.spawn(function()
-    wait(5)
     print("plaza")
     getgenv().autoPlaza = {
         Sniper = {
@@ -64,7 +62,7 @@ task.spawn(function()
             BUY_ANY_TITANIC_PRICE = 1000000000,
     
             BUY_CUSTOM = {
-                    {Class = "Misc", Item = {id = "Crystal Key"}, Cost = 23000},
+                    {Class = "Misc", Item = {id = "Crystal Key"}, Cost = 24000},
             },
     
             MIN_CANDIDATES = 3, -- (for stats tracker)
