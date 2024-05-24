@@ -1,16 +1,81 @@
-getgenv().alts = {
-    "vasdasd"
-    "ps99rank7",
-    "HolyKram",
-    "KramATK",
-    "kyleuriarte123",
-    "StartedManw2134",
-    "FriendlyRanger588",
-    "007jimm",
-    "KramDEFF"
-} -- put usernames to hop if more than two of them are in the same server
+local osclock = os.clock()
+repeat task.wait(1) until game:IsLoaded()
+print("utohatt")
 
-repeat wait() until game:IsLoaded()
-if game.PlaceId == 8737899170 then
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/PS99/main/utoDig'))()
+wait(16)
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/AllforOne'))()
+
+local function serverHop(id)
+    local HttpService = game:GetService("HttpService")
+    local TeleportService = game:GetService("TeleportService")
+    local Players = game:GetService("Players")
+    local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true"
+    local req = request({
+        Url = string.format(sfUrl, id, "Desc", 100)
+    })
+    local body = HttpService:JSONDecode(req.Body)
+    task.wait(0.2)
+    local servers = {}
+    if body and body.data then
+        for i, v in next, body.data do
+            if type(v) == "table" and v.playing >= 1 and v.id ~= game.JobId then
+                table.insert(servers, 1, v.id)
+            end
+        end
+    end
+    local randomCount = #servers
+    if not randomCount then
+        randomCount = 2
+    end
+    TeleportService:TeleportToPlaceInstance(id, servers[math.random(1, randomCount)], Players.LocalPlayer)
 end
+
+task.spawn(function()
+    print("Auto Reconnect Executed!")
+    game:GetService("GuiService").ErrorMessageChanged:Connect(function(errorMessage)       
+        game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
+        print("Error message:", errorMessage)
+        print("Found An Error, Reconnecting...")
+        wait(0.1)
+        serverHop(8737899170) -- Attempt to teleport to another server
+    end);
+end)
+
+task.spawn(function()
+    wait(10)
+    print("hatsing")
+    getgenv().autoPlaza = {
+        Sniper = {
+            Enabled = true,
+    
+            DISCORD_ID = "402681518197047306",
+            WEBHOOK_URL = "https://discord.com/api/webhooks/1207252883460849684/I8IGlcrpEcTEcm6VsO7RsI3uqb9_t2NMl4eHOxtzUaCMq5-L9FZXf1u79VXcbKDfLZ9y",
+            SHOW_USER = false,
+    
+            SEND_SNPES = true,
+            PING_SNPES = false,
+    
+            SEND_FAILS = true,
+            PING_FAILS = true,
+    
+            PING_ALL_EXCLUSIVES = true,
+            BUY_ANY_EXCLUSIVE_PRICE = 300000,
+            BUY_ANY_HUGE_PRICE = 40000000,
+            BUY_ANY_TITANIC_PRICE = 1000000000,
+    
+            BUY_CUSTOM = {
+                    {Class = "Misc", Item = {id = "Crystal Key"}, Cost = 23000},
+            },
+    
+            MIN_CANDIDATES = 3, -- (for stats tracker)
+            STATS_TRACKER = true,
+    
+            MIN_BOOTH_CHECKS = 1,
+            MIN_FOUND_SERVERS = 3,
+            SERVER_HOPPER = true,
+        }
+    }
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/0f103ef58ec991b5be6c9a2dcf83dad1.lua"))()
+end)
+
+
