@@ -1,5 +1,6 @@
 local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
+wait(3)
 task.spawn(function()
     print("plaza")
     getgenv().autoPlaza = {
