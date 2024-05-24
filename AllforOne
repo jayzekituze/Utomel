@@ -2,7 +2,7 @@ local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
 print("utohatt")
 
-wait(16)
+wait(5)
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/AllforOne'))()
 
 local function serverHop(id)
@@ -42,8 +42,8 @@ task.spawn(function()
 end)
 
 task.spawn(function()
-    wait(10)
-    print("hatsing")
+    wait(5)
+    print("plaza")
     getgenv().autoPlaza = {
         Sniper = {
             Enabled = true,
