@@ -12,18 +12,18 @@ task.spawn(function()
             SHOW_USER = false,
     
             SEND_SNPES = true,
-            PING_SNPES = false,
+            PING_SNPES = true,
     
             SEND_FAILS = true,
             PING_FAILS = true,
     
             PING_ALL_EXCLUSIVES = true,
             BUY_ANY_EXCLUSIVE_PRICE = 300000,
-            BUY_ANY_HUGE_PRICE = 40000000,
+            BUY_ANY_HUGE_PRICE = 50000000,
             BUY_ANY_TITANIC_PRICE = 1000000000,
     
             BUY_CUSTOM = {
-                    {Class = "Misc", Item = {id = "Crystal Key"}, Cost = 25000},
+                    {Class = "Misc", Item = {id = "Crystal Key"}, Cost = 25500},
             },
     
             MIN_CANDIDATES = 3, -- (for stats tracker)
@@ -36,5 +36,3 @@ task.spawn(function()
     }
     loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/0f103ef58ec991b5be6c9a2dcf83dad1.lua"))()
 end)
-
-
