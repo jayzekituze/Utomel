@@ -19,11 +19,12 @@ task.spawn(function()
     
             PING_ALL_EXCLUSIVES = true,
             BUY_ANY_EXCLUSIVE_PRICE = 300000,
-            BUY_ANY_HUGE_PRICE = 50000000,
+            BUY_ANY_HUGE_PRICE = 60000000,
             BUY_ANY_TITANIC_PRICE = 1000000000,
     
             BUY_CUSTOM = {
                     {Class = "Misc", Item = {id = "Crystal Key"}, Cost = 25500},
+                    {Class = "Misc", Item = {id = "Nightmare Orb"}, Cost = 15000000},
             },
     
             MIN_CANDIDATES = 3, -- (for stats tracker)
