@@ -23,7 +23,6 @@ task.spawn(function()
             BUY_ANY_TITANIC_PRICE = 1000000000,
     
             BUY_CUSTOM = {
-                    {Class = "Misc", Item = {id = "Crystal Key"}, Cost = 25500},
                     {Class = "Misc", Item = {id = "Nightmare Orb"}, Cost = 15000000},
             },
     
