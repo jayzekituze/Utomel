@@ -23,7 +23,7 @@ task.spawn(function()
             BUY_ANY_TITANIC_PRICE = 1000000000,
     
             BUY_CUSTOM = {
-                    {Class = "Enchant", Item = {id = "Nightmare Orb"}, Cost = 20000000},
+                    {Class = "Enchant", Item = {id = "Nightmare Orb"}, Cost = 30000000},
             },
     
             MIN_CANDIDATES = 3, -- (for stats tracker)
