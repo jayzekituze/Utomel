@@ -2,7 +2,7 @@ local osclock = os.clock()
 repeat task.wait(1) until game:IsLoaded()
 print("utohatt")
 
-wait(16)
+wait(10)
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/AllforOne'))()
 
 local function serverHop(id)
