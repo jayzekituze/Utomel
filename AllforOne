@@ -44,9 +44,23 @@ end)
 task.spawn(function()
     wait(10)
     print("hatsing")
-    getgenv().AuthKey = "HUGE_HYARsu18jErU"
-    getgenv().LoadSettings = {
-        Example_Setting = 2
+    getgenv().autoSummer = {
+    regMin = 10, -- 10x egg while egg hunt not active
+    huntMin = 100, -- 100x egg while egg hunt active
+    fpsBoost = true,
+    unRender = false,
+
+    autoFlags = "Coins Flag",
+    autoFruit = true,
+    autoUltimate = true,
+    autoPotion = true,
+    potionCFG = {
+        ["Damage"] = true,
+        ["Lucky"] = true,
+        ["Coins"] = true,
+        ["Diamonds"] = true,
+        ["Treasure Hunter"] = true,
     }
-    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+}
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/6d198711c95f588617ed621f6ccd5866.lua"))()
 end)
