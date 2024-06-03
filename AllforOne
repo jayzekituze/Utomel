@@ -48,7 +48,7 @@ task.spawn(function()
     regMin = 10, -- 10x egg while egg hunt not active
     huntMin = 100, -- 100x egg while egg hunt active
     fpsBoost = true,
-    unRender = false,
+    unRender = true,
 
     autoFlags = "Coins Flag",
     autoFruit = true,
