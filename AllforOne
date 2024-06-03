@@ -44,23 +44,10 @@ end)
 task.spawn(function()
     wait(10)
     print("hatsing")
-    getgenv().autoSummer = {
-    regMin = 10, -- 10x egg while egg hunt not active
-    huntMin = 100, -- 100x egg while egg hunt active
+    getgenv().autoPrison = {
+    userID = "402681518197047306",
+    webUrl = "https://discordapp.com/api/webhooks/1207252883460849684/I8IGlcrpEcTEcm6VsO7RsI3uqb9_t2NMl4eHOxtzUaCMq5-L9FZXf1u79VXcbKDfLZ9y",
     fpsBoost = true,
-    unRender = true,
-
-    autoFlags = "Coins Flag",
-    autoFruit = true,
-    autoUltimate = true,
-    autoPotion = true,
-    potionCFG = {
-        ["Damage"] = true,
-        ["Lucky"] = true,
-        ["Coins"] = true,
-        ["Diamonds"] = true,
-        ["Treasure Hunter"] = true,
-    }
 }
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/6d198711c95f588617ed621f6ccd5866.lua"))()
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/5456f301e27a245f39de10016f585393.lua"))()
 end)
