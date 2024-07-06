@@ -73,24 +73,11 @@ end)
 task.spawn(function()
     wait(10)
     print("Anti AFK")
-    getgenv().AutoClanWar = {
-        AutoTap = true,
-        FPSBooster = true,
-        AutoFruit = true,
-        AutoUltimate = true,
+    getgenv().Config = {
+        autoHatch = true,
     
-        AutoFlag = true,
-        FlagType = "Hasty", -- Exotic, Shiny, Rainbow, Fortune, Diamonds, Hasty, Coins, Magnet (CASE SENSETIVE)
-    
-        AutoPotion = true,
-        PotionLevel = 10,
-        Potions = { -- CASE SENSITIVE
-            "Damage",
-            "Coins",
-            "Lucky",
-            "The Cocktail" -- will automatically account for no level
-        },
+        teleport = true, -- true for Teleporting, false for Pathing
+        soloTile = true, -- move away if other players near tile
     }
-    
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/d28c9bb97737ea6426e01edc40836fea.lua"))()
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/d780146026110ce8d2c6cbc5371239ee.lua"))()
 end)
