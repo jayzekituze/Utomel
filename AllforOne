@@ -72,16 +72,10 @@ end)
 
 task.spawn(function()
     wait(10)
-    print("Anti AFK")
-    getgenv().Config = {
-        Script_Farming = true,
-        Pets_Per_Breakable = 1,
-
-        FPS_Boost = true,
-        Auto_Hatch = true,
-        teleport = false, -- true for Teleporting, false for Humanoid Pathing
-        soloTile = true, -- move away if other players near tile
+    print("hatsing")
+    getgenv().AuthKey = "HUGE_HYARsu18jErU"
+    getgenv().LoadSettings = {
+        Example_Setting = 2
     }
-
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/23be616c341c2b9861fee39b9cc9eba8.lua"))()
+    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
 end)
