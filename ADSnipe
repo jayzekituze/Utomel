@@ -1,51 +1,90 @@
-repeat wait() until game:IsLoaded() and game.PlaceId ~= nil
-
+repeat wait() until game:IsLoaded()
 wait(10)
--- services shit
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/NaAutoFish'))()
-setfpscap(10)
+print("utobaZic")
 
---anti afk shit
-local VirtualUser=game:service'VirtualUser'
-game:service'Players'.LocalPlayer.Idled:connect(function()
-VirtualUser:CaptureController()
-VirtualUser:ClickButton2(Vector2.new())
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/ADSnipe'))()
+local Players = game:GetService('Players')
+local Player = Players.LocalPlayer
+local getPlayers = Players:GetPlayers()
+local PlayerInServer = #getPlayers
+local http = game:GetService("HttpService")
+local ts = game:GetService("TeleportService")
+local rs = game:GetService("ReplicatedStorage")
+local vu = game:GetService("VirtualUser")
+
+
+local function serverHop(id)
+    local HttpService = game:GetService("HttpService")
+    local TeleportService = game:GetService("TeleportService")
+    local Players = game:GetService("Players")
+    local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true"
+    local req = request({
+        Url = string.format(sfUrl, id, "Desc", 100)
+    })
+    local body = HttpService:JSONDecode(req.Body)
+    task.wait(0.2)
+    local servers = {}
+    if body and body.data then
+        for i, v in next, body.data do
+            if type(v) == "table" and v.playing >= 1 and v.id ~= game.JobId then
+                table.insert(servers, 1, v.id)
+            end
+        end
+    end
+    local randomCount = #servers
+    if not randomCount then
+        randomCount = 2
+    end
+    TeleportService:TeleportToPlaceInstance(id, servers[math.random(1, randomCount)], Players.LocalPlayer)
+end
+
+task.spawn(function()
+    print("Auto Reconnect Executed!")
+    game:GetService("GuiService").ErrorMessageChanged:Connect(function(errorMessage)       
+        game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
+        print("Error message:", errorMessage)
+        print("Found An Error, Reconnecting...")
+        wait(0.1)
+        serverHop(8737899170) -- Attempt to teleport to another server
+    end);
 end)
-game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
 
---low cpu nigga optimizer
-game:GetService("RunService"):Set3dRenderingEnabled(false)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AwesomeDudePerfect/psx-gem-farm/main/lowCpu.lua"))()
+-- for i = 1, PlayerInServer do
+--     for _, alt in pairs(alts) do
+--         if getPlayers[i].Name == alt and alt ~= Players.LocalPlayer.Name then
+--             task.wait(math.random(0, 300))
+--             while task.wait(1) do
+--                 serverHop(8737899170)
+--             end
+--         end
+--     end
+-- end
 
-getgenv().config = {
-    autoFishing = true,              -- farm off execution or not
-    placetoFish = "AdvancedFishing", -- "Fishing" // "AdvancedFishing"
-    sendReels = true,                  -- send reels webhooks
-    reelsUrl = "",                     -- webhook URL for reels
-    invisWater = true,                  -- make water transparent
 
-    autoPresents = false,              -- auto collect presents
-    sendPresents = true,             -- send presents webhooks
-    presentsUrl = "",                 -- webhook URL for presents
-    
-    autoDaycare = false,              -- configurable auto daycare     
-    petToEnroll = "",                 -- name of pet to enroll
-    enrollpetType = 2,                 -- 1=Golden, 2=Rainbow, 0=Regular
-    
-    autoMerchants = false,             -- auto buy from merchants
-    autoVendings = false,              -- auto buy from machines
 
-    autoMail = false,                  -- true // false
-    userToMail = "",                  -- Username to auto mail
-    amountToMail = 0,                  -- Amount to Mail // 0 sends all
-    mailTimer = 300,                  -- custom timer (seconds)
-    
-    manualMailUsernames = {             -- option to be able to mail different accounts with GUI button
-        "Username1",
-        "Username2",
+
+task.spawn(function()
+    wait(10)
+    getgenv()._S = {
+        Rules = {
+            {Name = "The Gamer", Price = 100000, Shiny = false, Traits = {Brawler = 3}},
+            {Name = "Shadow Dragon", Price = 100000, Shiny = false, Traits = {Brawler = 3}},
+            {Name = "The Rift Sorcerer", Price = 100000, Shiny = false, Traits = {Brawler = 3}},
+            {Name = "The Cursed Knight", Price = 100000, Shiny = false, Traits = {Brawler = 3}},
+            {Name = "Chance Taker", Price = 100000, Shiny = false, Traits = {Brawler = 3}},
+            {Name = "Slime Spirit", Price = 100000, Shiny = false, Traits = {Brawler = 3}},
+        },
+        Webhooks = {
+            Send = true,
+            Webhook = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr",
+            ShowUsername = true,
+        },
+        Servers = {
+            Hop = true,
+            TimeToWait = 10,
+        },
     }
     
-    --autoCollectMail = false,
-    --collectTimer = "300",
-}
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/92e9e3513b3d3359d311cccd6c5ef57c.lua"))()
+    script_key="LjuHTohHvbxairVCxFgupfICGfBsVWki"
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/89c8974ead8a7a495341ab05c1cad1ef.lua"))()
+end)
