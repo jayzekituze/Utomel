@@ -121,6 +121,26 @@ task.spawn(function()
     end
 end)
 
+task.spawn(function()
+    wait(10)
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local Network = ReplicatedStorage:WaitForChild("Network")
+    local LuckyDice_Craft = Network:WaitForChild("LuckyDice_Craft")
+
+    local function craftLuckyDice(diceType)
+        local args = {
+            [1] = diceType,
+            [2] = 1
+        }
+        LuckyDice_Craft:InvokeServer(unpack(args))
+    end
+
+    while true do
+        craftLuckyDice("Lucky Dice II")
+        craftLuckyDice("Mega Lucky Dice")
+        wait(0.5)
+end)
+
 
 task.spawn(function()
     wait(10)
