@@ -108,3 +108,21 @@ task.spawn(function()
         wait(5)
     end
 end)
+
+task.spawn(function()
+    wait(10)
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local Network = ReplicatedStorage:WaitForChild("Network")
+    local Rng_Roll = Network:WaitForChild("Rng_Roll")
+
+    local args = {
+        [1] = "First"
+    }
+
+    local rollInterval = 0.1 -- Adjust this value to control the speed of rolling (in seconds)
+
+    while true do
+        Rng_Roll:InvokeServer(unpack(args))
+        wait(rollInterval)
+    end
+end)
