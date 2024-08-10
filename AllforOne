@@ -61,18 +61,50 @@ end)
 -- end
 
 task.spawn(function()
-    wait(20)
-    print("webhoooook daw")
-    getgenv().Id = "402681518197047306"
-    getgenv().Url = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr"
+    wait(10)
+    script_key="LjuHTohHvbxairVCxFgupfICGfBsVWki";
+    getgenv().LoadSettings = kram -- Replace 'nil' with Copied Settings if you want to import to other devices
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/23521cea1cff5c0e428954401f395af3.lua"))()
+end)
 
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ed88cda2afec54cf573c9c1498fad353.lua"))()
+task.spawn(function()
+    wait(10)
+    local player = game.Players.LocalPlayer
+
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+    local targetCFrame = CFrame.new(
+        -10275.4131, 5.40920258, -7313.2832, 
+        0.999543607, 0, 0.0302092619, 
+        0, 1, 0, 
+        -0.0302092619, 0, 0.999543607
+    )
+
+    humanoidRootPart.CFrame = targetCFrame
 end)
 
 
 task.spawn(function()
     wait(10)
-    script_key="LjuHTohHvbxairVCxFgupfICGfBsVWki";
-    getgenv().LoadSettings = kram -- Replace 'nil' with Copied Settings if you want to import to other devices
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/23521cea1cff5c0e428954401f395af3.lua"))()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local Network = ReplicatedStorage:WaitForChild("Network")
+    local Merchant_RequestPurchase = Network:WaitForChild("Merchant_RequestPurchase")
+
+    local function makePurchase(number)
+        local args = {
+            [1] = "LuckyDiceMerchant",
+            [2] = number
+        }
+
+        Merchant_RequestPurchase:InvokeServer(unpack(args))
+    end
+
+    while true do
+        for number = 1, 6 do
+            makePurchase(number)
+            wait(1)
+        end
+        wait(5)
+    end
 end)
