@@ -49,6 +49,21 @@ task.spawn(function()
     end);
 end)
 
+print("Anti AFKEY")
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
+
+local niggaJump = coroutine.create(function ()
+    while 1 do
+        wait(10)
+        game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    end
+end)
+coroutine.resume(niggaJump)
+
 -- for i = 1, PlayerInServer do
 --     for _, alt in pairs(alts) do
 --         if getPlayers[i].Name == alt and alt ~= Players.LocalPlayer.Name then
@@ -92,15 +107,15 @@ task.spawn(function()
 end)
 
 
-task.spawn(function()
-    wait(10)
-    print("hatsing")
-    getgenv().AuthKey = "HUGE_HYARsu18jErU"
-    getgenv().LoadSettings = {
-        Example_Setting = 2
-    }
-    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
-end)
+-- task.spawn(function()
+--     wait(10)
+--     print("hatsing")
+--     getgenv().AuthKey = "HUGE_HYARsu18jErU"
+--     getgenv().LoadSettings = {
+--         Example_Setting = 2
+--     }
+--     loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+-- end)
 
 -- task.spawn(function()
 --     wait(10)
