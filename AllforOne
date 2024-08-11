@@ -91,7 +91,20 @@ task.spawn(function()
     loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/661ba97429a1d20f02880d1e9eeced08.lua"))()
 end)
 
+print("Anti AFKEY")
+local VirtualUser = game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
 
+local niggaJump = coroutine.create(function ()
+    while 1 do
+        wait(10)
+        game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    end
+end)
+coroutine.resume(niggaJump)
 -- task.spawn(function()
 --     wait(10)
 --     script_key="LjuHTohHvbxairVCxFgupfICGfBsVWki";
