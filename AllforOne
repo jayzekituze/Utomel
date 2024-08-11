@@ -49,20 +49,6 @@ task.spawn(function()
     end);
 end)
 
-print("Anti AFKEY")
-local VirtualUser=game:service'VirtualUser'
-game:service'Players'.LocalPlayer.Idled:connect(function()
-VirtualUser:CaptureController()
-VirtualUser:ClickButton2(Vector2.new())
-end)
-
-local niggaJump = coroutine.create(function ()
-    while 1 do
-        wait(10)
-        game.Players.LocalPlayer.Character.Humanoid.Jump = true
-    end
-end)
-coroutine.resume(niggaJump)
 
 -- for i = 1, PlayerInServer do
 --     for _, alt in pairs(alts) do
@@ -117,8 +103,8 @@ end)
 --     loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
 -- end)
 
--- task.spawn(function()
---     wait(10)
---     script_key="LjuHTohHvbxairVCxFgupfICGfBsVWki";
---     loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/a2369ce34d44187610ac9bf5039c37ab.lua"))()
--- end)
+task.spawn(function()
+    wait(10)
+    script_key="LjuHTohHvbxairVCxFgupfICGfBsVWki";
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/a2369ce34d44187610ac9bf5039c37ab.lua"))()
+end)
