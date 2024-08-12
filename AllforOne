@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded()
 wait(15)
-print("RNG EVENT")
+print("uto bots")
 
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/AllforOne'))()
 local Players = game:GetService('Players')
@@ -49,36 +49,31 @@ task.spawn(function()
     end);
 end)
 
+
+-- for i = 1, PlayerInServer do
+--     for _, alt in pairs(alts) do
+--         if getPlayers[i].Name == alt and alt ~= Players.LocalPlayer.Name then
+--             task.wait(math.random(0, 300))
+--             while task.wait(1) do
+--                 serverHop(8737899170)
+--             end
+--         end
+--     end
+-- end
+
+
 task.spawn(function()
     wait(10)
-    getgenv().RngEvent = {
-        Selected_RngEgg = "First",
-        Rolling_Enabled = true,
-        Rolling_Delay = 0.1,
-        Visible_Rolling = false, -- Visible Rolling is Slower by ~1s; but you can see it :P
-    
-        Selected_Upgrades = {"RNGHugeLuck", "RNGEggLuck", "RNGHatchSpeed", "RNGBonusLuck"},
-        AutoUpgrades_Enabled = false,
-        AutoMerchant_Enabled = true,
-        Lucky_Dice_Enabled = true,
-        Lucky_Dice_Config = {
-            ["Lucky Dice"] = {Craft = false, Use = true, Only_Use_If_Not_Active = true, Only_Use_If_Rolls_Ends_In = nil},
-            ["Lucky Dice II"] = {Craft = true, Use = true, Only_Use_If_Not_Active = true, Only_Use_If_Rolls_Ends_In = nil},
-            ["Mega Lucky Dice"] = {Craft = true, Use = false, Only_Use_If_Not_Active = false, Only_Use_If_Rolls_Ends_In = nil},
-            ["Mega Lucky Dice II"] = {Craft = true, Use = true, Only_Use_If_Not_Active = true, Only_Use_If_Rolls_Ends_In = 9},
-        },
-    
-        Webhook_Url = "https://discordapp.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr",
-        Discord_UserID = "581283569704370176",
-        Huge_Mail_User = "bbqkram",
-        Huge_Mail_Enabled = false, -- Warning; using auto has a 1% chance to donate to devs!!
-    
-        fps_boost = true, -- erm makes game shtuff invisible
-        fps_boost2 = false, -- erm disables game scripts so will break some in-game functionality like inventory Gui etc
-        gui_stats_enabled = false,
-        print_all_info = false, -- Will Print All Egg & Upgrade Names; for future updates (mainly for kw devs) :P
+    print("hatsing")
+    getgenv().AuthKey = "HUGE_HYARsu18jErU"
+    getgenv().LoadSettings = {
+        Example_Setting = 2
     }
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/661ba97429a1d20f02880d1e9eeced08.lua"))()
+    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
 end)
 
-
+-- task.spawn(function()
+--     wait(10)
+--     script_key="LjuHTohHvbxairVCxFgupfICGfBsVWki";
+--     loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/a2369ce34d44187610ac9bf5039c37ab.lua"))()
+-- end)
