@@ -2,7 +2,7 @@ repeat wait() until game:IsLoaded()
 wait(15)
 print("RNG EVENT")
 
---// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/AllforOne'))()
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/main/AutoRNG'))()
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer
 local getPlayers = Players:GetPlayers()
@@ -80,5 +80,3 @@ task.spawn(function()
     }
     loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/661ba97429a1d20f02880d1e9eeced08.lua"))()
 end)
-
-
