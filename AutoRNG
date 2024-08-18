@@ -51,6 +51,7 @@ end)
 
 task.spawn(function()
     wait(10)
+    
     getgenv().RngEvent = {
         Selected_RngEgg = "First",
         Rolling_Enabled = true,
@@ -60,6 +61,9 @@ task.spawn(function()
         Selected_Upgrades = {"RNGHugeLuck", "RNGEggLuck", "RNGHatchSpeed", "RNGBonusLuck", "RNGExtraEgg"},
         AutoUpgrades_Enabled = true,
         AutoMerchant_Enabled = true,
+        AutoSellPets_Enabled = true,
+        AutoSell_OnlyEventPets = true, -- if false, will sell any pet not only pets gained from event
+        AutoBreakChests_Enabled = true, -- semi blatant teleporting
         Lucky_Dice_Enabled = true,
         Lucky_Dice_Config = {
             ["Fire Dice"] = {Craft = false, Use = true, Only_Use_If_Not_Active = true, Only_Use_If_Rolls_Ends_In = nil},
@@ -69,7 +73,6 @@ task.spawn(function()
             ["Mega Lucky Dice"] = {Craft = true, Use = false, Only_Use_If_Not_Active = false, Only_Use_If_Rolls_Ends_In = nil},
             ["Mega Lucky Dice II"] = {Craft = true, Use = true, Only_Use_If_Not_Active = true, Only_Use_If_Rolls_Ends_In = 9},
         },
-        AutoBreakChests_Enabled = true,
     
         Webhook_Url = "https://discord.com/api/webhooks/1149765527389077534/OAAbl2pZosZJrMQprv_IynhwIj9EGIzf5O_qRyCMplPVrpdxe50dj7VGGuC4Hh_GeNDr",
         Discord_UserID = "581283569704370176",
