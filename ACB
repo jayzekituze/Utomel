@@ -1,297 +1,72 @@
--- Recursive function to find a child by name in a model or object
-    local function findChildRecursive(parent, childName)
-        local child = parent:FindFirstChild(childName)
-        if child then
-            return child
-        end
-    
-        for _, descendant in ipairs(parent:GetDescendants()) do
-            if descendant.Name == childName then
-                return descendant
-            end
-        end
-    
-        return nil
-    end
-    
-    -- Function to update the debug label
-    local function updateDebugLabel(message)
-        local player = game:GetService("Players").LocalPlayer
-        local debugLabel = findChildRecursive(player:WaitForChild("PlayerGui"), "DebugLabel")
-        if debugLabel then
-            debugLabel.Text = message
-        end
-    end
-    
-    -- Teleport the player to the raid location at the start
-    local function teleportToRaidStart()
-        local player = game:GetService("Players").LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local hrp = findChildRecursive(character, "HumanoidRootPart")
-        if hrp then 
-            hrp.CFrame = CFrame.new(-7924.71777, 180.096298, -9327.33301, -0.616174281, 5.75478287e-09, -0.787609816, 6.60594379e-09, 1, 2.13858442e-09, 0.787609816, -3.88516552e-09, -0.616174281) 
-        end
-    end
-    
-    -- Teleport the player to the Adaptive Titan boss location
-    -- Recursive function to find a child by name in a model or object
-    local function findChildRecursive(parent, childName)
-        local child = parent:FindFirstChild(childName)
-        if child then
-            return child
-        end
-    
-        for _, descendant in ipairs(parent:GetDescendants()) do
-            if descendant.Name == childName then
-                return descendant
-            end
-        end
-    
-        return nil
-    end
-    
-    -- Function to update the debug label
-    local function updateDebugLabel(message)
-        local player = game:GetService("Players").LocalPlayer
-        local debugLabel = findChildRecursive(player:WaitForChild("PlayerGui"), "DebugLabel")
-        if debugLabel then
-            debugLabel.Text = message
-        else
-            print(message) -- Fallback if DebugLabel is not found
-        end
-    end
-    
-    -- Teleport the player to the raid location at the start
-    local function teleportToRaidStart()
-        local player = game:GetService("Players").LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local hrp = findChildRecursive(character, "HumanoidRootPart")
-        if hrp then 
-            hrp.CFrame = CFrame.new(-7924.71777, 180.096298, -9327.33301, -0.616174281, 5.75478287e-09, -0.787609816, 6.60594379e-09, 1, 2.13858442e-09, 0.787609816, -3.88516552e-09, -0.616174281) 
-            updateDebugLabel("Teleported to Raid Start")
-        end
-    end
-    
-    -- Teleport the player to the Adaptive Titan boss location
-    local function teleportToBoss()
-        local player = game:GetService("Players").LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local hrp = findChildRecursive(character, "HumanoidRootPart")
-        if hrp then 
-            hrp.CFrame = CFrame.new(-11600.8408, 250.179428, -11484.5742, 0.99849534, 3.60299945e-09, 0.0548362397, -5.08048981e-09, 1, 2.68042779e-08, -0.0548362397, -2.70425424e-08, 0.99849534) 
-            updateDebugLabel("Teleported to Boss")
-        end
-    end
-    
-    -- Main script logic
-    local hasTeleportedToRaidStart = false
-    
-    while true do
-        task.wait(2)
-        local player = game:GetService("Players").LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local hrp = findChildRecursive(character, "HumanoidRootPart")
-    
-        -- Check if raid conditions are met (e.g., raid is open)
-        local raidBar = findChildRecursive(player.PlayerGui, "RaidBar")
-        local raidActiveGui = raidBar and raidBar:FindFirstChild("RaidActive")
-        local raidText = raidActiveGui and raidActiveGui:FindFirstChild("Text")
-        local raidBarElement = raidBar and raidBar:FindFirstChild("RaidBar")
-    
-        if raidActiveGui and raidActiveGui.Visible then
-            if not hasTeleportedToRaidStart then
-                -- Teleport to raid start location the first time the raid becomes active
-                teleportToRaidStart()
-                updateDebugLabel("RaidActive GUI is visible")
-                hasTeleportedToRaidStart = true  -- Mark that the player has been teleported to the raid start
-            end
-    
-            -- Check if the raid text contains "Ends in" and if the raid bar element is not full
-            if raidText and string.match(raidText.Text, "Ends in") and raidBarElement and raidBarElement.PlayerDamage.Size.X.Offset < 1 then
-                updateDebugLabel("Raid is in progress and ending soon")
-                task.wait(3)
-                -- Teleport to the boss after checking conditions
-                teleportToBoss()
-    
-                -- Finding the proximity prompt recursively
-                local proximityPrompt = findChildRecursive(workspace.Bosses["Adaptive Titan"].HumanoidRootPart, "ProximityPrompt")
-                if proximityPrompt then
-                    updateDebugLabel("Found Adaptive Titan ProximityPrompt")
-                    proximityPrompt.MaxActivationDistance = math.huge
-                    proximityPrompt:InputHoldBegin()
-                    wait(proximityPrompt.HoldDuration)
-                    proximityPrompt:InputHoldEnd()
-    
-                    local npcDialogue = findChildRecursive(player.PlayerGui, "NPCDialogue")
-                    if npcDialogue then
-                        local responseFrame = findChildRecursive(npcDialogue:FindFirstChild("DialogueFrame"), "ResponseFrame")
-                        if responseFrame then
-                            for _, option in pairs(responseFrame:GetChildren()) do
-                                if option:IsA("TextButton") and option.Text == "LETS FIGHT!" then
-                                    updateDebugLabel("Found and activated 'LETS FIGHT!' button")
-                                    option:Activate()
-                                    character:FindFirstChildOfClass("Humanoid").Jump = true
-                                    break
-                                end
-                            end
-                        end
-                    end
-                else
-                    updateDebugLabel("Adaptive Titan ProximityPrompt not found")
-                end
-            end
-    
-            task.wait(3)
-            local vInput = game:GetService("VirtualInputManager")
-            local xsize, ysize = workspace.CurrentCamera.ViewportSize.X * 0.425, workspace.CurrentCamera.ViewportSize.Y * 0.796
-            vInput:SendMouseButtonEvent(xsize, ysize, 0, true, game, 1)
-            task.wait(0.005)
-            vInput:SendMouseButtonEvent(xsize, ysize, 0, false, game, 1)
-        else
-            -- Reset the teleport flag if the raid is not active
-            hasTeleportedToRaidStart = false
-    
-            -- Teleport the player back to the non-raid location if the raid is not happening
-            if hrp then 
-                hrp.CFrame = CFrame.new(460.122589, 247.562836, 5929.6377, 0.998433292, -1.28846711e-08, -0.0559547879, 1.23393251e-08, 1, -1.00916839e-08, 0.0559547879, 9.38542843e-09, 0.998433292) 
-                updateDebugLabel("Teleported to Non-Raid Location")
-            end
-            task.wait(4)
-            -- Finding the proximity prompt for David recursively
-            local proximityPrompt = findChildRecursive(workspace.NPCs["David"].HumanoidRootPart, "ProximityPrompt")
-            if proximityPrompt then
-                proximityPrompt.MaxActivationDistance = math.huge
-                proximityPrompt:InputHoldBegin()
-                wait(proximityPrompt.HoldDuration)
-                proximityPrompt:InputHoldEnd()
-                
-                local npcDialogue = findChildRecursive(player.PlayerGui, "NPCDialogue")
-                if npcDialogue then
-                    local responseFrame = findChildRecursive(npcDialogue:FindFirstChild("DialogueFrame"), "ResponseFrame")
-                    if responseFrame then
-                        for _, option in pairs(responseFrame:GetChildren()) do
-                            if option:IsA("TextButton") and option.Text == "Yes please!" then
-                                option:Activate()
-                                character:FindFirstChildOfClass("Humanoid").Jump = true
-                                break
-                            end
-                        end
-                    end
-                end
-            end
-    
-            task.wait(3)
-            local vInput = game:GetService("VirtualInputManager")
-            local xsize, ysize = workspace.CurrentCamera.ViewportSize.X * 0.425, workspace.CurrentCamera.ViewportSize.Y * 0.796
-            vInput:SendMouseButtonEvent(xsize, ysize, 0, true, game, 1)
-            task.wait(0.005)
-            vInput:SendMouseButtonEvent(xsize, ysize, 0, false, game, 1)
-        end
-    end
-    
-    
-    -- Main script logic
-    local hasTeleportedToRaidStart = false
-    
-    while true do
-        task.wait(2)
-        local player = game:GetService("Players").LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local hrp = findChildRecursive(character, "HumanoidRootPart")
-    
-        -- Check if raid conditions are met (e.g., raid is open)
-        local raidBar = findChildRecursive(player.PlayerGui, "RaidBar")
-        local raidActiveGui = raidBar and raidBar:FindFirstChild("RaidActive")
-        local raidText = raidActiveGui and raidActiveGui:FindFirstChild("Text")
-        local raidBarElement = raidBar and raidBar:FindFirstChild("RaidBar")
-    
-        if raidActiveGui and raidActiveGui.Visible then
-            if not hasTeleportedToRaidStart then
-                -- Teleport to raid start location the first time the raid becomes active
-                teleportToRaidStart()
-                updateDebugLabel("RaidActive GUI is visible")
-                hasTeleportedToRaidStart = true  -- Mark that the player has been teleported to the raid start
-            end
-    
-            -- Check if the raid text contains "Ends in" and if the raid bar element is not full
-            if raidText and string.match(raidText.Text, "Ends in") and raidBarElement and raidBarElement.PlayerDamage.Size.X.Offset < 1 then
-                updateDebugLabel("Raid is in progress and ending soon")
-                task.wait(3)
-                -- Teleport to the boss after checking conditions
-                teleportToBoss()
-    
-                -- Finding the proximity prompt recursively
-                local proximityPrompt = findChildRecursive(workspace.Bosses["Adaptive Titan"].HumanoidRootPart, "ProximityPrompt")
-                if proximityPrompt then
-                    updateDebugLabel("Found Adaptive Titan ProximityPrompt")
-                    proximityPrompt.MaxActivationDistance = math.huge
-                    proximityPrompt:InputHoldBegin()
-                    wait(proximityPrompt.HoldDuration)
-                    proximityPrompt:InputHoldEnd()
-    
-                    local npcDialogue = findChildRecursive(player.PlayerGui, "NPCDialogue")
-                    if npcDialogue then
-                        local responseFrame = findChildRecursive(npcDialogue:FindFirstChild("DialogueFrame"), "ResponseFrame")
-                        if responseFrame then
-                            for _, option in pairs(responseFrame:GetChildren()) do
-                                if option:IsA("TextButton") and option.Text == "LETS FIGHT!" then
-                                    updateDebugLabel("Found and activated 'LETS FIGHT!' button")
-                                    option:Activate()
-                                    character:FindFirstChildOfClass("Humanoid").Jump = true
-                                    break
-                                end
-                            end
-                        end
-                    end
-                else
-                    updateDebugLabel("Adaptive Titan ProximityPrompt not found")
-                end
-            end
-    
-            task.wait(3)
-            local vInput = game:GetService("VirtualInputManager")
-            local xsize, ysize = workspace.CurrentCamera.ViewportSize.X * 0.425, workspace.CurrentCamera.ViewportSize.Y * 0.796
-            vInput:SendMouseButtonEvent(xsize, ysize, 0, true, game, 1)
-            task.wait(0.005)
-            vInput:SendMouseButtonEvent(xsize, ysize, 0, false, game, 1)
-        else
-            -- Reset the teleport flag if the raid is not active
-            hasTeleportedToRaidStart = false
-    
-            -- Teleport the player back to the non-raid location if the raid is not happening
-            if hrp then 
-                hrp.CFrame = CFrame.new(460.122589, 247.562836, 5929.6377, 0.998433292, -1.28846711e-08, -0.0559547879, 1.23393251e-08, 1, -1.00916839e-08, 0.0559547879, 9.38542843e-09, 0.998433292) 
-            end
-            task.wait(4)
-            -- Finding the proximity prompt for David recursively
-            local proximityPrompt = findChildRecursive(workspace.NPCs["David"].HumanoidRootPart, "ProximityPrompt")
-            if proximityPrompt then
-                proximityPrompt.MaxActivationDistance = math.huge
-                proximityPrompt:InputHoldBegin()
-                wait(proximityPrompt.HoldDuration)
-                proximityPrompt:InputHoldEnd()
-                
-                local npcDialogue = findChildRecursive(player.PlayerGui, "NPCDialogue")
-                if npcDialogue then
-                    local responseFrame = findChildRecursive(npcDialogue:FindFirstChild("DialogueFrame"), "ResponseFrame")
-                    if responseFrame then
-                        for _, option in pairs(responseFrame:GetChildren()) do
-                            if option:IsA("TextButton") and option.Text == "Yes please!" then
-                                option:Activate()
-                                character:FindFirstChildOfClass("Humanoid").Jump = true
-                                break
-                            end
-                        end
-                    end
-                end
-            end
-    
-            task.wait(3)
-            local vInput = game:GetService("VirtualInputManager")
-            local xsize, ysize = workspace.CurrentCamera.ViewportSize.X * 0.425, workspace.CurrentCamera.ViewportSize.Y * 0.796
-            vInput:SendMouseButtonEvent(xsize, ysize, 0, true, game, 1)
-            task.wait(0.005)
-            vInput:SendMouseButtonEvent(xsize, ysize, 0, false, game, 1)
-        end
-    end
-    
+local osclock = os.clock()
+repeat task.wait(1) until game:IsLoaded()
+print("ACB")
+
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/jayzekituze/Utomel/main/ACBV2"))()
+
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+
+local Window = Rayfield:CreateWindow({
+    Name = "[RAIDS] Anime Card Battle",
+    LoadingTitle = "CHIGGALOID",
+    LoadingSubtitle = "Made by Bungus",
+    ConfigurationSaving = {
+       Enabled = true,
+       FolderName = hatdog, -- Create a custom folder for your hub/game
+       FileName = "chicksilog"
+    },
+    Discord = {
+       Enabled = false,
+       Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+       RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+    },
+    KeySystem = true, -- Set this to true to use our key system
+    KeySettings = {
+       Title = "[RAIDS] Anime Card Battle",
+       Subtitle = "Key System",
+       Note = "Join the discord to get a key https://discord.gg/RcvuFpar",
+       FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+       SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+       Key = {"12345"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+    }
+    })
+
+    local Tab = Window:CreateTab("CHIGGA HUB", 4483362458) -- Title, Image
+    local Section = Tab:CreateSection("Main")
+
+
+
+    local Toggle = Tab:CreateToggle({
+        Name = "Auto Infinite",
+        CurrentValue = false,
+        Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Value)
+
+            -- The function that takes place when the toggle is pressed
+            -- The variable (Value) is a boolean on whether the toggle is true or false
+            wait(5)
+            loadstring(game:HttpGet("https://pastebin.com/raw/rcYhvbVc"))()
+            
+        end,
+    })
+     
+    local Button = Tab:CreateButton({
+        Name = "Rejoin",
+        Callback = function()
+            game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+        end,
+    })
+
+
+
+
+    local Button = Tab:CreateButton({
+        Name = "DestroyUI",
+        Callback = function()
+            Rayfield:Destroy()
+        end,
+    })
+
+Rayfield:LoadConfiguration()
