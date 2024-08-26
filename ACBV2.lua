@@ -46,3 +46,9 @@ task.spawn(function()
     print("acb on top")
     loadstring(game:HttpGet("https://raw.githubusercontent.com/jayzekituze/Utomel/main/ACB_INF"))()
 end)
+
+task.spawn(function()
+    wait(10)
+    print("acb on top")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/AnimeCard"))();
+end)
