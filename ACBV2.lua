@@ -37,7 +37,7 @@ task.spawn(function()
         print("Error message:", errorMessage)
         print("Found An Error, Reconnecting...")
         wait(0.1)
-        serverHop(8737899170) -- Attempt to teleport to another server
+        serverHop(18138547215) -- Attempt to teleport to another server
     end);
 end)
 
