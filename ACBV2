@@ -14,8 +14,8 @@ local Window = Rayfield:CreateWindow({
     LoadingSubtitle = "Made by Bungus",
     ConfigurationSaving = {
        Enabled = true,
-       FolderName = ACB, -- Create a custom folder for your hub/game
-       FileName = "ACB"
+       FolderName = hatdog, -- Create a custom folder for your hub/game
+       FileName = "chicksilog"
     },
     Discord = {
        Enabled = false,
