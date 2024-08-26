@@ -3,7 +3,7 @@ repeat task.wait(1) until game:IsLoaded()
 print("ACB2")
 
 wait(13)
---loadstring(game:HttpGet("https://raw.githubusercontent.com/jayzekituze/Utomel/main/ACBV2"))()
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/jayzekituze/Utomel/main/ACBV2.lua"))()
 
 local function serverHop(id)
     local HttpService = game:GetService("HttpService")
