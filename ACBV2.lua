@@ -8,5 +8,14 @@ wait(13)
 task.spawn(function()
     wait(5)
     print("acb on top")
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/AnimeCard"))();
+    --[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+    ]]
+    getgenv().autoRoll = true
+    getgenv().collectPotion = true
+    getgenv().obby = false
+    getgenv().inf = true
+    getgenv().fpsboost = true
+    getgenv().reconnect = true
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/AnimeCard"))()
 end)
