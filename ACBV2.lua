@@ -18,7 +18,7 @@ task.spawn(function()
 	getgenv().inf = true
 	getgenv().fpsboost = false
 	getgenv().reconnect = true
-	getgenv().raid = true
+	getgenv().raid = false
 	getgenv().blackScreen = false
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/AnimeCard"))()
 end)
