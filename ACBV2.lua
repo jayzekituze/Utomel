@@ -16,7 +16,7 @@ task.spawn(function()
 	getgenv().collectPotion = true
 	getgenv().obby = false
 	getgenv().inf = true
-	getgenv().fpsboost = false
+	getgenv().fpsboost = true
 	getgenv().reconnect = true
 	getgenv().raid = false
 	getgenv().blackScreen = false
