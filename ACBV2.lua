@@ -16,10 +16,9 @@ task.spawn(function()
 	getgenv().collectPotion = true
 	getgenv().obby = false
 	getgenv().inf = true
-	getgenv().fpsboost = true
+	getgenv().fpsboost = false
 	getgenv().reconnect = true
 	getgenv().raid = true
-	getgenv().blackScreen = true
+	getgenv().blackScreen = false
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/AnimeCard"))()
-
 end)
