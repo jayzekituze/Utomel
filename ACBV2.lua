@@ -7,9 +7,6 @@ wait(5)
 
 task.spawn(function()
     print("acb on top")
-	--[[
-	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
-	]]
 	--you can change the false to true
 	
 	getgenv().autoRoll = true
@@ -18,7 +15,8 @@ task.spawn(function()
 	getgenv().inf = true
 	getgenv().fpsboost = false
 	getgenv().reconnect = true
-	getgenv().raid = false
+	getgenv().raid = true
 	getgenv().blackScreen = false
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/AnimeCard"))()
+
 end)
