@@ -7,16 +7,17 @@ wait(5)
 
 task.spawn(function()
     print("acb on top")
-	--you can change the false to true
+	--Anime Card Battles 
 	
-	getgenv().autoRoll = true
-	getgenv().collectPotion = true
-	getgenv().obby = false
-	getgenv().inf = true
-	getgenv().fpsboost = false
-	getgenv().reconnect = true
-	getgenv().raid = false
-	getgenv().blackScreen = false
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/AnimeCard"))()
-
+	task.spawn(function()
+	        while getgenv().gaunt do 
+	                local vim = game:GetService("VirtualInputManager")
+	                vim:SendKeyEvent(true, Enum.KeyCode.E.Value, false, game)
+	                task.wait()
+	                vim:SendKeyEvent(false, Enum.KeyCode.E.Value, false, game)
+	                task.wait(1)
+	        end
+	end)
+	
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/IdiotHub/Scripts/main/Loader"))()
 end)
