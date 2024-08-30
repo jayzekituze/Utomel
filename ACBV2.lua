@@ -7,16 +7,6 @@ wait(5)
 
 task.spawn(function()
     print("acb on top")
-	
-	--you can change the false to true
-	
-	getgenv().autoRoll = true
-	getgenv().collectPotion = true
-	getgenv().obby = false
-	getgenv().inf = true
-	getgenv().fpsboost = true
-	getgenv().reconnect = true
-	getgenv().raid = true
-	getgenv().blackScreen = false
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/AnimeCard"))()
+	script_key="wMMFpzXrIqVVzcsvNMfVXptlZsixXXfT";
+	loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/180154ec7abc246752b60603a7adc12d.lua"))()
 end)
