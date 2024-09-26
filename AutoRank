@@ -3,7 +3,6 @@ repeat task.wait(1) until game:IsLoaded()
 print("utohatt")
 
 wait(10)
-
 --// loadstring(game:HttpGet('https://raw.githubusercontent.com/jayzekituze/Utomel/refs/heads/main/AutoRank'))()
 
 local function serverHop(id)
@@ -45,13 +44,9 @@ end)
 task.spawn(function()
     wait(10)
     print("hatsing")
-    getgenv().AutoWorldConfig = {
-        PurchaseUpgrades = true, -- purchases available upgrades before and while auto world is running
-        CollectShinyRelics = true, -- collects available shiny relics before and while auto world is running
-    
-        FPSBooster = false,
-        MinRebirthOrbs = 20 -- Minimum amount of coin orbs to leave to collect once rebirthed (IF YOU DON'T KNOW WHAT THIS DOES, DON'T CHANGE IT)
+    getgenv().AuthKey = "HUGE_HYARsu18jErU"
+    getgenv().LoadSettings = {
+        Example_Setting = 2
     }
-    
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/e050f6fa2a8b1861079735e969b8aeb8.lua"))()
+    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
 end)
