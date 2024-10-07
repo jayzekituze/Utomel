@@ -5,6 +5,16 @@ print("ACB2")
 wait(15)
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/jayzekituze/Utomel/main/ACBV2.lua"))()
 
+
+task.spawn(function()
+	wait(10)
+    print("acb on top")
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/acbw"))()
+end)
+
+
+
+
 task.spawn(function()
 	wait(10)
     print("acb on top")
