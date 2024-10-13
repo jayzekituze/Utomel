@@ -10,6 +10,5 @@ wait(10)
 task.spawn(function()
 	wait(5)
     print("acb on top")
-	script_key="KxYdJFffvFuqMSfsbBDBhKFSAfeCgRKM";
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/180154ec7abc246752b60603a7adc12d.lua"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/acbw"))()
 end)
