@@ -9,7 +9,7 @@ wait(10)
 task.spawn(function()
 	wait(10)
     print("acb on top")
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/acbw"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/acb/main/halloween"))()
 
     -- wait(30)
     -- script_key="euSIyzooyhNBmchXBlYBVUdqmDvVhdfS";
