@@ -12,8 +12,8 @@ task.spawn(function()
     getgenv().cancelgetexpeditiongui = true
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/acb/main/halloween"))()
 
-    -- wait(30)
-    -- script_key="euSIyzooyhNBmchXBlYBVUdqmDvVhdfS";
-    -- loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/180154ec7abc246752b60603a7adc12d.lua"))()
+    wait(30)
+    script_key="euSIyzooyhNBmchXBlYBVUdqmDvVhdfS";
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/180154ec7abc246752b60603a7adc12d.lua"))()
 end)
 
