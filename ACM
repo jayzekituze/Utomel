@@ -1,1 +1,40 @@
-asd
+local osclock = os.clock()
+repeat task.wait(5) until game:IsLoaded()
+print("ACB2")
+
+wait(15)
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/jayzekituze/Utomel/refs/heads/main/ACM"))()
+
+
+task.spawn(function()
+	wait(10)
+    print("acb on top")
+    local args = {
+        [1] = "DrawCard"
+    }
+    
+    -- This will run the code as fast as possible (with minimal delay between executions)
+    while true do
+        game:GetService("ReplicatedStorage").Remote.RemoteEvent:FireServer(unpack(args))
+        wait(0.1)  -- Wait for a very short time (100 milliseconds) before running again
+    end
+end)
+
+
+task.spawn(function()
+	wait(20)
+    print("Anti AFKEY")
+    local VirtualUser=game:service'VirtualUser'
+    game:service'Players'.LocalPlayer.Idled:connect(function()
+    VirtualUser:CaptureController()
+    VirtualUser:ClickButton2(Vector2.new())
+    end)
+
+    local niggaJump = coroutine.create(function ()
+        while 1 do
+            wait(10)
+            game.Players.LocalPlayer.Character.Humanoid.Jump = true
+        end
+    end)
+    coroutine.resume(niggaJump)
+end)
