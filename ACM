@@ -24,17 +24,7 @@ end)
 task.spawn(function()
 	wait(20)
     print("Anti AFKEY")
-    local VirtualUser=game:service'VirtualUser'
-    game:service'Players'.LocalPlayer.Idled:connect(function()
-    VirtualUser:CaptureController()
-    VirtualUser:ClickButton2(Vector2.new())
-    end)
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/juywvm/-Roblox-Projects-/main/____Anti_Afk_Remastered_______"))();
 
-    local niggaJump = coroutine.create(function ()
-        while 1 do
-            wait(10)
-            game.Players.LocalPlayer.Character.Humanoid.Jump = true
-        end
-    end)
-    coroutine.resume(niggaJump)
+    --new github acc
 end)
