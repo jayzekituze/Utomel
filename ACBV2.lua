@@ -15,4 +15,12 @@ task.spawn(function()
     wait(10)
     script_key="VTZtsKYsdvzRgGzlwFDEirsvVDKICRNX";
     loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/180154ec7abc246752b60603a7adc12d.lua"))()
+
+
+    wait(10)
+    print("acb on top")
+    while true do
+        game.Players.LocalPlayer:Kick()
+        wait(3600)
+    end
 end)
