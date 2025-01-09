@@ -20,7 +20,7 @@ task.spawn(function()
     wait(10)
     print("acb on top")
     while true do
-        wait(3600)
+        wait(2700)
         game.Players.LocalPlayer:Kick()
     end
 end)
