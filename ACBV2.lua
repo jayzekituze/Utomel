@@ -7,10 +7,10 @@ wait(10)
 
 
 task.spawn(function()
-	wait(10)
-    print("acb on top")
-    getgenv().cancelgetexpeditiongui = true
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/acbw"))()
+	-- wait(10)
+    -- print("acb on top")
+    -- getgenv().cancelgetexpeditiongui = true
+    -- loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/acbw"))()
 
     wait(10)
     script_key="VTZtsKYsdvzRgGzlwFDEirsvVDKICRNX";
