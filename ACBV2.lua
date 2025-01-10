@@ -12,9 +12,9 @@ task.spawn(function()
     getgenv().cancelgetexpeditiongui = true
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Tatsumaki49/main/123/acbw"))()
 
-    wait(10)
-    script_key="VTZtsKYsdvzRgGzlwFDEirsvVDKICRNX";
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/180154ec7abc246752b60603a7adc12d.lua"))()
+    -- wait(10)
+    -- script_key="VTZtsKYsdvzRgGzlwFDEirsvVDKICRNX";
+    -- loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/180154ec7abc246752b60603a7adc12d.lua"))()
 
 
 --     wait(10)
@@ -23,4 +23,4 @@ task.spawn(function()
 --         wait(3600)
 --         game.Players.LocalPlayer:Kick()
 --     end
--- end)
+end)
